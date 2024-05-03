@@ -1,0 +1,9 @@
+.model_box {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ); /* Adjust the alpha (last) value to control transparency */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Adjust the values for the shadow effect */
+}

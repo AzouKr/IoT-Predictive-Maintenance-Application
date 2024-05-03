@@ -1,0 +1,7 @@
+# Create lists of features and target names
+features = [col for col in df1.columns
+            if df1[col].dtype=='float64' or col =='Type']
+target = ['Target','Failure Type']
+# Portion of data where RNF=1
+idx_RNF = df1.loc[df['Failure Type']=='Random Failures'].index
+df1.loc[idx_RNF,target]

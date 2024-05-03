@@ -1,0 +1,4 @@
+first_drop = df1.loc[idx_RNF,target].shape[0]
+print('Number of observations where RNF=1 but Machine failure=0:',first_drop)
+# Drop corresponding observations and RNF column
+df1.drop(index=idx_RNF, inplace=True)

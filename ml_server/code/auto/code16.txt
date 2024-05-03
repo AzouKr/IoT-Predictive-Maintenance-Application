@@ -1,0 +1,14 @@
+from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import SMOTENC
+# n_working must represent 80% of the desired length of resampled dataframe
+n_working = df1['Failure Type'].value_counts()['No Failure']
+desired_length = round(n_working/0.8)
+spc = round((desired_length-n_working)/4)  #samples per class
+# Resampling
+balance_cause = {'No Failure':n_working,
+                 'Overstrain Failure':spc,
+                 'Heat Dissipation Failure':spc,
+                 'Power Failure':spc,
+                 'Tool Wear Failure':spc}
+sm = SMOTENC(categorical_features=[0,7], sampling_strategy=balance_cause, random_state=0)
+df_res, y_res = sm.fit_resample(df1, df1['Failure Type'])

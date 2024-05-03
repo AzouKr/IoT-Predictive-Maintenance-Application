@@ -1,0 +1,3 @@
+# show the numeric characters
+df_numeric = df1.select_dtypes(include=[np.number])
+df_numeric.describe(include='all').T

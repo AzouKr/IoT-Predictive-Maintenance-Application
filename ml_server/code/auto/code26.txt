@@ -1,0 +1,6 @@
+task = 'binary'
+y_pred_test, cm_dict_test, metrics_test = predict_and_evaluate(
+fitted_models_binary,X_test,y_test,clf_str,task)
+
+print('Test scores:', metrics_test, sep='\n')
+

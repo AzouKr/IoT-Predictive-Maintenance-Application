@@ -1,0 +1,34 @@
+# Convert 'Target' column in y_test to integer type
+y_test['Target'] = y_test['Target'].astype(int)
+print(y_test.dtypes)
+
+# Make predictions
+lr = LogisticRegression(random_state=0)
+lr.fit(X_train, y_train['Target'])
+y_val_lr = lr.predict(X_val)
+y_test_lr = lr.predict(X_test)
+
+# Metrics
+cm_val_lr, metrics_val_lr = eval_preds(lr,X_val,y_val,y_val_lr,'binary')
+cm_test_lr, metrics_test_lr = eval_preds(lr,X_test,y_test,y_test_lr,'binary')
+print('Validation set metrics:',metrics_val_lr, sep='\n')
+print('Test set metrics:',metrics_test_lr, sep='\n')
+
+cm_labels = ['Not Failure', 'Failure']
+cm_lr = [cm_val_lr, cm_test_lr]
+# Show Confusion Matrices
+fig, axs = plt.subplots(ncols=2, figsize=(8,4))
+fig.suptitle('LR Confusion Matrices')
+for j, title in enumerate(['Validation Set', 'Test Set']):
+    ax = axs[j]
+    sns.heatmap(ax=ax, data=cm_lr[j], annot=True,
+              fmt='d', cmap='Blues', cbar=False)
+    axs[j].title.set_text(title)
+    axs[j].set_xticklabels(cm_labels)
+    axs[j].set_yticklabels(cm_labels)
+plt.show()
+
+# Odds for interpretation
+d = {'feature': X_train.columns, 'odds': np.exp(lr.coef_[0])}
+odds_df = pd.DataFrame(data=d).sort_values(by='odds', ascending=False)
+odds_df

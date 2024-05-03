@@ -1,0 +1,6 @@
+# Tune hyperparameters with GridSearch (estimated time 8m)
+print('GridSearch start')
+fitted_models_binary = []
+print('Training '+clf_str)
+fit_model = tune_and_fit(clf,X_train,y_train,clf_params,'binary')
+fitted_models_binary.append(fit_model)

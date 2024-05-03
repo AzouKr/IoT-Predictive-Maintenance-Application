@@ -1,0 +1,11 @@
+# Portion of df where there is a failure and causes percentage
+idx_fail = df1.loc[df['Failure Type'] != 'No Failure'].index
+df_fail = df.loc[idx_fail]
+df_fail_percentage = 100*df_fail['Failure Type'].value_counts()/df_fail['Failure Type'].shape[0]
+print('Failures percentage in data:',
+      round(100*df1['Target'].sum()/n,2))
+# Pie plot
+plt.title('Causes involved in Machine failures')
+plt.pie(x=df_fail_percentage.array, labels=df_fail_percentage.index.array,
+        colors=sns.color_palette('tab10')[0:4], autopct='%.0f%%')
+plt.show()

@@ -1,0 +1,8 @@
+# Convert 'Target' column to integer type
+y_train['Target'] = y_train['Target'].astype(int)
+print(y_train['Target'].dtype)
+
+# Convert 'Target' column in y_val to integer type
+y_val['Target'] = y_val['Target'].astype(int)
+print(y_train.dtypes)
+print(y_val.dtypes)

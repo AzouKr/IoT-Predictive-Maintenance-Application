@@ -1,0 +1,5 @@
+pca = PCA(n_components=len(num_features))
+X_pca = pd.DataFrame(data=pca.fit_transform(df_pre[num_features]), columns=['PC'+str(i+1) for i in range(len(num_features))])
+var_exp = pd.Series(data=100*pca.explained_variance_ratio_, index=['PC'+str(i+1) for i in range(len(num_features))])
+print('Explained variance ratio per component:', round(var_exp,2), sep='\n')
+print('Explained variance ratio with 3 components: '+str(round(var_exp.values[:3].sum(),2)))

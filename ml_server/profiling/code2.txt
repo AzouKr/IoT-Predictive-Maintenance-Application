@@ -1,0 +1,5 @@
+# numbering the figures
+fig_number = 1
+raw_data = pd.read_csv('./dataset/predictive_maintenance.csv')
+df = raw_data.copy()
+df.head(5)

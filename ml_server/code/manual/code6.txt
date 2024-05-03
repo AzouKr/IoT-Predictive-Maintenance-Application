@@ -1,0 +1,3 @@
+# Drop ID columns
+df1 = df.copy()
+df1.drop(columns=['UDI','Product ID'], inplace=True)

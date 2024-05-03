@@ -1,0 +1,7 @@
+# Portion of data where Machine failure=1 but no failure cause is specified
+idx_ambiguous = df1.loc[(df1['Target']==1) &
+                       (df1['Failure Type']=='No Failure')].index
+second_drop = df1.loc[idx_ambiguous].shape[0]
+print('Number of ambiguous observations:', second_drop)
+display(df1.loc[idx_ambiguous,target])
+df1.drop(index=idx_ambiguous, inplace=True)

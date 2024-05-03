@@ -1,0 +1,3 @@
+function getData() {}
+
+module.exports = {};

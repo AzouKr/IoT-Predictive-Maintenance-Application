@@ -1,0 +1,37 @@
+plt.figure(figsize=(5,5))
+plot_kws={"s": 1}
+sns.heatmap(df1.isna().transpose(),
+            cmap='cividis',
+            linewidths=0.0,
+           ).set_facecolor('white')
+plt.close()
+
+# Taking a look at 'Failure Type' variable
+df1.groupby(['Target','Failure Type']).count().drop(['Process temperature',
+                                                      'Rotational speed',
+                                                      'Torque',
+                                                      'Tool wear',
+                                                      'Air temperature'],axis=1).rename(columns = {'Type':'count'})
+
+df1['Target'].value_counts(normalize=True)
+
+# Create lists of features and target names
+features = [col for col in df1.columns
+            if df1[col].dtype=='float64' or col =='Type']
+target = ['Target','Failure Type']
+# Portion of data where RNF=1
+idx_RNF = df1.loc[df['Failure Type']=='Random Failures'].index
+df1.loc[idx_RNF,target]
+
+first_drop = df1.loc[idx_RNF,target].shape[0]
+print('Number of observations where RNF=1 but Machine failure=0:',first_drop)
+# Drop corresponding observations and RNF column
+df1.drop(index=idx_RNF, inplace=True)
+
+# Portion of data where Machine failure=1 but no failure cause is specified
+idx_ambiguous = df1.loc[(df1['Target']==1) &
+                       (df1['Failure Type']=='No Failure')].index
+second_drop = df1.loc[idx_ambiguous].shape[0]
+print('Number of ambiguous observations:', second_drop)
+display(df1.loc[idx_ambiguous,target])
+df1.drop(index=idx_ambiguous, inplace=True)

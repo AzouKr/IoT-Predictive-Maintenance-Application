@@ -1,0 +1,5 @@
+print('Features non-null values and data type:')
+df.info()  #information about the DataFrame
+n = df.shape[0]
+print('Check for duplicate values:',
+      df['Product ID'].unique().shape[0]!=n)

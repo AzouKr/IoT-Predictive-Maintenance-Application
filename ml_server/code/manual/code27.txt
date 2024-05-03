@@ -1,0 +1,30 @@
+#multiclass classification
+lr = LogisticRegression(random_state=0,multi_class='ovr')
+lr.fit(X_train, y_train['Failure Type'])
+y_val_lr = lr.predict(X_val)
+y_test_lr = lr.predict(X_test)
+
+# Validation metrics
+cm_val_lr, metrics_val_lr = eval_preds(lr,X_val,y_val,y_val_lr,'multi_class')
+cm_test_lr, metrics_test_lr = eval_preds(lr,X_test,y_test,y_test_lr,'multi_class')
+print('Validation set metrics:',metrics_val_lr, sep='\n')
+print('Test set metrics:',metrics_test_lr, sep='\n')
+
+cm_lr = [cm_val_lr, cm_test_lr]
+cm_labels = ['No Fail','PWF','OSF','HDF','TWF']
+# Show Confusion Matrices
+fig, axs = plt.subplots(ncols=2, figsize=(9,4))
+fig.suptitle('LR Confusion Matrices')
+for j, title in enumerate(['Validation Set', 'Test Set']):
+    ax = axs[j]
+    sns.heatmap(ax=ax, data=cm_lr[j], annot=True,
+              fmt='d', cmap='Blues', cbar=False)
+    axs[j].title.set_text(title)
+    axs[j].set_xticklabels(cm_labels)
+    axs[j].set_yticklabels(cm_labels)
+plt.show()
+
+# Odds for interpretation
+odds_df = pd.DataFrame(data = np.exp(lr.coef_), columns = X_train.columns,
+                       index = df_res['Failure Type'].unique())
+odds_df

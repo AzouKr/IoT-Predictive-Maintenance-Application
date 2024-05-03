@@ -1,0 +1,21 @@
+# Portion of df_res where there is a failure and causes percentage
+idx_fail_res = df_res.loc[df_res['Failure Type'] != 'No Failure'].index
+df_res_fail = df_res.loc[idx_fail_res]
+fail_res_percentage = 100*df_res_fail['Failure Type'].value_counts()/df_res_fail.shape[0]
+
+# Percentages
+print('Percentage increment of observations after oversampling:',
+      round((df_res.shape[0]-df1.shape[0])*100/df1.shape[0],2))
+print('SMOTE Resampled Failures percentage:',
+      round(df_res_fail.shape[0]*100/df_res.shape[0],2))
+
+# Pie plot
+fig, axs = plt.subplots(ncols=2, figsize=(12,4))
+fig.suptitle('Causes involved in Machine failures')
+axs[0].pie(x=df_fail_percentage.array, labels=df_fail_percentage.index.array,
+        colors=sns.color_palette('tab10')[0:4], autopct='%.0f%%')
+axs[1].pie(x=fail_res_percentage.array, labels=fail_res_percentage.index.array,
+        colors=sns.color_palette('tab10')[0:4], autopct='%.0f%%')
+axs[0].title.set_text('Original')
+axs[1].title.set_text('After Resampling')
+plt.show()

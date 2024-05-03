@@ -1,0 +1,110 @@
+"""User-defined function: Evaluate cm, accurcay, AUC, F1 for a given classifier
+- model, fitted estimator.
+- X, data used to estimate class probabilities (paired with y_true)
+- y_true, ground truth with two columns
+- y_pred, predictions
+- task = 'binary','multi_class'
+"""
+def eval_preds(model,X,y_true,y_pred,task):
+    if task == 'binary':
+        # Extract task target
+        y_true = y_true['Target']
+        cm = confusion_matrix(y_true, y_pred)
+        # Probability of the minority class
+        proba = model.predict_proba(X)[:,1]
+        # Metrics
+        acc = accuracy_score(y_true, y_pred)
+        auc = roc_auc_score(y_true, proba)
+        f1 = f1_score(y_true, y_pred, pos_label=1)
+        f2 = fbeta_score(y_true, y_pred, pos_label=1, beta=2)
+    elif task == 'multi_class':
+        y_true = y_true['Failure Type']
+        cm = confusion_matrix(y_true, y_pred)
+        proba = model.predict_proba(X)
+        # Metrics
+        acc = accuracy_score(y_true, y_pred)
+        auc = roc_auc_score(y_true, proba, multi_class='ovr', average='weighted')
+        f1 = f1_score(y_true, y_pred, average='weighted')
+        f2 = fbeta_score(y_true, y_pred, beta=2, average='weighted')
+    metrics = pd.Series(data={'ACC':acc, 'AUC':auc, 'F1':f1, 'F2':f2})
+    metrics = round(metrics,3)
+    return cm, metrics
+
+
+
+"""User-defined function: Fits one estimator using GridSearch to search for the best parameters
+- clf, estimator
+- X, y = X_train, y_train
+- params, parameters grid for GridSearch
+- task = 'binary','multi_class'
+"""
+def tune_and_fit(clf,X,y,params,task):
+    if task=='binary':
+        f2_scorer = make_scorer(fbeta_score, pos_label=1, beta=2)
+        start_time = time.time()
+        grid_model = GridSearchCV(clf, param_grid=params,
+                                cv=5, scoring=f2_scorer)
+        grid_model.fit(X, y['Target'])
+    elif task=='multi_class':
+        f2_scorer = make_scorer(fbeta_score, beta=2, average='weighted')
+        start_time = time.time()
+        grid_model = GridSearchCV(clf, param_grid=params,
+                              cv=5, scoring=f2_scorer)
+        grid_model.fit(X, y['Failure Type'])
+
+    print('Best params:', grid_model.best_params_)
+    # Print training times
+    train_time = time.time()-start_time
+    mins = int(train_time//60)
+    print('Training time: '+str(mins)+'m '+str(round(train_time-mins*60))+'s')
+    return grid_model
+
+
+
+"""User-defined function: Makes predictions using the tuned classifiers.
+Then uses eval_preds to compute the relative metrics. Returns:
+- y_pred, DataFrame containing the predictions of each model
+- cm_list, confusion matrix list
+- metrics, DataFrame containing the metrics
+Input:
+- fitted_models, fitted estimators
+- X, data used to make predictions
+- y_true, true values for target
+- clf_str, list containing estimators names
+- task = 'binary','multi_class'
+"""
+def predict_and_evaluate(fitted_models,X,y_true,clf_str,task):
+    cm_dict = {key: np.nan for key in clf_str}
+    metrics = pd.DataFrame(columns=clf_str)
+    y_pred = pd.DataFrame(columns=clf_str)
+    for fit_model, model_name in zip(fitted_models,clf_str):
+        # Update predictions
+        y_pred[model_name] = fit_model.predict(X)
+        # Metrics
+        if task == 'binary':
+            cm, scores = eval_preds(fit_model,X,y_true,
+                                     y_pred[model_name],task)
+        elif task == 'multi_class':
+            cm, scores = eval_preds(fit_model,X,y_true,
+                                     y_pred[model_name],task)
+        # Update Confusion matrix and metrics
+        cm_dict[model_name] = cm
+        metrics[model_name] = scores
+    return y_pred, cm_dict, metrics
+
+
+
+"""User-defined function: Fit the estimators on multiple classifiers
+- clf, estimators
+- clf_str, list containing estimators names
+- X_train,y_train, data used to fit models
+- X_val,y_val, data used to validate models
+"""
+
+def fit_models(clf,clf_str,X_train,X_val,y_train,y_val):
+    metrics = pd.DataFrame(columns=clf_str)
+    for model, model_name in zip(clf, clf_str):
+        model.fit(X_train,y_train['Target'])
+        y_val_pred = model.predict(X_val)
+        metrics[model_name] = eval_preds(model,X_val,y_val,y_val_pred,'binary')[1]
+    return metrics

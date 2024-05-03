@@ -1,0 +1,52 @@
+
+# Models
+lr = LogisticRegression()
+knn = KNeighborsClassifier()
+svc = SVC(probability=True)
+rfc = RandomForestClassifier()
+xgb = XGBClassifier()
+
+clf = [lr,knn,svc,rfc,xgb]
+clf_str = ['LR','KNN','SVC','RFC','XGB']
+
+# Fit on raw train
+metrics_0 = fit_models(clf,clf_str,X_train,X_val,y_train,y_val)
+
+# Fit on temperature product train
+XX_train = X_train.drop(columns=['Process temperature','Air temperature'])
+XX_val = X_val.drop(columns=['Process temperature','Air temperature'])
+XX_train['Temperature']= X_train['Process temperature']*X_train['Air temperature']
+XX_val['Temperature'] = X_val['Process temperature']*X_val['Air temperature']
+metrics_1 = fit_models(clf,clf_str,XX_train,XX_val,y_train,y_val)
+
+# Fit on power product train
+XX_train = X_train.drop(columns=['Rotational speed','Torque'])
+XX_val = X_val.drop(columns=['Rotational speed','Torque'])
+XX_train['Power'] = X_train['Rotational speed']*X_train['Torque']
+XX_val['Power'] = X_val['Rotational speed']*X_val['Torque']
+metrics_2 = fit_models(clf,clf_str,XX_train,XX_val,y_train,y_val)
+
+# Fit on both products train
+XX_train = X_train.drop(columns=['Process temperature','Air temperature','Rotational speed','Torque'])
+XX_val = X_val.drop(columns=['Process temperature','Air temperature','Rotational speed','Torque'])
+XX_train['Temperature']= X_train['Process temperature']*X_train['Air temperature']
+XX_val['Temperature']= X_val['Process temperature']*X_val['Air temperature']
+XX_train['Power'] = X_train['Rotational speed']*X_train['Torque']
+XX_val['Power'] = X_val['Rotational speed']*X_val['Torque']
+metrics_3 = fit_models(clf,clf_str,XX_train,XX_val,y_train,y_val)
+
+# classification metrics barplot
+fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(18,8))
+fig.suptitle('Classification metrics')
+for j, model in enumerate(clf_str):
+    ax = axs[j//3,j-3*(j//3)]
+    model_metrics = pd.DataFrame(data=[metrics_0[model],metrics_1[model],metrics_2[model],metrics_3[model]])
+    model_metrics.index = ['Original','Temperature','Power','Both']
+    model_metrics.transpose().plot(ax=ax, kind='bar', rot=0, )
+    ax.title.set_text(model)
+    ax.get_legend().remove()
+fig.subplots_adjust(top=0.9, left=0.1, right=0.9, bottom=0.12)
+axs.flatten()[-2].legend(title='Dataset', loc='upper center',
+                         bbox_to_anchor=(0.5, -0.12), ncol=4, fontsize=12)
+plt.show()
+

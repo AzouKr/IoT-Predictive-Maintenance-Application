@@ -1,0 +1,7 @@
+# Global percentage of removed observations
+print('Global percentage of removed observations:',
+     (100*(first_drop+second_drop)/n))
+df1.reset_index(drop=True, inplace=True)   # Reset index
+n = df1.shape[0]
+df1.shape[0]
+df1.reset_index(inplace=True, drop=True)
