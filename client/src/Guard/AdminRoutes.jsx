@@ -16,7 +16,10 @@ function AdminRoute({ children }) {
       setanalyst(false);
       setadmin(true);
     } else {
-      if (secureLocalStorage.getItem("auth")) {
+      if (
+        secureLocalStorage.getItem("auth") ||
+        secureLocalStorage.getItem("supervisor")
+      ) {
         setSpinner(false);
         setadmin(false);
         setanalyst(false);

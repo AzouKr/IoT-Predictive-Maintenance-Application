@@ -1,0 +1,42 @@
+{
+    "Target": {
+        "1221": 0,
+        "1302": 0,
+        "1748": 0,
+        "2072": 0,
+        "2559": 0,
+        "3065": 0,
+        "3452": 0,
+        "5471": 0,
+        "5489": 0,
+        "5495": 0,
+        "5509": 0,
+        "5553": 0,
+        "5639": 0,
+        "6091": 0,
+        "6913": 0,
+        "6960": 0,
+        "7488": 0,
+        "7868": 0
+    },
+    "Failure Type": {
+        "1221": "Random Failures",
+        "1302": "Random Failures",
+        "1748": "Random Failures",
+        "2072": "Random Failures",
+        "2559": "Random Failures",
+        "3065": "Random Failures",
+        "3452": "Random Failures",
+        "5471": "Random Failures",
+        "5489": "Random Failures",
+        "5495": "Random Failures",
+        "5509": "Random Failures",
+        "5553": "Random Failures",
+        "5639": "Random Failures",
+        "6091": "Random Failures",
+        "6913": "Random Failures",
+        "6960": "Random Failures",
+        "7488": "Random Failures",
+        "7868": "Random Failures"
+    }
+}

@@ -1,3 +1,31 @@
+import {
+  LoadingData,
+  Metadata,
+  Target,
+  FailureType,
+  Anomalies,
+  FeaturesScaling,
+} from "../../components";
+
+import { AreaTop } from "../../components";
+
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
+
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from "@mui/material";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
 import fig1 from "../../assets/figures/fig1.png";
 import fig2 from "../../assets/figures/fig2.png";
 import fig3 from "../../assets/figures/fig3.png";
@@ -5,403 +33,679 @@ import fig4 from "../../assets/figures/fig4.png";
 import fig5 from "../../assets/figures/fig5.png";
 import fig6 from "../../assets/figures/fig6.png";
 import fig7 from "../../assets/figures/fig7.png";
+import fig8 from "../../assets/figures/fig8.png";
+import fig9 from "../../assets/figures/fig9.png";
+import fig10 from "../../assets/figures/fig10.png";
+import fig11 from "../../assets/figures/fig11.png";
+import fig12 from "../../assets/figures/fig12.png";
+import fig13 from "../../assets/figures/fig13.png";
+import fig14 from "../../assets/figures/fig14.png";
+import fig15 from "../../assets/figures/fig15.png";
+import fig16 from "../../assets/figures/fig16.png";
 import { getDatasets, getProfiling } from "../../Hooks/Python";
 import Table from "../../components/Table";
 import Loading from "../../components/Loading";
 import React, { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
+import { useTranslation } from "react-i18next";
 
-function Profiling() {
-  const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
+const Profiling = () => {
+  const { theme } = useContext(ThemeContext);
+  const backgroundColor = theme === LIGHT_THEME ? "#F3F4F6" : "#2e2e48";
+  const color = theme === LIGHT_THEME ? "black" : "white";
+
   const [data, setdata] = useState([]);
   const [datasets, setdatasets] = useState([]);
   const [selectedDataset, setselectedDataset] = useState("");
   const [loading, setloading] = useState(false);
+  const { t, i18n } = useTranslation();
 
-  const startHnadler = async () => {
+  const startHnadler = async (event) => {
+    event.preventDefault();
     setloading(true);
-    const response = await getProfiling(selectedDataset);
-    setdata(response.result);
-    setloading(false);
+    getProfiling(selectedDataset).then((response) => {
+      // console.log(response);
+      setdata(response);
+      setloading(false);
+      // localStorage.setItem("profiling", JSON.stringify(response));
+    });
+    // setdata(JSON.parse(localStorage.getItem("profiling")));
+    // setloading(false);
   };
 
   const fetchData = async () => {
-    await getDatasets().then((response) => {
+    getDatasets().then((response) => {
       setdatasets(response);
     });
   };
+  // console.log(
+  //   JSON.parse(JSON.parse(localStorage.getItem("profiling"))[1]).dataframe_info
+  // );
 
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
-    <div className="min-h-min w-full">
-      <div className="h-[10vh] w-full flex items-center justify-center">
-        <select
-          className="select select-bordered w-full max-w-xs m-4 bg-white text-black"
-          onChange={(e) => {
-            setselectedDataset(e.target.value);
+    <div className="content-area">
+      <div className="main-container">
+        <h2 className={theme === LIGHT_THEME ? "text-black" : "text-white"}>
+          Data Preparation
+        </h2>
+        <p className={theme === LIGHT_THEME ? "text-black" : "text-white"}>
+          Transforming Raw Data into Actionable Insights.
+        </p>
+      </div>
+      <div className="flex items-center justify-items-center  m-4 gap-10 ">
+        <FormControl
+          fullWidth
+          style={{
+            width: "200px", // Adjust width to account for border
           }}
         >
-          <option disabled selected>
-            Sélectionner une Dataset
-          </option>
-          {datasets.map((dataset, index) => (
-            <option key={index} value={dataset}>
-              {dataset}
-            </option>
-          ))}
-        </select>
-        <button
+          <InputLabel id="demo-simple-select-label">Select Dataset</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Select Dataset"
+            onChange={(e) => {
+              setselectedDataset(e.target.value);
+            }}
+          >
+            {datasets.map((dataset, index) => (
+              <MenuItem key={index} value={dataset}>
+                {dataset}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Button
+          style={{
+            backgroundColor: "#475be8",
+            color: "#fff",
+            width: "200px",
+            height: "52px",
+          }}
           onClick={startHnadler}
-          className="btn bg-blue-600 dark:bg-blue-600 text-white hover:bg-blue-700 m-4"
         >
-          Start Profiling
-        </button>
+          Start profiling
+        </Button>
       </div>
       {loading ? (
         <div className="h-[90vh] w-full flex items-center justify-center">
           <Loading />
         </div>
       ) : data.length !== 0 ? (
-        <div className="min-h-min w-full p-[10vh]">
+        <div>
           <h1
-            className={`text-[5vh] ${
-              theme === LIGHT_THEME ? `text-black` : `text-white`
-            } mb-[3vh]`}
+            className={`${"text-xl"} ${"font-medium mb-3 "} ${
+              theme === LIGHT_THEME ? "text-black" : "text-white"
+            }`}
+          >
+            Data description
+          </h1>
+          {/* azoooooooooooo win kayan 10000 w 14 lzm nraj3ouha variable tatbadal 3la7sab dataset */}
+          <p
+            className={`${"text-xl opacity-75"}  ${
+              theme === LIGHT_THEME ? "text-black" : "text-white"
+            }`}
+          >
+            The dataset consists of 10 000 data points stored as rows with 14
+            features in columns
+          </p>
+          <Accordion
+            className="m-10 text-xl font-medium"
+            style={{ backgroundColor, color }}
+          >
+            <AccordionSummary
+              expandIcon={<ArrowDownwardIcon />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              <Typography>Features description</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography
+                className={`${"text-xl"} ${"font-medium mb-5 opacity-50"} ${
+                  theme === LIGHT_THEME ? "text-black" : "text-white"
+                }`}
+              >
+                UID: unique identifier;
+                <br />
+                Product ID: consisting of a letter L, M, or H variants and a
+                variant-specific serial number;
+                <br />
+                Air temperature [K]: generated using a random walk process later
+                normalized to a standard deviation of 2 K around 300 K;
+                <br />
+                Process temperature [K]: generated using a random walk process
+                normalized to a standard deviation of 1 K, added to the air
+                temperature plus 10 K; Rotational speed [rpm]: calculated from a
+                power of 2860 W, overlaid with a normally distributed noise;
+                <br /> Torque [Nm]: torque values are normally distributed
+                around 40 Nm with a standard deviation of 10 Nm and no negative
+                values;
+                <br />
+                Tool wear [min]: The quality variants H/M/L add 5/3/2 minutes of
+                tool wear to the used tool in the process;
+                <br />
+                Machine failure: label that indicates, whether the machine has
+                failed in this particular data point for any of the following
+                failure modes are true. The machine failure consists of five
+                independent failure modes: tool wear failure (TWF): the tool
+                will be replaced of fail at a randomly selected tool wear time
+                between 200 - 240 mins;
+                <br />
+                heat dissipation failure (HDF): heat dissipation causes a
+                process failure, if the difference between air- and process
+                temperature is below 8.6 K and the tools rotational speed is
+                below 1380 rpm;
+                <br />
+                power failure (PWF):the product of torque and rotational speed
+                (in rad/s) equals the power required for the process. If this
+                power is below 3500 W or above 9000 W, the process fails;
+                <br />
+                overstrain failure (OSF): if the product of tool wear and torque
+                exceeds 11,000 minNm for the L product variant (12,000 M, 13,000
+                H), the process fails due to overstrain;
+                <br />
+                random failures (RNF): each process has a chance of 0,1 % to
+                fail regardless of its process parameters. If at least one of
+                the above failure modes is true, the process fails and the
+                ’machine failure’ label is set to 1. It is therefore not
+                transparent to the machine learning method, which of the failure
+                modes has caused the process to fail.
+                <br />
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <h1
+            className={`${"text-xl"} ${"font-medium mb-3 "} ${
+              theme === LIGHT_THEME ? "text-black" : "text-white"
+            }`}
           >
             Loading data
           </h1>
-          <div className="overflow-x-auto">
-            <div className="min-h-min w-full flex items-center justify-center">
-              <Table jsonData={data[0].data} />
-            </div>
-            <h1
-              className={`text-[5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
+          <LoadingData TABLE_DATA={JSON.parse(data[0])} />
+          <Accordion className="mb-5 mt-5" style={{ backgroundColor, color }}>
+            <AccordionSummary
+              expandIcon={<ArrowDownwardIcon />}
+              aria-controls="panel1-content"
+              id="panel1-header"
             >
-              Data Preprocessing : Drop unwanted features
-            </h1>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              <b>Data preprocessing</b> is the process of transforming raw data
-              into an understandable format. It also makes the datasets more
-              complete and efficient to perform data analysis.
-            </p>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              Before going into more technical matters we deal with the two ID
-              columns as the model we will use could get confused by them, since
-              it is unrealistic to think that the failure of a machine depends
-              on its identifier. However, while UDI results in being a copy of
-              the dataframe index, the column Product ID is made up of an
-              initial letter followed by five numbers; there is a small chance
-              that an hidden pattern lies behind this structure. However, the
-              initial letter corresponds to the machine Type and the number
-              sequences define three intervals based on the same feature; this
-              allows to confirm that the Product ID column does not actually
-              carry any more information than the feature Type and it is legit
-              to drop it. The following histogram shows the number sequences:
-            </p>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <img src={fig1} />
-            </div>
-            <h1
-              className={`text-[5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh] mt-[3vh]`}
-            >
-              EDA(Exploratory Data Analysis)
-            </h1>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              <b>Exploratory Data Analysis (EDA)</b> is an approach to perform
-              initial investigations on data to discover patterns, spot
-              anomalies, test hypothesis and check assumptions with the help of
-              statistics and graphical representations.
-            </p>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <Table jsonData={data[0].data} />
-            </div>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              just check the descriptions for the numeric features. None missing
-              and on apparent outliers
-            </p>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <Table jsonData={data[1].data} />
-            </div>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              Taking a look at 'Failure Type' variable
-            </p>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <table className="table bg-gray-200 mb-[5vh] w-[70vh]">
-                {/* head */}
-                <thead>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+              <Typography> Metadata of The dataset :</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Metadata
+                row1={JSON.parse(data[1]).dataframe_info.split("\n")[5]}
+                row2={JSON.parse(data[1]).dataframe_info.split("\n")[6]}
+              />
+              <Typography>
+                <h1>
+                  {
+                    JSON.parse(data[1]).dataframe_info.split("\n")[
+                      JSON.parse(data[1]).dataframe_info.split("\n").length - 3
+                    ]
+                  }
+                </h1>
+                <h1>
+                  {
+                    JSON.parse(data[1]).dataframe_info.split("\n")[
+                      JSON.parse(data[1]).dataframe_info.split("\n").length - 2
+                    ]
+                  }
+                </h1>
+                <h1>
+                  Check for duplicate values: &nbsp;
+                  {JSON.stringify(JSON.parse(data[1]).duplicate_check)}
+                </h1>
+              </Typography>
+
+              <Typography>
+                The following histogram shows the number sequences:
+              </Typography>
+              <div className="min-h-min w-full flex items-center justify-center">
+                <img src={fig1} alt=" Image" className="h-[50vh] w-[90vh] " />
+              </div>
+            </AccordionDetails>
+          </Accordion>
+          <div className="mt-5" style={{ backgroundColor, color }}>
+            <Accordion style={{ backgroundColor, color }}>
+              <AccordionSummary
+                expandIcon={<ArrowDownwardIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <Typography>EDA(Exploratory Data Analysis) </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  It is an approach to perform initial investigations on data to
+                  discover patterns, spot anomalies, test hypothesis and check
+                  assumptions with the help of statistics and graphical
+                  representations
+                </Typography>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">Target</th>
-                    <th className="text-black">Failure Type</th>
-                    <th className="text-black">Count</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography> Target , Failure type ...</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div
+                      className="flex justify-center "
+                      style={{ width: "100%" }}
+                    >
+                      <Target TABLE_DATA={JSON.parse(data[3])} />
+                      <FailureType TABLE_DATA={JSON.parse(data[2])} />
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">0</th>
-                    <td className="text-black">No Failure</td>
-                    <td className="text-black">
-                      {JSON.parse(data[2].data)[0].count}
-                    </td>
-                  </tr>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography> Target anomalies :</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      In this section we observe the distribution of the target
+                      to find any imbalances and correct them before dividing
+                      the dataset.
+                    </Typography>
+                    <div
+                      className="flex justify-center "
+                      style={{ width: "100%" }}
+                    >
+                      <Anomalies data={JSON.parse(data[6])} />
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">1</th>
-                    <td className="text-black">Random Failures</td>
-                    <td className="text-black">
-                      {JSON.parse(data[2].data)[1].count}
-                    </td>
-                  </tr>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography>Data Visualisation </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Data Visualisation is also a part of EDA to represent
+                      categorical data with graphical representation.
+                    </Typography>
+                    <Accordion style={{ backgroundColor, color }}>
+                      <AccordionSummary
+                        expandIcon={<ArrowDownwardIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                      >
+                        <Typography> Product types</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
+                          The following pie chart shows the percentages of
+                          machines by Type:
+                        </Typography>
+                        <div className="min-h-min w-full flex items-center justify-center">
+                          <img
+                            src={fig2}
+                            alt=" Image"
+                            className="h-[50vh] w-[120vh] "
+                          />
+                        </div>
+                      </AccordionDetails>
+                    </Accordion>
+                    <Accordion style={{ backgroundColor, color }}>
+                      <AccordionSummary
+                        expandIcon={<ArrowDownwardIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                      >
+                        <Typography>Percentage of failure</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <div className="min-h-min w-full flex items-center justify-center">
+                          <img
+                            src={fig3}
+                            alt=" Image"
+                            className="h-[40vh] w-[50vh] "
+                          />
+                        </div>
+                        <Typography>
+                          The dataset is highly imbalanced where the machine
+                          failure consist only 3.5% of the whole dataset.
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                    <Accordion style={{ backgroundColor, color }}>
+                      <AccordionSummary
+                        expandIcon={<ArrowDownwardIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                      >
+                        <Typography>
+                          Percentage of failure wrt product type
+                        </Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <div className="min-h-min w-full flex items-center justify-center">
+                          <img
+                            src={fig4}
+                            alt=" Image"
+                            className="h-[50vh] w-[120vh] "
+                          />
+                        </div>
+                      </AccordionDetails>
+                    </Accordion>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">1</th>
-                    <td className="text-black">Heat Dissipation Failure</td>
-                    <td className="text-black">
-                      {JSON.parse(data[2].data)[2].count}
-                    </td>
-                  </tr>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography> Correlation</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="min-h-min w-full flex items-center justify-center">
+                      <img
+                        src={fig5}
+                        alt=" Image"
+                        className="h-[90vh] w-[140vh] "
+                      />
+                    </div>
+                    <Typography>
+                      Insights: -Torque and rotational speed are highly
+                      correlated. -Process temperature and air temperature are
+                      also highly correlated. We immediately see that failures
+                      occur for extreme values of some features, i.e., the
+                      machinery fails either for the lowest or largest values of
+                      torque and rotational speed. This is easily spotted in the
+                      graph since the green dots are far apart for those
+                      features. So, there is a range for normal conditions in
+                      which the machines operate, and above or under this range,
+                      they tend to fail.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">1</th>
-                    <td className="text-black">No Failure</td>
-                    <td className="text-black">
-                      {JSON.parse(data[2].data)[3].count}
-                    </td>
-                  </tr>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography>
+                      {" "}
+                      violin chart to see how torque and rotational speed
+                      behave:
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="min-h-min w-full flex items-center justify-center">
+                      <img
+                        src={fig6}
+                        alt=" Image"
+                        className="h-[50vh] w-[140vh] "
+                      />
+                    </div>
+                    <Typography>
+                      Insight: Regarding torque and rotational speed, it can be
+                      seen again that most failures are triggered for much lower
+                      or much higher values than the mean when not failing.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">1</th>
-                    <td className="text-black">Overstrain Failure</td>
-                    <td className="text-black">
-                      {JSON.parse(data[2].data)[4].count}
-                    </td>
-                  </tr>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography> Correllation Heatmap:</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="min-h-min w-full flex items-center justify-center">
+                      <img
+                        src={fig7}
+                        alt=" Image"
+                        className="h-[80vh] w-[110vh] "
+                      />
+                    </div>
+                    <Typography>
+                      As mentioned before, there is high correlation between
+                      process temperature and air temperature, and between
+                      rotational speed and torque.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">1</th>
-                    <td className="text-black">Power Failure</td>
-                    <td className="text-black">
-                      {JSON.parse(data[2].data)[5].count}
-                    </td>
-                  </tr>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography>
+                      {" "}
+                      Exploring features for each type of failure:
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="min-h-min w-full flex items-center justify-center">
+                      <img
+                        src={fig8}
+                        alt=" Image"
+                        className="h-[50vh] w-[140vh] "
+                      />
+                    </div>
+                    <Typography>
+                      Some insights: Power failure happens both for lower and
+                      higher rotational speed/torque. It is the type of failure
+                      with the highest rotational speed (over 2500rpm) and
+                      lowest torque (below around 15Nm). In other others, above
+                      and below these thresholds only power failures occur.
+                      Between torques 16Nm and 41Nm all failures are tool wear.
+                      Overstrain failures take place with torques ranging from
+                      around 47 and 68Nm) and rotational speeds from 1200 to
+                      1500rpm approximately. For heat dissipation failures, the
+                      torque range is smaller and the rotational speed range is
+                      bigger compared to overstrain failures.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">1</th>
-                    <td className="text-black">Tool Wear Failure </td>
-                    <td className="text-black">
-                      {JSON.parse(data[2].data)[6].count}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              We can see that the dataset is highly unbalanced. Let's further
-              check that with the 'target' variable:
-            </p>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <table className="table bg-gray-200 mb-[5vh] w-[50vh]">
-                {/* head */}
-                <thead>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography> Outliers inspection:</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      The goal of this section is to check if the dataset
+                      contains any outlier, which are usually misleading for
+                      machine learning algorithms. We begin by looking at a
+                      statistical report of the numerical features.
+                    </Typography>
+                    <div className="min-h-min w-full flex items-center justify-center">
+                      <img
+                        src={fig9}
+                        alt=" Image"
+                        className="h-[50vh] w-[140vh] "
+                      />
+                    </div>
+                    <Typography>
+                      From the boxplots we can see that 'Rotational speed' and
+                      'Torque' have outliers.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                {JSON.parse(data[5]).ratio * 100 < 10 && (
+                  <>
+                    <Accordion style={{ backgroundColor, color }}>
+                      <AccordionSummary
+                        expandIcon={<ArrowDownwardIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                      >
+                        <Typography> Resampling with SMOTE:</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
+                          Another important consideration regards the extremely
+                          low occurrence of machine failures among the entire
+                          dataset, which percentage is equal only to 3.31%.
+                          Moreover, a pie plot showing the occurrence of the
+                          causes involved for each failure reveals a further
+                          degree of imbalance.
+                        </Typography>
+                        <div className="min-h-min w-full flex items-center justify-center">
+                          <img
+                            src={fig10}
+                            alt=" Image"
+                            className="h-[60vh] w-[70vh] "
+                          />
+                        </div>
+                        <Typography>
+                          we use the SMOTE procedure to generate new samples,
+                          which is very much like slightly moving the data point
+                          in the direction of its neighbors. This way, the
+                          synthetic data point is not an exact copy of an
+                          existing data point but we can also be sure that it is
+                          also not too different from the known observations in
+                          the minority class.
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                    <Accordion style={{ backgroundColor, color }}>
+                      <AccordionSummary
+                        expandIcon={<ArrowDownwardIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                      >
+                        <Typography> Comparison after resampling:</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
+                          The result is described in the following pie charts.
+                        </Typography>
+                        <div className="min-h-min w-full flex items-center justify-center">
+                          <img
+                            src={fig11}
+                            alt=" Image"
+                            className="h-[60vh] w-[140vh] "
+                          />
+                        </div>
+                        <div className="min-h-min w-full flex items-center justify-center mb-[1vh] mt-[1vh]">
+                          <img
+                            src={fig12}
+                            alt=" Image"
+                            className="h-[60vh] w-[140vh] "
+                          />
+                        </div>
+                        <Typography>
+                          Finally, let’s look at how the distribution of
+                          features has changed.
+                        </Typography>
+                        <div className="min-h-min w-full flex items-center justify-center mb-[1vh] mt-[1vh]">
+                          <img
+                            src={fig13}
+                            alt=" Image"
+                            className="h-[60vh] w-[140vh] "
+                          />
+                        </div>
+                      </AccordionDetails>
+                    </Accordion>
+                  </>
+                )}
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black"></th>
-                    <th className="text-black">Target</th>
-                    <th className="text-black">Percentage %</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography> Features scaling and Encoding:</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      In order to make data exploitable for the algorithms we
+                      will run, we apply two transformations: <br />
+                      First, we apply a label encoding to the categorical
+                      columns, since Type is an ordinal feature and Cause must
+                      be represented in one column. <br /> The mapping follows
+                      this scheme: Type: L=0, M=1, H=2 <br /> Cause: Working=0,
+                      PWF=1, OSF=2, HDF=3, TWF=4 <br />
+                      Secondly we perform the scaling of the columns with
+                      StandardScaler. This is particularly useful for the good
+                      working of methods that rely on the metric space, such as
+                      PCA and KNN. It has been also verified that using
+                      StandardScaler leads to slightly better performances than
+                      using MinMaxScaler.
+                    </Typography>
+                    <FeaturesScaling TABLE_DATA={JSON.parse(data[4])} />
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">1</th>
-                    <td className="text-black">0</td>
-                    <td className="text-black">{data[3].data[0]}</td>
-                  </tr>
-                  <tr
-                    className={`${
-                      theme === LIGHT_THEME ? `text-black` : `text-white`
-                    }`}
+                    <Typography> PCA (Principal Component Analysis)</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      We run PCA to have a further way of displaying the data
+                      instead of making feature selection.
+                    </Typography>
+                    <div className="min-h-min w-full flex items-center justify-center mb-[1vh] mt-[1vh]">
+                      <img src={fig14} alt=" Image" className=" w-[140vh] " />
+                    </div>
+                  </AccordionDetails>
+                  <Typography>
+                    The bar plot of Principal Components weights makes easy to
+                    understand what they represent:
+                    <br /> PC1 is closely related to the two temperature data;
+                    <br /> PC2 can be identified with the machine power, which
+                    is the product of Rotational Speed and Torque;
+                    <br /> PC3 is identifiable with Tool Wear.
+                  </Typography>
+                </Accordion>
+                <Accordion style={{ backgroundColor, color }}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDownwardIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    <th className="text-black">2</th>
-                    <td className="text-black">1</td>
-                    <td className="text-black">{data[3].data[1]}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <h1
-              className={`text-[5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              Target anomalies
-            </h1>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <Table jsonData={data[4].data} />
-            </div>
-            <h1
-              className={`text-[5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              Data Visualisation
-            </h1>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              The following pie chart shows the percentages of machines by Type:
-            </p>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <img className="h-[50vh]" src={fig2} />
-            </div>
-            <h1
-              className={`text-[4vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh] mt-[3vh]`}
-            >
-              Percentage of failure
-            </h1>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <img className="h-[50vh]" src={fig3} />
-            </div>
-            <h1
-              className={`text-[4vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh] mt-[3vh]`}
-            >
-              Percentage of failure wrt product type
-            </h1>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <img className="h-[50vh]" src={fig4} />
-            </div>
-            <h1
-              className={`text-[4vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh] mt-[3vh]`}
-            >
-              Correlation
-            </h1>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <img className="h-[90vh] mb-[5vh]" src={fig5} />
-            </div>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              -Torque and rotational speed are highly correlated.
-            </p>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              -Process temperature and air temperature are also highly
-              correlated.
-            </p>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              We immediately see that failures occur for extreme values of some
-              features, i.e., the machinery fails either for the lowest or
-              largest values of torque and rotational speed. This is easily
-              spotted in the graph since the green dots are far apart for those
-              features. So, there is a range for normal conditions in which the
-              machines operate, and above or under this range, they tend to
-              fail.{" "}
-            </p>
-            <p
-              className={`text-[2.5vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              violin chart to see how torque and rotational speed behave:
-            </p>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <img className="h-[50vh] mb-[5vh]" src={fig6} />
-            </div>
-            <h1
-              className={`text-[4vh] ${
-                theme === LIGHT_THEME ? `text-black` : `text-white`
-              } mb-[3vh]`}
-            >
-              Correllation Heatmap
-            </h1>
-            <div className="min-h-min w-full flex items-center justify-center">
-              <img className="h-[80vh]" src={fig7} />
-            </div>
+                    <Typography>
+                      {" "}
+                      Correlation heatmap after data preprocessing :
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="min-h-min w-full flex items-center justify-center mb-[1vh] mt-[1vh]">
+                      <img
+                        src={fig16}
+                        alt=" Image"
+                        className="h-[60vh] w-[90vh]"
+                      />
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+              </AccordionDetails>
+            </Accordion>
           </div>
         </div>
       ) : null}
     </div>
   );
-}
+};
 
 export default Profiling;

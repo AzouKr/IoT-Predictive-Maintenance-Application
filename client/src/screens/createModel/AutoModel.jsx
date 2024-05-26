@@ -2,9 +2,11 @@ import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
 import { createAutoModel, getDatasets } from "../../Hooks/Python";
+import { useTranslation } from "react-i18next";
 
 function AutoModel() {
   const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
+  const { t, i18n } = useTranslation();
 
   const [datasets, setdatasets] = useState([]);
   const [selectedDataset, setselectedDataset] = useState("");
@@ -59,7 +61,7 @@ function AutoModel() {
               }}
             >
               <option disabled selected>
-                Sélectionner une Dataset
+                {t("label_profiling_selectDataset")}
               </option>
               {datasets.map((dataset, index) => (
                 <option key={index} value={dataset}>
@@ -73,7 +75,7 @@ function AutoModel() {
               theme === LIGHT_THEME ? `text-black` : `text-white`
             }`}
           >
-            Name your model :
+            {t("label_createModel_autoML_Name")}
           </h1>
           <div className="min-h-min w-full flex items-center justify-center mb-[3vh]">
             <input
@@ -90,7 +92,7 @@ function AutoModel() {
               theme === LIGHT_THEME ? `text-black` : `text-white`
             }`}
           >
-            Type :
+            {t("label_createModel_autoML_Type")}
           </h1>
           <div className="min-h-min w-full flex items-center justify-center">
             <select
@@ -100,7 +102,7 @@ function AutoModel() {
               className="select select-bordered w-full max-w-xs bg-white text-black"
             >
               <option disabled selected>
-                Binary or Multiclass
+                {t("label_createModel_autoML_Type_Or")}
               </option>
               <option value={0}>Binary</option>
               <option value={1}>Multiclass</option>
@@ -111,7 +113,7 @@ function AutoModel() {
               onClick={handleCreate}
               className="btn btn-wide bg-blue-600 dark:bg-blue-600 text-white hover:bg-blue-700"
             >
-              Create
+              {t("label_createModel_autoML_create")}
             </button>
           </div>
           {error ? (
@@ -130,7 +132,7 @@ function AutoModel() {
                     d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span>All fields must be filled</span>
+                <span>{t("label_empty_fields_error")}</span>
               </div>
             </div>
           ) : null}
@@ -142,14 +144,21 @@ function AutoModel() {
               theme === LIGHT_THEME ? `text-black` : `text-white`
             }`}
           >
-            The model is being created.
+            {t("label_creation_model_wait_text")}
           </h1>
           <h1
             className={`text-center text-[3vh] mr-[1vh] ${
               theme === LIGHT_THEME ? `text-black` : `text-white`
             }`}
           >
-            This may take some time please be patient
+            {t("label_creation_model_wait_text2")}
+          </h1>
+          <h1
+            className={`text-center text-[3vh] mr-[1vh] ${
+              theme === LIGHT_THEME ? `text-black` : `text-white`
+            }`}
+          >
+            {t("label_creation_model_wait_text3")}
           </h1>
           <div className="flex items-center justify-center mt-[1vh]">
             <span

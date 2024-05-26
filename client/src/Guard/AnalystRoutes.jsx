@@ -16,7 +16,10 @@ function AnalystRoutes({ children }) {
       setanalyst(false);
       setadmin(true);
     } else {
-      if (secureLocalStorage.getItem("auth")) {
+      if (
+        secureLocalStorage.getItem("auth") ||
+        secureLocalStorage.getItem("supervisor")
+      ) {
         setSpinner(false);
         setadmin(false);
         setanalyst(false);
@@ -39,7 +42,7 @@ function AnalystRoutes({ children }) {
   return spinner ? (
     <Spinner />
   ) : admin ? (
-    <Navigate to="/team" />
+    <Navigate to="/users" />
   ) : analyst ? (
     <Outlet />
   ) : auth ? (

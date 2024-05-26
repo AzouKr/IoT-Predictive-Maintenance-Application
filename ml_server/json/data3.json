@@ -1,0 +1,37 @@
+[
+    {
+        "Target": 0,
+        "Failure Type": "No Failure",
+        "count": 9643
+    },
+    {
+        "Target": 0,
+        "Failure Type": "Random Failures",
+        "count": 18
+    },
+    {
+        "Target": 1,
+        "Failure Type": "Heat Dissipation Failure",
+        "count": 112
+    },
+    {
+        "Target": 1,
+        "Failure Type": "No Failure",
+        "count": 9
+    },
+    {
+        "Target": 1,
+        "Failure Type": "Overstrain Failure",
+        "count": 78
+    },
+    {
+        "Target": 1,
+        "Failure Type": "Power Failure",
+        "count": 95
+    },
+    {
+        "Target": 1,
+        "Failure Type": "Tool Wear Failure",
+        "count": 45
+    }
+]

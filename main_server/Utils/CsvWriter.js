@@ -1,67 +1,36 @@
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
+const path = require("path");
+const fs = require("fs");
 
-// Create a CSV writer
-const csvWriterHm = createCsvWriter({
-  path: "./Data/hydro_machines.csv",
+// Function to get the current date in 'YYYY-MM-DD' format
+function getCurrentDate() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+// Ensure the directory exists
+const dir = path.join(__dirname, "../Data");
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
+
+// Create a CSV writer with a filename based on the current date
+const csvWriter = createCsvWriter({
+  path: path.join(dir, `records_${getCurrentDate()}.csv`),
   header: [
     { id: "timestamp", title: "Date" },
     { id: "id", title: "Machine ID" },
-    { id: "airtemperature", title: "Air Temperature" },
-    { id: "processtemperature", title: "Process Temperature" },
+    { id: "type", title: "Type" },
+    { id: "airTemperature", title: "Air Temperature" },
+    { id: "processTemperature", title: "Process Temperature" },
+    { id: "currentRotatinalSpeed", title: "Rotatinal Speed" },
+    { id: "torque", title: "Torque" },
     { id: "toolwear", title: "Tool wear" },
     { id: "failure", title: "Failure" },
   ],
 });
 
-const csvWriterRm = createCsvWriter({
-  path: "./Data/rotational_machines.csv",
-  header: [
-    { id: "timestamp", title: "Date" },
-    { id: "id", title: "Machine ID" },
-    { id: "airtemperature", title: "Air Temperature" },
-    { id: "processtemperature", title: "Process Temperature" },
-    { id: "rotationalspeed", title: "Rotational Speed" },
-    { id: "vibration1", title: "Vibration 1" },
-    { id: "vibration2", title: "Vibration 2" },
-    { id: "vibration3", title: "Vibration 3" },
-    { id: "vibration4", title: "Vibration 4" },
-    { id: "load", title: "Load" },
-    { id: "failure", title: "Failure" },
-  ],
-});
-
-const csvWriterMt = createCsvWriter({
-  path: "./Data/machines_tool.csv",
-  header: [
-    { id: "timestamp", title: "Date" },
-    { id: "id", title: "Machine ID" },
-    { id: "airtemperature", title: "Air Temperature" },
-    { id: "processtemperature", title: "Process Temperature" },
-    { id: "rotationalspeed", title: "Rotational Speed" },
-    { id: "vibration1", title: "Vibration 1" },
-    { id: "vibration2", title: "Vibration 2" },
-    { id: "vibration3", title: "Vibration 3" },
-    { id: "vibration4", title: "Vibration 4" },
-    { id: "load", title: "Load" },
-    { id: "toolwear", title: "Tool wear" },
-    { id: "failure", title: "Failure" },
-  ],
-});
-
-function csvWriterRM(machineRecord) {
-  csvWriterRm
-    .writeRecords([machineRecord])
-    .catch((error) => console.error("Error writing to CSV file:", error));
-}
-function csvWriterHM(machineRecord) {
-  csvWriterHm
-    .writeRecords([machineRecord])
-    .catch((error) => console.error("Error writing to CSV file:", error));
-}
-function csvWriterMT(machineRecord) {
-  csvWriterMt
-    .writeRecords([machineRecord])
-    .catch((error) => console.error("Error writing to CSV file:", error));
-}
-
-module.exports = { csvWriterRM, csvWriterHM, csvWriterMT };
+module.exports = csvWriter;

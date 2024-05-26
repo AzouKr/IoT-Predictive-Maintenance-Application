@@ -11,7 +11,10 @@ from IPython.display import Image
 import pandas as pd
 import joblib
 import shutil
-
+import datetime
+import glob
+import json
+from profiling import profilingProcess
 
 
 # Get the path of the project directory
@@ -149,6 +152,21 @@ def get_files():
     files = os.listdir(folder_path)
     return jsonify(files)
 
+
+# ****************************************
+# *** Endpoint to Get Dataset's name   ***
+# ****************************************
+@app.route('/files/infos', methods=['GET'])
+def get_files_infos():
+    folder_path = './dataset/'
+    files = os.listdir(folder_path)
+    file_info = []
+    for file_name in files:
+        file_path = os.path.join(folder_path, file_name)
+        creation_time = datetime.datetime.fromtimestamp(os.path.getctime(file_path))
+        file_info.append({'name': file_name, 'creation_date': creation_time.strftime('%Y-%m-%d %H:%M:%S')})
+    return jsonify(file_info)
+
 # ****************************************
 # ***** Endpoint to Get ML Models   *****
 # ****************************************
@@ -159,6 +177,95 @@ def get_models():
     return jsonify(files)
 
 # ****************************************
+# **** Endpoint to Get used ML Model  ****
+# ****************************************
+@app.route('/models/use', methods=['GET'])
+def get_used_model():
+    folder_path = './usedModel/'
+    files = os.listdir(folder_path)
+    return jsonify(files)
+
+# ****************************************
+# ***** Endpoint to use a ML Model   *****
+# ****************************************
+@app.route('/models/use', methods=['POST'])
+def use_models():
+    request_data = request.json 
+    modelname = request_data['name']
+    folder_path = './models/'
+    target_folder = './usedModel/'
+    # Remove the entire target folder if it exists
+    if os.path.exists(target_folder):
+        shutil.rmtree(target_folder)
+
+    # Recreate the empty target folder
+    os.makedirs(target_folder)
+
+    # Construct paths for source and destination
+    source_path = os.path.join(folder_path, modelname)
+    destination_path = os.path.join(target_folder, modelname)
+    
+    # Copy the model file to the destination folder
+    shutil.copy2(source_path, destination_path)
+    
+    return jsonify({'message': 'Model copied successfully.'}), 200
+
+# ****************************************
+# ***** Endpoint to delete a ML Model   *****
+# ****************************************
+@app.route('/models/delete', methods=['POST'])
+def delete_models():
+    request_data = request.json 
+    modelname = request_data['name']
+    folder_path = './models/'
+    folder_path_json = './metrics/'
+
+    MLModel = modelname+".joblib"
+    json0 = modelname+"0.json"
+    json1 = modelname+"1.json"
+
+    # Construct the path for the file to be deleted
+    file_path = os.path.join(folder_path, MLModel)
+    # Construct the path for the json0 file to be deleted
+    file_path1 = os.path.join(folder_path_json, json0)
+    # Construct the path for the json1 file to be deleted
+    file_path2 = os.path.join(folder_path_json, json1)
+
+    # Check if the file exists
+    if os.path.exists(file_path):
+        # Delete the file
+        os.remove(file_path)
+
+    # Check if the json file exists
+    if os.path.exists(folder_path_json):
+        # Delete the file
+        os.remove(file_path1)
+        os.remove(file_path2)
+
+    return jsonify({'message': f'Model "{modelname}" deleted successfully.'}), 200
+        
+# ****************************************
+# ***** Endpoint to delete a ML Model   *****
+# ****************************************
+@app.route('/dataset/delete', methods=['POST'])
+def delete_dataset():
+    request_data = request.json 
+    modelname = request_data['name']
+    folder_path = './dataset/'
+
+    # Construct the path for the file to be deleted
+    file_path = os.path.join(folder_path, modelname)
+
+    # Check if the file exists
+    if os.path.exists(file_path):
+        # Delete the file
+        os.remove(file_path)
+        return jsonify({'message': f'Dataset "{modelname}" deleted successfully.'}), 200
+    else:
+        return jsonify({'error': f'Dataset "{modelname}" not found.'}), 404
+        
+    
+# ****************************************
 # *** Endpoint to make the profiling   ***
 # ****************************************
 @app.route('/profiling', methods=['POST'])
@@ -166,19 +273,19 @@ def profiling():
     request_data = request.json 
     datasetName = request_data['data']
     response = []
-    for i in range(1, 9):
-        if i == 2:
-            # Ensure proper indentation
-            code = f"""
+    code = read_file_as_string(f"./profiling/code1.txt")
+    profiling_evaluate_code(code, response)
+
+    code = f"""
 # numbering the figures
-fig_number = 1
 raw_data = pd.read_csv('./dataset/{datasetName}')
 df = raw_data.copy()
 print(df.head(5))  # Printing the first 5 rows for verification
 """
-        else:
-            code = read_file_as_string(f"./profiling/code{i}.txt")
-        profiling_evaluate_code(code, response)  # Assuming this function appends to response
+    profiling_evaluate_code(code, response)
+    code = read_file_as_string(f"./profiling/code2.txt")
+    profiling_evaluate_code(code, response)
+    profilingProcess.execute_profiling(datasetName)
     # Source directory to copy
     source_dir = './figures'
     # Destination directory to copy to
@@ -189,7 +296,23 @@ print(df.head(5))  # Printing the first 5 rows for verification
         shutil.rmtree(destination_dir)
     # Copy the source directory and its contents to the destination directory
     shutil.copytree(source_dir, destination_dir)
-    return {'result': response}
+
+    json_folder = './json'  # Directory where your JSON files are located
+    json_files = ['data1.json', 'data2.json', 'data3.json', 'data4.json', 'data5.json', 'data6.json', 'data7.json']
+    # Array to hold the JSON strings
+    json_strings = []
+    
+    for filename in json_files:
+        filepath = os.path.join(json_folder, filename)
+        with open(filepath, 'r') as f:
+            # Read the JSON content
+            json_content = json.load(f)
+            # Convert the JSON content to a string
+            json_str = json.dumps(json_content)
+            # Append the JSON string to the list
+            json_strings.append(json_str)
+
+    return jsonify(json_strings)
 
 
 
@@ -236,6 +359,9 @@ df.head(2)
         print("Saving Models")
         print("************************************")
         code = f"""
+
+metrics_val.to_json("./metrics/Binary_'+model_name+f'_{modeName}0.json")
+metrics_test.to_json("./metrics/Binary_'+model_name+f'_{modeName}1.json")
 import pandas as pd
 import joblib
 
@@ -253,7 +379,7 @@ best_algorithm = choose_best_algorithm(metrics_test)
 for i, fit_model in enumerate(fitted_models_binary):
     model_name = clf_str[i]
     if model_name == best_algorithm:
-        joblib.dump(fit_model, './models/'+model_name+f'_{modeName}.joblib')
+        joblib.dump(fit_model, './models/Binary_'+model_name+f'_{modeName}.joblib')
 """
         evaluate_code(code)
     else:
@@ -270,6 +396,10 @@ for i, fit_model in enumerate(fitted_models_binary):
         print("Saving Models")
         print("************************************")
         code = f"""
+
+metrics_val.to_json("./metrics/Multi_'+model_name+f'_{modeName}0.json")
+metrics_test.to_json("./metrics/Multi_'+model_name+f'_{modeName}1.json")
+
 import pandas as pd
 import joblib
 
@@ -287,7 +417,7 @@ best_algorithm = choose_best_algorithm(metrics_test)
 for i, fit_model in enumerate(fitted_models_multi):
     model_name = clf_str[i]
     if model_name == best_algorithm:
-        joblib.dump(fit_model, './models/'+model_name+f'_{modeName}.joblib')
+        joblib.dump(fit_model, './models/Multi_'+model_name+f'_{modeName}.joblib')
 """
         evaluate_code(code)
 
@@ -335,22 +465,31 @@ df.head(2)
         code = f"""
 argument = "{modelName}"
 
+knn = KNeighborsClassifier()
+svc = SVC()
+rfc = RandomForestClassifier()
+xgb = XGBClassifier()
+
 if argument == 'knn':
-    clf = KNeighborsClassifier()
-    clf_str = "KNN"
+    clf = [knn]
+    clf_str = ["KNN"]
     clf_params = {params}
+    params = pd.Series(data=[clf_params],index=clf)
 elif argument == 'svc':
-    clf = SVC()
-    clf_str = "SVC"
+    clf = [svc]
+    clf_str =["SVC"]
     clf_params = {params}
+    params = pd.Series(data=[clf_params],index=clf)
 elif argument == 'rfc':
-    clf = RandomForestClassifier()
-    clf_str = "RFC"
+    clf = [rfc]
+    clf_str = ["RFC"]
     clf_params = {params}
+    params = pd.Series(data=[clf_params],index=clf)
 else:
-    clf = XGBClassifier()
-    clf_str = "XGB"
+    clf = [xgb]
+    clf_str = ["XGB"]
     clf_params = {params}
+    params = pd.Series(data=[clf_params],index=clf)
 """
         evaluate_code(code)
         code = read_file_as_string("./code/manual/code25.txt")
@@ -360,13 +499,19 @@ else:
         print("************************************")
         print("Saving Models")
         print("************************************")
+        UppermodelName = modelName.upper()
         code = f"""
+
+
+metrics_val.to_json('./metrics/Binary_'+f'{UppermodelName}'+f'_{modeName}0.json')
+metrics_test.to_json('./metrics/Binary_'+f'{UppermodelName}'+f'_{modeName}1.json')
+
 import pandas as pd
 import joblib
 
 
 for i, fit_model in enumerate(fitted_models_binary):
-    joblib.dump(fit_model, './models/'+clf_str+f'_{modeName}.joblib')
+    joblib.dump(fit_model, './models/Binary_'+clf_str[0]+f'_{modeName}.joblib')
         
 """
         evaluate_code(code)
@@ -377,24 +522,33 @@ for i, fit_model in enumerate(fitted_models_binary):
         print("Start training Models  (MultiClass)")
         print("************************************")
         code = f"""
-argument = f"{modelName}"
+argument = "{modelName}"
+
+knn = KNeighborsClassifier()
+svc = SVC()
+rfc = RandomForestClassifier()
+xgb = XGBClassifier()
 
 if argument == 'knn':
-    clf = KNeighborsClassifier()
-    clf_str = "KNN"
+    clf = [knn]
+    clf_str = ["KNN"]
     clf_params = {params}
+    params = pd.Series(data=[clf_params],index=clf)
 elif argument == 'svc':
-    clf = SVC()
-    clf_str = "SVC"
+    clf = [svc]
+    clf_str =["SVC"]
     clf_params = {params}
+    params = pd.Series(data=[clf_params],index=clf)
 elif argument == 'rfc':
-    clf = RandomForestClassifier()
-    clf_str = "RFC"
+    clf = [rfc]
+    clf_str = ["RFC"]
     clf_params = {params}
+    params = pd.Series(data=[clf_params],index=clf)
 else:
-    clf = XGBClassifier()
-    clf_str = "XGB"
+    clf = [xgb]
+    clf_str = ["XGB"]
     clf_params = {params}
+    params = pd.Series(data=[clf_params],index=clf)
 """
         evaluate_code(code)
         code = read_file_as_string("./code/manual/code28.txt")
@@ -404,17 +558,23 @@ else:
         print("************************************")
         print("Saving Models")
         print("************************************")
+        UppermodelName = modelName.upper()
         code = f"""
+
+metrics_val.to_json('./metrics/Multi_'+f'{UppermodelName}'+f'_{modeName}0.json')
+metrics_test.to_json('./metrics/Multi_'+f'{UppermodelName}'+f'_{modeName}1.json')
+
+
 import pandas as pd
 import joblib
 
 for i, fit_model in enumerate(fitted_models_multi):
-    joblib.dump(fit_model, './models/'+clf_str+f'_{modeName}.joblib')
+    joblib.dump(fit_model, './models/Multi_'+clf_str[0]+f'_{modeName}.joblib')
 """
-        evaluate_code(code)
+        evaluate_code(code)                  
 
-
-    return jsonify({'result': True})
+    # Return the JSON data
+    return jsonify("DONE")
 
 
 def extract_import_lines_from_files():
@@ -444,9 +604,17 @@ def predict():
     rotational_speed = data_list[3]  # Provide the rotational speed value
     torque = data_list[4]  # Provide the torque value
     tool_wear = data_list[5]  # Provide the tool wear value
-    loaded_model = joblib.load('./models/XGB.joblib')
+    folder_path = './usedModel/'
+    source_files = glob.glob(os.path.join(folder_path, '*.joblib'))
+    source_path = source_files[0]
+    loaded_model = joblib.load(source_path)
+    filename = os.path.basename(source_path)
+    if filename.startswith('Binary_'):
+        model_type = 0
+    else:
+        model_type = 1
     predictions = loaded_model.predict([[type,air_temp, process_temp, rotational_speed, torque, tool_wear]])
-    return jsonify({'result': predictions.tolist()})
+    return jsonify({'result': predictions.tolist(), 'type': model_type})
 
 # ****************************************
 # ***** Endpoint to GET Dataset CSV  ****
@@ -470,6 +638,52 @@ def download_csv():
     
     # Return the CSV file as a response
     return csv_data, 200, headers
+
+# ****************************************
+# *****   Endpoint to GET Metrics    *****
+# ****************************************
+@app.route('/metrics', methods=['POST'])
+def get_metrics():
+    directory = './metrics'
+    request_data = request.json 
+    name = request_data['name']
+    # List all files in the directory
+    files = os.listdir(directory)
+
+    # Initialize an empty dictionary to store the JSON data
+    json_data = {}
+
+    # Iterate through each file
+    for file_name in files:
+        # Assuming all files in the directory are JSON files
+        if file_name == name+"0.json" or file_name == name+"1.json":
+            with open(os.path.join(directory, file_name), 'r') as file:
+                # Read the JSON data from the file
+                data = json.load(file)
+                
+                # Check if data is a dictionary
+                if isinstance(data, dict):
+                    # Get the first key and its value
+                    first_key = next(iter(data.keys()))  # Get the first key
+                    value = data[first_key]
+                    
+                    # Check if the value is also a dictionary
+                    if isinstance(value, dict):
+                        # Create a new dictionary with the first key's content and rename it to 'key'
+                        new_data = {'key': value}
+                        # Get the filename without extension
+                        filename_without_extension = os.path.splitext(file_name)[0]
+                        # Store the modified JSON data in the dictionary with the filename (without extension) as the key
+                        json_data[filename_without_extension] = new_data
+                    else:
+                        # Handle case where the value is not a dictionary
+                        print(f"Skipping file {file_name}: first key's value is not a dictionary")
+                else:
+                    # If data is not a dictionary, skip the file or handle it as needed
+                    print(f"Skipping file {file_name}: not a JSON object")
+
+    # Return the JSON data
+    return jsonify(json_data)
 
 
 if __name__ == '__main__':

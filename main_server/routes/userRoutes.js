@@ -2,10 +2,12 @@ const express = require("express");
 const {
   fetchAllUsers,
   modifyUser,
-  deleteUser,
+  desactivateUser,
   fetchUserById,
 } = require("../Utils/database");
 const authenticateToken = require("../Middleware/authMiddleware");
+const sendEmail = require("../Utils/nodeMailer");
+const taskEmail = require("../Utils/emails/taskEmail");
 const router = express.Router();
 
 router.get(
@@ -60,11 +62,17 @@ router.post(
     authenticateToken(req, res, next, ["admin"]);
   },
   async (req, res) => {
-    const id = req.body;
-    id.forEach((ids) => {
-      deleteUser(ids)
+    const emails = req.body;
+    emails.forEach((email) => {
+      desactivateUser(email)
         .then((response) => {
-          console.log(response);
+          deleteTeamMember(email)
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((err) => {
+              res.status(400).json(err);
+            });
         })
         .catch((error) => {
           res.status(400).json(error);
@@ -73,19 +81,14 @@ router.post(
   }
 );
 
-router.get(
-  "/healtcheck",
-  (req, res, next) => {
-    authenticateToken(req, res, next, ["admin"]);
-  },
-  async (req, res) => {
-    try {
-      const users = req.user;
-      res.status(200).json(users);
-    } catch (error) {
-      res.status(400).json(error);
-    }
+router.post("/healtcheck", async (req, res) => {
+  try {
+    const body = taskEmail();
+    sendEmail("iamazouu@gmail.com", "test", body);
+    res.status(200).json("done");
+  } catch (error) {
+    res.status(400).json(error);
   }
-);
+});
 
 module.exports = router;

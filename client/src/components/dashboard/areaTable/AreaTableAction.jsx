@@ -39,16 +39,6 @@ const AreaTableAction = () => {
                   View
                 </Link>
               </li>
-              <li className="dropdown-menu-item">
-                <Link to="/view" className="dropdown-menu-link">
-                  Edit
-                </Link>
-              </li>
-              <li className="dropdown-menu-item">
-                <Link to="/view" className="dropdown-menu-link">
-                  Delete
-                </Link>
-              </li>
             </ul>
           </div>
         )}

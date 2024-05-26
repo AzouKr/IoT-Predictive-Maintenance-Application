@@ -3,6 +3,8 @@ import App from "./App.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { SidebarProvider } from "./context/SidebarContext.jsx";
 
+import "./i18n";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ThemeProvider>
     <SidebarProvider>

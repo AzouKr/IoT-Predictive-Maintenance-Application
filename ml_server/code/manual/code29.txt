@@ -2,5 +2,8 @@
 
 task = 'multi_class'
 
+y_pred_val, cm_dict_val, metrics_val = predict_and_evaluate(
+    fitted_models_multi,X_val,y_val,clf_str,task)
 y_pred_test, cm_dict_test, metrics_test = predict_and_evaluate(
     fitted_models_multi,X_test,y_test,clf_str,task)
+

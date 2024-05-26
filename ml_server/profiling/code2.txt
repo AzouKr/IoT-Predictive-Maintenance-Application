@@ -1,5 +1,19 @@
-# numbering the figures
-fig_number = 1
-raw_data = pd.read_csv('./dataset/predictive_maintenance.csv')
-df = raw_data.copy()
-df.head(5)
+print('Features non-null values and data type:')
+df.info()  #information about the DataFrame
+n = df.shape[0]
+print('Check for duplicate values:',
+      df['Product ID'].unique().shape[0]!=n)
+
+df.replace("?",np.nan,inplace=True)
+
+# Remove first character and set to numeric dtype
+if df['Product ID'].dtype != 'object':
+    df['Product ID'] = df['Product ID'].astype(str)
+df['Product ID'] = df['Product ID'].str.extract('(\d+)', expand=False)
+df['Product ID'] = pd.to_numeric(df['Product ID'])
+# Histogram of ProductID
+sns.histplot(data=df, x='Product ID', hue='Type')
+
+fig_path = "./figures/fig1.png"
+plt.savefig(fig_path)
+plt.close()

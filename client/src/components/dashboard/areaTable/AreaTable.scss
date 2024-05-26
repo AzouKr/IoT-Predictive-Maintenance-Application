@@ -35,7 +35,7 @@
     }
 
     table {
-      min-width: 900px;
+      min-width: 300px;
       width: 100%;
       border-collapse: collapse;
       color: var(--text-color-inverted);
@@ -75,14 +75,13 @@
           width: 8px;
           height: 8px;
           border-radius: 100%;
-
-          &.dot-Danger {
+          &.dot-enDanger {
             background-color: var(--orange-color);
           }
-          &.dot-Panne {
+          &.dot-enPanne {
             background-color: var(--red-color);
           }
-          &.dot-Marche {
+          &.dot-enMarche {
             background-color: var(--green-color);
           }
         }

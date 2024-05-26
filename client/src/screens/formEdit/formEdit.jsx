@@ -1,39 +1,46 @@
-import { AreaTop } from "../../components";
-import { Box, Button, TextField } from "@mui/material";
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  Box,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-// import { Select, MenuItem } from "@mui/material";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
-import { Select, MenuItem, InputLabel } from "@mui/material";
-import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { AreaTop } from "../../components";
 import { editUser, getUserById } from "../../Hooks/Users";
-import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const FormEdit = () => {
   const { id } = useParams();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
-  const [name, setname] = useState("");
-  const [email, setemail] = useState("");
-  const [phone, setphone] = useState("");
-  const [password, setpassword] = useState("");
-  const [role, setrole] = useState("");
-  const [city, setcity] = useState("");
-  const [age, setage] = useState(0);
+  const { theme } = useContext(ThemeContext);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+  const [city, setCity] = useState("");
+  const [age, setAge] = useState(0);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const fetchData = async () => {
     await getUserById(id).then((response) => {
-      setname(response.data[0].name);
-      setemail(response.data[0].email);
-      setpassword(response.data[0].password);
-      setphone(response.data[0].phone);
-      setage(response.data[0].age);
-      setcity(response.data[0].city);
-      setrole(response.data[0].role);
+      const userData = response.data[0];
+      setName(userData.name);
+      setEmail(userData.email);
+      setPassword(userData.password);
+      setPhone(userData.phone);
+      setAge(userData.age);
+      setCity(userData.city);
+      setRole(userData.role);
     });
   };
 
@@ -43,14 +50,14 @@ const FormEdit = () => {
 
   const handleFormSubmit = async () => {
     const data = {
-      id: id,
-      name: name,
-      password: password,
-      email: email,
-      phone: phone,
-      role: role,
-      age: age,
-      city: city,
+      id,
+      name,
+      password,
+      email,
+      phone,
+      role,
+      age,
+      city,
     };
     await editUser(data)
       .then((response) => {
@@ -71,7 +78,11 @@ const FormEdit = () => {
     <div className="content-area">
       <AreaTop />
       <Box m="20px" className={theme === LIGHT_THEME ? "" : "dark-mode"}>
-        <Formik onSubmit={handleFormSubmit} validationSchema={checkoutSchema}>
+        <Formik
+          onSubmit={handleFormSubmit}
+          initialValues={{ name, email, phone, password, role, city, age }}
+          validationSchema={checkoutSchema}
+        >
           {({
             values,
             errors,
@@ -93,7 +104,7 @@ const FormEdit = () => {
                   fullWidth
                   variant="filled"
                   type="text"
-                  label="Name"
+                  label={t("label_form_name")}
                   InputLabelProps={{
                     sx: {
                       color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
@@ -105,20 +116,17 @@ const FormEdit = () => {
                     },
                   }}
                   onBlur={handleBlur}
-                  onChange={(e) => {
-                    setname(e.target.value);
-                  }}
+                  onChange={(e) => setName(e.target.value)}
                   value={name}
                   name="name"
-                  error={!!touched.firstName && !!errors.firstName}
-                  helperText={touched.firstName && errors.firstName}
+                  helperText={touched.name && errors.name}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
                   fullWidth
                   variant="filled"
                   type="text"
-                  label="Email"
+                  label={t("label_form_email")}
                   InputLabelProps={{
                     sx: {
                       color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
@@ -130,12 +138,9 @@ const FormEdit = () => {
                     },
                   }}
                   onBlur={handleBlur}
-                  onChange={(e) => {
-                    setemail(e.target.value);
-                  }}
+                  onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   name="email"
-                  error={!!touched.email && !!errors.email}
                   helperText={touched.email && errors.email}
                   sx={{ gridColumn: "span 4" }}
                 />
@@ -143,7 +148,7 @@ const FormEdit = () => {
                   fullWidth
                   variant="filled"
                   type="text"
-                  label="Phone Number"
+                  label={t("label_form_phone")}
                   InputLabelProps={{
                     sx: {
                       color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
@@ -155,20 +160,17 @@ const FormEdit = () => {
                     },
                   }}
                   onBlur={handleBlur}
-                  onChange={(e) => {
-                    setphone(e.target.value);
-                  }}
+                  onChange={(e) => setPhone(e.target.value)}
                   value={phone}
                   name="phone"
-                  error={!!touched.contact && !!errors.contact}
-                  helperText={touched.contact && errors.contact}
+                  helperText={touched.phone && errors.phone}
                   sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
                   fullWidth
                   variant="filled"
                   type="number"
-                  label="Age"
+                  label={t("label_form_age")}
                   InputLabelProps={{
                     sx: {
                       color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
@@ -180,20 +182,17 @@ const FormEdit = () => {
                     },
                   }}
                   onBlur={handleBlur}
-                  onChange={(e) => {
-                    setage(e.target.value);
-                  }}
+                  onChange={(e) => setAge(e.target.value)}
                   value={age}
                   name="age"
-                  error={!!touched.address1 && !!errors.address1}
-                  helperText={touched.address1 && errors.address1}
+                  helperText={touched.age && errors.age}
                   sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
                   fullWidth
                   variant="filled"
-                  type="password" // Change type to "password"
-                  label="Password" // Change label to "Password"
+                  type="password"
+                  label={t("label_form_password")}
                   InputLabelProps={{
                     sx: {
                       color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
@@ -205,19 +204,17 @@ const FormEdit = () => {
                     },
                   }}
                   onBlur={handleBlur}
-                  onChange={(e) => {
-                    setpassword(e.target.value);
-                  }}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                   name="password"
-                  error={!!touched.password && !!errors.password}
                   helperText={touched.password && errors.password}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
                   fullWidth
                   variant="filled"
-                  type="text" // Change type to "password"
-                  label="City" // Change label to "Password"
+                  type="text"
+                  label={t("label_form_city")}
                   InputLabelProps={{
                     sx: {
                       color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
@@ -229,13 +226,10 @@ const FormEdit = () => {
                     },
                   }}
                   onBlur={handleBlur}
-                  onChange={(e) => {
-                    setcity(e.target.value);
-                  }}
+                  onChange={(e) => setCity(e.target.value)}
                   value={city}
                   name="city"
-                  error={!!touched.password && !!errors.password}
-                  helperText={touched.password && errors.password}
+                  helperText={touched.city && errors.city}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <div>
@@ -245,19 +239,16 @@ const FormEdit = () => {
                       color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
                     }}
                   >
-                    Role
+                    {t("label_form_role")}
                   </InputLabel>
                   <Select
                     fullWidth
                     variant="filled"
                     labelId="role-label"
                     onBlur={handleBlur}
-                    onChange={(e) => {
-                      setrole(e.target.value);
-                    }}
+                    onChange={(e) => setRole(e.target.value)}
                     value={role}
                     name="role"
-                    error={!!touched.role && !!errors.role}
                     sx={{
                       color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
                       gridColumn: "span 4",
@@ -276,7 +267,7 @@ const FormEdit = () => {
                   color="secondary"
                   variant="contained"
                 >
-                  Edit User
+                  {t("label_form_update")}
                 </Button>
               </Box>
             </form>
@@ -287,20 +278,20 @@ const FormEdit = () => {
   );
 };
 
-// Validation schema and initial values
 const phoneRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
+  name: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
-  contact: yup
+  phone: yup
     .string()
     .matches(phoneRegExp, "Phone number is not valid")
     .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
+  age: yup.number().required("required"),
+  password: yup.string().required("required"),
+  city: yup.string().required("required"),
+  role: yup.string().required("required"),
 });
 
 export default FormEdit;

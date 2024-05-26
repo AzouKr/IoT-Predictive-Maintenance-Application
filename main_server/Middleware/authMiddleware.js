@@ -3,11 +3,10 @@ const jwt = require("jsonwebtoken");
 const secretKey = require("../config/default");
 
 async function authenticateToken(req, res, next, role) {
-  const token = req.header("cookie");
+  var token = req.cookies.accessToken;
   if (!token) return res.status(401).send("Access Denied");
-  const accessToken = token.slice(90);
   try {
-    jwt.verify(accessToken, secretKey, (err, user) => {
+    jwt.verify(token, secretKey, (err, user) => {
       if (err) {
         return res.sendStatus(403); // Forbidden
       }

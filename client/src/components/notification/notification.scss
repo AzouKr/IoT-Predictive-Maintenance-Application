@@ -1,0 +1,50 @@
+.notification {
+    position: relative;
+    width: fit-content;
+    margin-top: 5px;
+  }
+  
+  .iconSection {
+    position: relative;
+    width: fit-content;
+    display: inline-flex;
+  }
+  
+  .notificationBar {
+    display: block;
+    box-shadow: 2px 3px 17px -3px #8888888c;
+    padding: 15px;
+    right: 0;
+    left: 100;
+    z-index: 1;
+    background: #f4f4f4;
+    color: initial;
+    max-height: 300px; // Set max-height for scrolling
+    overflow-y: auto; // Enable vertical scrolling
+  }
+  
+  .notification:hover .notificationBar {
+    display: block;
+  }
+  
+  .lineItems {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .iconBadge {
+    background: red;
+    width: 20px;
+    display: block;
+    text-align: center;
+    height: 20px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 11px;
+    line-height: 15px;
+    position: absolute;
+    right: 0;
+    bottom: 13px;
+    left: 20px;
+  }
+  

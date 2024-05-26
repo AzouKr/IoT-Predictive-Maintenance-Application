@@ -7,9 +7,12 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { addDays } from "date-fns";
 import { DateRange } from "react-date-range";
 import { Link, useLocation } from "react-router-dom";
+import Notification from "../../notification/Notification";
 
 const AreaTop = () => {
   const { openSidebar } = useContext(SidebarContext);
+
+  const [listItems, setListItems] = useState([]);
 
   const [state, setState] = useState([
     {
@@ -22,17 +25,22 @@ const AreaTop = () => {
   // Function to get page title based on location
   const getPageTitle = () => {
     switch (location.pathname) {
-      case "/form":
-        return "Creat User";
-      case "/team":
-        return "Manage Team";
-      case "/contacts":
-        return "Contacts Information";
+      case "/":
+        return "Dashboard";
+      case "/profiling":
+        return "Profiling-Exploratory data analysis";
+      case "/models":
+        return "Bibliothèque de modèle";
+      case "/datasets":
+        return "Listes des Datasets";
+      case "/createmodel":
+        return "Créer un modèle";
       case "/calendar":
         return "Calendar";
+      case "/dataviewer":
+        return "Affichage du dataset";
       case "/faq":
         return "FAQ";
-      // Add cases for other pages if needed
       default:
         return "Unknown Page";
     }
@@ -58,6 +66,11 @@ const AreaTop = () => {
     };
   }, []);
 
+  // Function to clear all notifications
+  const handleClearAll = () => {
+    setListItems([]);
+  };
+
   return (
     <section className="content-area-top">
       <div className="area-top-l">
@@ -69,6 +82,26 @@ const AreaTop = () => {
           <MdOutlineMenu size={24} />
         </button>
         <h2 className="area-top-title">{getPageTitle()}</h2>
+      </div>
+      <div className="area-top-r flex gap-5">
+        <div>
+          <Notification onClearAll={handleClearAll} />
+        </div>
+        <div
+          ref={dateRangeRef}
+          className={`date-range-wrapper ${
+            !showDatePicker ? "hide-date-range" : ""
+          }`}
+          onClick={handleInputClick}
+        >
+          <DateRange
+            editableDateInputs={true}
+            onChange={(item) => setState([item.selection])}
+            moveRangeOnFirstSelection={false}
+            ranges={state}
+            showMonthAndYearPickers={false}
+          />
+        </div>
       </div>
     </section>
   );

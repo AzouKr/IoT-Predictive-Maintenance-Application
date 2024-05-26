@@ -1,3 +1,69 @@
-.create_model_box {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Adjust the values for the shadow effect */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.5;
+}
+
+/****************/
+.main-container {
+  width: 70vw;
+  margin: 0 auto;
+  padding: 1px 0;
+}
+.main-container > h2 {
+  text-align: center;
+  font-size: 28px;
+}
+.main-container > p {
+  font-weight: 300;
+  padding: 10px 0;
+  opacity: 0.7;
+  text-align: center;
+}
+.post {
+  box-shadow: 0px 15px 30px -12px rgba(10, 50, 210, 0.64);
+  height: fit-content;
+  width: 90vh;
+  padding: 20px;
+}
+.post p {
+  opacity: 0.7;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.post h3 {
+  // opacity: 0.9;
+  font-size: 17px;
+  line-height: 1.8;
+}
+.post h2 {
+  text-align: center;
+  font-size: 20px;
+  border-bottom: 1px solid #3210b9;
+  margin-bottom: 10px;
+}
+
+.btn {
+  border: none;
+  padding: 8px 15px;
+  display: block;
+  margin: 5px auto;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  border: 1px solid #3210b9;
+  background: transparent;
+  margin-bottom: 30px;
+  color: #3d59a5;
+}
+
+.btn:hover {
+  background: #475be8;
+  color: #fff;
 }

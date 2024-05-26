@@ -1,10 +1,18 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
-import { createManualModel, getDatasets } from "../../Hooks/Python";
+import {
+  createManualModel,
+  deleteModel,
+  getDatasets,
+} from "../../Hooks/Python";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 function ManualModel() {
   const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   const [datasets, setdatasets] = useState([]);
   const [selectedDataset, setselectedDataset] = useState("");
@@ -13,6 +21,8 @@ function ManualModel() {
   const [type, settype] = useState(0);
   const [error, seterror] = useState(false);
   const [loading, setloading] = useState(false);
+  const [validation, setvalidation] = useState(false);
+  const [values, setvalues] = useState();
 
   const [n_neighbors, setn_neighbors] = useState(0);
   const [c, setc] = useState(0);
@@ -62,8 +72,31 @@ function ManualModel() {
       }
       createManualModel(name, selectedDataset, newtype, selectedAlgo, params)
         .then((res) => {
-          setloading(false);
-          console.log(res);
+          setvalidation(true);
+          var jsonData = JSON.parse(res);
+          const combinedData = [
+            {
+              metric: "ACC",
+              file1: jsonData.metrics_val.key.ACC,
+              file2: jsonData.metrics_test.key.ACC,
+            },
+            {
+              metric: "AUC",
+              file1: jsonData.metrics_val.key.AUC,
+              file2: jsonData.metrics_test.key.AUC,
+            },
+            {
+              metric: "F1",
+              file1: jsonData.metrics_val.key.F1,
+              file2: jsonData.metrics_test.key.F1,
+            },
+            {
+              metric: "F2",
+              file1: jsonData.metrics_val.key.F2,
+              file2: jsonData.metrics_test.key.F2,
+            },
+          ];
+          setvalues(combinedData);
         })
         .catch((err) => {
           console.log(err);
@@ -73,6 +106,21 @@ function ManualModel() {
     }
   };
 
+  const handleCreationCancle = async () => {
+    const data = {
+      name: selectedAlgo.toUpperCase() + "_" + name + ".joblib",
+    };
+    await deleteModel(data)
+      .then((res) => {
+        setTimeout(() => {
+          navigate("/createmodel");
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="h-[80vh] w-full ">
       {!loading ? (
@@ -80,8 +128,8 @@ function ManualModel() {
           <div
             className={
               theme === LIGHT_THEME
-                ? "min-h-min min-w-min p-[2vh]  flex border-[0.4vh] rounded-[2vh] border-black"
-                : "min-h-min min-w-min p-[2vh] flex border-[0.4vh] rounded-[2vh] border-white"
+                ? "min-h-min min-w-min p-[2vh]  flex "
+                : "min-h-min min-w-min p-[2vh] flex"
             }
           >
             <div>
@@ -93,7 +141,7 @@ function ManualModel() {
                   }}
                 >
                   <option disabled selected>
-                    Sélectionner une Dataset
+                    {t("label_profiling_selectDataset")}
                   </option>
                   {datasets.map((dataset, index) => (
                     <option key={index} value={dataset}>
@@ -107,7 +155,7 @@ function ManualModel() {
                   theme === LIGHT_THEME ? `text-black` : `text-white`
                 }`}
               >
-                Name your model :
+                {t("label_createModel_autoML_Name")}
               </h1>
               <div className="min-h-min w-full flex items-center justify-center mb-[3vh]">
                 <input
@@ -124,7 +172,7 @@ function ManualModel() {
                   theme === LIGHT_THEME ? `text-black` : `text-white`
                 }`}
               >
-                Type :
+                {t("label_createModel_autoML_Type")}
               </h1>
               <div className="min-h-min w-full flex items-center justify-center">
                 <select
@@ -134,7 +182,7 @@ function ManualModel() {
                   className="select select-bordered w-full max-w-xs bg-white text-black"
                 >
                   <option disabled selected>
-                    Binary or Multiclass
+                    {t("label_createModel_autoML_Type_Or")}
                   </option>
                   <option value={0}>Binary</option>
                   <option value={1}>Multiclass</option>
@@ -156,7 +204,7 @@ function ManualModel() {
                         d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <span>All fields must be filled</span>
+                    <span>{t("label_empty_fields_error")}</span>
                   </div>
                 </div>
               ) : null}
@@ -170,7 +218,7 @@ function ManualModel() {
                   }}
                 >
                   <option disabled selected>
-                    Sélectionner une Algorithme
+                    {t("label_creation_model_select_algo")}
                   </option>
                   <option value="knn">KNN</option>
                   <option value="svc">SVC</option>
@@ -193,7 +241,7 @@ function ManualModel() {
                       placeholder="Type here"
                       className="input input-bordered w-full max-w-xs bg-white text-black"
                       onChange={(e) => {
-                        setparams(e.target.value);
+                        setn_neighbors(e.target.value);
                       }}
                     />
                   </div>
@@ -343,7 +391,7 @@ function ManualModel() {
                         d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <span>All fields must be filled</span>
+                    <span>{t("label_empty_fields_error")}</span>
                   </div>
                 </div>
               ) : null}
@@ -354,8 +402,75 @@ function ManualModel() {
               onClick={handleCreate}
               className="btn btn-wide bg-blue-600 dark:bg-blue-600 text-white hover:bg-blue-700"
             >
-              Create
+              {t("label_createModel_autoML_create")}
             </button>
+          </div>
+        </>
+      ) : validation ? (
+        <>
+          <div className="h-[100vh] w-full">
+            <div className="min-h-min w-full flex items-center">
+              <h1
+                className={`text-center text-[3vh] mb-[4vh] mr-[1vh] ${
+                  theme === LIGHT_THEME ? `text-black` : `text-white`
+                }`}
+              >
+                {t("label_createModel_manual_Mode_score")}
+              </h1>
+            </div>
+            <div className="min-h-min w-full flex items-center justify-center">
+              <div className="overflow-x-auto">
+                <table
+                  className={`table border-[0.3vh] ${
+                    theme === LIGHT_THEME ? "border-black" : "border-white"
+                  } ${theme === LIGHT_THEME ? `text-black` : `text-white`}`}
+                >
+                  {/* head */}
+                  <thead
+                    className={`${
+                      theme === LIGHT_THEME ? `text-black` : `text-white`
+                    }`}
+                  >
+                    <tr>
+                      <th>Metrics</th>
+                      <th>Validation scores:</th>
+                      <th>Test scores:</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {values.map((item, index) => (
+                      <tr key={index}>
+                        <td className="text-center">{item.metric}</td>
+                        <td className="text-center">{item.file1}</td>
+                        <td className="text-center">{item.file2}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="h-[10vh] w-full mt-[3vh] flex items-center justify-center">
+              <h1
+                className={`text-center text-[3vh] mr-[1vh] ${
+                  theme === LIGHT_THEME ? `text-black` : `text-white`
+                }`}
+              >
+                {t("label_createModel_manual_Mode_question")}
+              </h1>
+            </div>
+            <div className="min-h-min w-full flex items-center justify-center">
+              <a href="/models">
+                <button className="btn w-[10vh] bg-blue-600 dark:bg-blue-600 text-white hover:bg-blue-700 m-4">
+                  {t("label_createModel_manual_Mode_yes")}
+                </button>
+              </a>
+              <button
+                onClick={handleCreationCancle}
+                className="btn w-[10vh] bg-blue-600 dark:bg-blue-600 text-white hover:bg-blue-700 m-4"
+              >
+                {t("label_createModel_manual_Mode_no")}
+              </button>
+            </div>
           </div>
         </>
       ) : (
@@ -365,14 +480,21 @@ function ManualModel() {
               theme === LIGHT_THEME ? `text-black` : `text-white`
             }`}
           >
-            The model is being created.
+            {t("label_creation_model_wait_text")}
           </h1>
           <h1
             className={`text-center text-[3vh] mr-[1vh] ${
               theme === LIGHT_THEME ? `text-black` : `text-white`
             }`}
           >
-            This may take some time please be patient
+            {t("label_creation_model_wait_text2")}
+          </h1>
+          <h1
+            className={`text-center text-[3vh] mr-[1vh] ${
+              theme === LIGHT_THEME ? `text-black` : `text-white`
+            }`}
+          >
+            {t("label_creation_model_wait_text3")}
           </h1>
           <div className="flex items-center justify-center mt-[1vh]">
             <span

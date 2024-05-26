@@ -8,7 +8,7 @@ const Prediction = async (data) => {
   return axios
     .post("http://localhost:8080/predict", requestData)
     .then((response) => {
-      return response.data.result[0];
+      return response.data;
     })
     .catch((error) => {
       console.error("Error:", error); // Log any errors that occur during the request

@@ -36,6 +36,57 @@ export const getDatasets = async () => {
   }
 };
 
+export const getMetrics = async (data) => {
+  try {
+    const response = await axios.post("http://127.0.0.1:8080/metrics", data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+      credentials: "include",
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const getDatasetsInfo = async () => {
+  try {
+    const response = await axios.get("http://127.0.0.1:8080/files/infos", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+      credentials: "include",
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteDataset = async (data) => {
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:8080/dataset/delete",
+      data,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        credentials: "include",
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const getCsvFile = async (name) => {
   try {
     const response = await axios.post(
@@ -85,7 +136,7 @@ export const createManualModel = async (
 ) => {
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8080/auto/create",
+      "http://127.0.0.1:8080/manual/create",
       {
         name: modelName,
         dataset: datasetName,
@@ -118,6 +169,61 @@ export const getModels = async () => {
       withCredentials: true,
       credentials: "include",
     });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const getModel = async () => {
+  try {
+    const response = await axios.get("http://127.0.0.1:8080/models/use", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+      credentials: "include",
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const useModel = async (data) => {
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:8080/models/use",
+      data,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        credentials: "include",
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteModel = async (data) => {
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:8080/models/delete",
+      data,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        credentials: "include",
+      }
+    );
     return response.data;
   } catch (error) {
     return error;

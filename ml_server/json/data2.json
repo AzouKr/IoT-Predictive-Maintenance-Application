@@ -1,0 +1,4 @@
+{
+    "dataframe_info": "<class 'pandas.core.frame.DataFrame'>\nRangeIndex: 10000 entries, 0 to 9999\nData columns (total 10 columns):\n #   Column                   Non-Null Count  Dtype  \n---  ------                   --------------  -----  \n 0   UDI                      10000 non-null  int64  \n 1   Product ID               10000 non-null  object \n 2   Type                     10000 non-null  object \n 3   Air temperature [K]      10000 non-null  float64\n 4   Process temperature [K]  10000 non-null  float64\n 5   Rotational speed [rpm]   10000 non-null  int64  \n 6   Torque [Nm]              10000 non-null  float64\n 7   Tool wear [min]          10000 non-null  int64  \n 8   Target                   10000 non-null  int64  \n 9   Failure Type             10000 non-null  object \ndtypes: float64(3), int64(4), object(3)\nmemory usage: 781.4+ KB\n",
+    "duplicate_check": false
+}

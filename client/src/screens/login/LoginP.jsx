@@ -5,6 +5,7 @@ import { LIGHT_THEME } from "../../constants/themeConstants";
 import { useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { login } from "../../Hooks/Auth";
+import { useTranslation } from "react-i18next";
 
 function LoginP() {
   const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
@@ -13,6 +14,7 @@ function LoginP() {
   const [error, seterror] = useState(false);
   const [errorMsg, seterrorMsg] = useState("");
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const loginHandler = async () => {
     if (email !== "" && password !== "") {
@@ -22,33 +24,57 @@ function LoginP() {
         if (response.data === "admin") {
           secureLocalStorage.setItem("auth", false);
           secureLocalStorage.setItem("analyst", false);
+          secureLocalStorage.setItem("supervisor", false);
           secureLocalStorage.setItem("admin", true);
+          secureLocalStorage.setItem("authToken", response.token);
+          secureLocalStorage.setItem("email", email);
           setTimeout(() => {
-            navigate("/team");
+            navigate("/users");
           }, 2000);
         } else {
           if (response.data === "technicien") {
             secureLocalStorage.setItem("admin", false);
             secureLocalStorage.setItem("analyst", false);
+            secureLocalStorage.setItem("supervisor", false);
             secureLocalStorage.setItem("auth", true);
+            secureLocalStorage.setItem("authToken", response.token);
+            secureLocalStorage.setItem("email", email);
+
             setTimeout(() => {
               navigate("/");
             }, 2000);
           } else {
-            secureLocalStorage.setItem("admin", false);
-            secureLocalStorage.setItem("auth", false);
-            secureLocalStorage.setItem("analyst", true);
-            setTimeout(() => {
-              navigate("/profiling");
-            }, 2000);
+            if (response.data === "supervisor") {
+              secureLocalStorage.setItem("admin", false);
+              secureLocalStorage.setItem("analyst", false);
+              secureLocalStorage.setItem("auth", false);
+              secureLocalStorage.setItem("supervisor", true);
+              secureLocalStorage.setItem("authToken", response.token);
+              secureLocalStorage.setItem("email", email);
+
+              setTimeout(() => {
+                navigate("/");
+              }, 2000);
+            } else {
+              secureLocalStorage.setItem("admin", false);
+              secureLocalStorage.setItem("auth", false);
+              secureLocalStorage.setItem("supervisor", false);
+              secureLocalStorage.setItem("analyst", true);
+              secureLocalStorage.setItem("authToken", response.token);
+              secureLocalStorage.setItem("email", email);
+
+              setTimeout(() => {
+                navigate("/profiling");
+              }, 2000);
+            }
           }
         }
       } else {
-        seterrorMsg(response.error);
+        seterrorMsg(t("label_login_error2"));
         seterror(true);
       }
     } else {
-      seterrorMsg("Please enter the Email or Password");
+      seterrorMsg(t("label_login_error"));
       seterror(true);
     }
   };
@@ -107,16 +133,18 @@ function LoginP() {
             </div>
             {/* right side */}
             <div className="flex flex-col justify-center p-8 md:p-14 login-container">
-              <span className="mb-3 text-4xl font-bold"> Bienvenue</span>
+              <span className="mb-3 text-4xl font-bold">
+                {t("label_login_title")}
+              </span>
               <span
                 className={`font-light ${
                   theme === LIGHT_THEME ? "text-black" : "text-white"
                 } mb-8`}
               >
-                Bienvenue ! Veuillez saisir vos coordonnées
+                {t("label_login_title2")}
               </span>
               <div className="py-4">
-                <span className="mb-2 text-md">Email</span>
+                <span className="mb-2 text-md">{t("label_login_email")}</span>
                 <input
                   type="email"
                   className={`w-full p-2 border border-gray-300 bg-white rounded-md text-black `}
@@ -128,7 +156,9 @@ function LoginP() {
                 />
               </div>
               <div className="py-4">
-                <span className="mb-2 text-md">Mot de passe</span>
+                <span className="mb-2 text-md">
+                  {t("label_login_password")}
+                </span>
                 <input
                   type="password"
                   name="pass"
@@ -144,8 +174,11 @@ function LoginP() {
                 className={`w-full p-2 rounded-lg mb-6 text-center hover:bg-white bg-blue-500 hover:text-black hover:border hover:border-gray-300 text-white`}
                 onClick={loginHandler}
               >
-                Connexion
+                {t("label_login_connect")}
               </button>
+              <a href="/reset/link" className="text-blue-800 cursor-pointer">
+                Forget password ?
+              </a>
               {error ? (
                 <div role="alert" className="alert alert-error">
                   <svg

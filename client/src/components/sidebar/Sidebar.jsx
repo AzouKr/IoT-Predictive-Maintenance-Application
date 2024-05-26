@@ -33,12 +33,14 @@ import "./Sidebar.scss";
 import { SidebarContext } from "../../context/SidebarContext";
 import secureLocalStorage from "react-secure-storage";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   // closing the navbar when clicked outside the sidebar area
   const handleClickOutside = (event) => {
@@ -61,6 +63,7 @@ const Sidebar = () => {
   const logoutHandler = async () => {
     await logout()
       .then((response) => {
+        secureLocalStorage.setItem("authToken", "");
         secureLocalStorage.setItem("auth", false);
         secureLocalStorage.setItem("admin", false);
         setTimeout(() => {
@@ -92,14 +95,14 @@ const Sidebar = () => {
               <>
                 <li className="menu-item">
                   <NavLink
-                    to="/team"
+                    to="/users"
                     className="menu-link"
                     activeClassName="active"
                   >
                     <span className="menu-link-icon">
                       <MdOutlinePeople size={18} />
                     </span>
-                    <span className="menu-link-text">Manage Team</span>
+                    <span className="menu-link-text">Manage Users</span>
                   </NavLink>
                 </li>
                 <li className="menu-item">
@@ -111,7 +114,19 @@ const Sidebar = () => {
                     <span className="menu-link-icon">
                       <MdOutlineContacts size={20} />
                     </span>
-                    <span className="menu-link-text">Contacts Information</span>
+                    <span className="menu-link-text">Contact informations</span>
+                  </NavLink>
+                </li>
+                <li className="menu-item">
+                  <NavLink
+                    to="/teams"
+                    className="menu-link"
+                    activeClassName="active"
+                  >
+                    <span className="menu-link-icon">
+                      <MdOutlineContacts size={20} />
+                    </span>
+                    <span className="menu-link-text">Teams</span>
                   </NavLink>
                 </li>
                 <li className="menu-item">
@@ -123,13 +138,89 @@ const Sidebar = () => {
                     <span className="menu-link-icon">
                       <MdOutlinePerson size={20} />
                     </span>
-                    <span className="menu-link-text">Profile Form</span>
+                    <span className="menu-link-text">
+                      {t("label_sidebar_addUser")}
+                    </span>
                   </NavLink>
                 </li>
               </>
             ) : null}
-            {secureLocalStorage.getItem("auth") ? (
+            {secureLocalStorage.getItem("auth") ||
+            secureLocalStorage.getItem("supervisor") ? (
               <>
+                <li className="menu-item">
+                  <NavLink
+                    to="/"
+                    className="menu-link"
+                    activeClassName="active"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      height="1em"
+                      width="1em"
+                      class="w-6 h-6"
+                    >
+                      <path d="M21 16V4H3v12h18m0-14a2 2 0 012 2v12a2 2 0 01-2 2h-7v2h2v2H8v-2h2v-2H3a2 2 0 01-2-2V4c0-1.11.89-2 2-2h18M5 6h9v5H5V6m10 0h4v2h-4V6m4 3v5h-4V9h4M5 12h4v2H5v-2m5 0h4v2h-4v-2z" />
+                    </svg>
+                    <span className="menu-link-text">Dashboard</span>
+                  </NavLink>
+                </li>
+                <li className="menu-item">
+                  <NavLink
+                    to="/maintenance-overview"
+                    className="menu-link"
+                    activeClassName="active"
+                  >
+                    <span className="menu-link-icon">
+                      <MdOutlineBarChart size={18} />
+                    </span>
+                    <span className="menu-link-text">Maintenance overview</span>
+                  </NavLink>
+                </li>
+                {secureLocalStorage.getItem("auth") ? (
+                  <li className="menu-item">
+                    <NavLink
+                      to="/alarmtech"
+                      className="menu-link"
+                      activeClassName="active"
+                    >
+                      <span className="menu-link-icon">
+                        <MdOutlineAddAlert size={18} />
+                      </span>
+                      <span className="menu-link-text">Alarms</span>
+                    </NavLink>
+                  </li>
+                ) : null}
+                {secureLocalStorage.getItem("supervisor") ? (
+                  <>
+                    <li className="menu-item">
+                      <NavLink
+                        to="/alarm"
+                        className="menu-link"
+                        activeClassName="active"
+                      >
+                        <span className="menu-link-icon">
+                          <MdOutlineAddAlert size={18} />
+                        </span>
+                        <span className="menu-link-text">Alarms</span>
+                      </NavLink>
+                    </li>
+                    <li className="menu-item">
+                      <NavLink
+                        to="/team"
+                        className="menu-link"
+                        activeClassName="active"
+                      >
+                        <span className="menu-link-icon">
+                          <MdOutlinePeople size={18} />
+                        </span>
+                        <span className="menu-link-text">Manage Team</span>
+                      </NavLink>
+                    </li>
+                  </>
+                ) : null}
+
                 <li className="menu-item">
                   <NavLink
                     to="/calendar"
@@ -139,7 +230,9 @@ const Sidebar = () => {
                     <span className="menu-link-icon">
                       <MdOutlineCalendarToday size={18} />
                     </span>
-                    <span className="menu-link-text">Calendar</span>
+                    <span className="menu-link-text">
+                      {t("label_sidebar_calendar")}
+                    </span>
                   </NavLink>
                 </li>
                 <li className="menu-item">
@@ -151,7 +244,9 @@ const Sidebar = () => {
                     <span className="menu-link-icon">
                       <MdOutlineHelpOutline size={20} />
                     </span>
-                    <span className="menu-link-text">FAQ Page</span>
+                    <span className="menu-link-text">
+                      {t("label_sidebar_faqPage")}
+                    </span>
                   </NavLink>
                 </li>
               </>
@@ -180,7 +275,9 @@ const Sidebar = () => {
                         />
                       </svg>
                     </span>
-                    <span className="menu-link-text">Profiling</span>
+                    <span className="menu-link-text">
+                      {t("label_sidebar_profiling")}
+                    </span>
                   </NavLink>
                 </li>
                 <li className="menu-item">
@@ -204,7 +301,9 @@ const Sidebar = () => {
                         <path d="M20.5 21a.5.5 0 11-1 0 .5.5 0 011 0zM18.5 3a.5.5 0 11-1 0 .5.5 0 011 0z" />
                       </svg>
                     </span>
-                    <span className="menu-link-text">Créer un modèle</span>
+                    <span className="menu-link-text">
+                      {t("label_sidebar_create_model")}
+                    </span>
                   </NavLink>
                 </li>
                 <li className="menu-item">
@@ -225,37 +324,14 @@ const Sidebar = () => {
                         />
                       </svg>
                     </span>
-                    <span className="menu-link-text">Modèles</span>
-                  </NavLink>
-                </li>
-                <li className="menu-item">
-                  <NavLink
-                    to="/upload"
-                    className="menu-link"
-                    activeClassName="active"
-                  >
-                    <span className="menu-link-icon">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75"
-                        />
-                      </svg>
+                    <span className="menu-link-text">
+                      {t("label_sidebar_models")}
                     </span>
-                    <span className="menu-link-text">Télécharger</span>
                   </NavLink>
                 </li>
                 <li className="menu-item">
                   <NavLink
-                    to="/csvreader"
+                    to="/dataset"
                     className="menu-link"
                     activeClassName="active"
                   >
@@ -268,7 +344,9 @@ const Sidebar = () => {
                         <path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM80 224h16c22.1 0 40 17.9 40 40v8c0 8.8-7.2 16-16 16s-16-7.2-16-16v-8c0-4.4-3.6-8-8-8H80c-4.4 0-8 3.6-8 8v80c0 4.4 3.6 8 8 8h16c4.4 0 8-3.6 8-8v-8c0-8.8 7.2-16 16-16s16 7.2 16 16v8c0 22.1-17.9 40-40 40H80c-22.1 0-40-17.9-40-40v-80c0-22.1 17.9-40 40-40zm72 46.4c0-25.6 20.8-46.4 46.4-46.4H216c8.8 0 16 7.2 16 16s-7.2 16-16 16h-17.6c-7.9 0-14.4 6.4-14.4 14.4 0 5.2 2.8 9.9 7.2 12.5l25.4 14.5C231 305.7 240 321 240 337.7c0 25.6-20.8 46.4-46.4 46.4H168c-8.8 0-16-7.2-16-16s7.2-16 16-16h25.6c7.9 0 14.4-6.4 14.4-14.4 0-5.2-2.8-9.9-7.2-12.5l-25.4-14.5c-14.5-8.3-23.4-23.7-23.4-40.3zM280 240v31.6c0 23 5.5 45.6 16 66 10.5-20.3 16-42.9 16-66V240c0-8.8 7.2-16 16-16s16 7.2 16 16v31.6c0 34.7-10.3 68.7-29.6 97.6l-5.1 7.7c-3 4.5-8 7.1-13.3 7.1s-10.3-2.7-13.3-7.1l-5.1-7.7c-19.3-28.9-29.6-62.9-29.6-97.6V240c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
                       </svg>
                     </span>
-                    <span className="menu-link-text">Dataset Reader</span>
+                    <span className="menu-link-text">
+                      {t("label_sidebar_datasets")}
+                    </span>
                   </NavLink>
                 </li>
               </>
@@ -283,7 +361,9 @@ const Sidebar = () => {
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={20} />
                 </span>
-                <span className="menu-link-text">Logout</span>
+                <span className="menu-link-text">
+                  {t("label_sidebar_logout")}
+                </span>
               </div>
             </li>
           </ul>

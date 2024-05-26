@@ -1,131 +1,164 @@
-import { AreaTop } from "../../components";
-import React, { useContext, useState, useEffect } from "react";
-import { Box, Button, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { AreaTop, MemberPop, TeamPop } from "../../components";
+import { Box, Button, Card, CardContent, Typography } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
-import { deleteUser, getUsers } from "../../Hooks/Users";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import "./team.scss";
+import { io } from "socket.io-client";
+import { backend_url_socket } from "../../Hooks";
+import secureLocalStorage from "react-secure-storage";
+import { deleteMember, getOneTeam, getTeam } from "../../Hooks/Teams";
 
 const Team = () => {
-  const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
-  const [selectedRowIds, setSelectedRowIds] = useState([]);
-  const navigate = useNavigate();
+  const [team, setteam] = useState();
+  const [teamInfo, setteamInfo] = useState();
 
-  const [data, setdata] = useState([]);
+  const socket = io(backend_url_socket, {
+    withCredentials: true,
+    extraHeaders: {
+      Authorization: `Bearer ${secureLocalStorage.getItem("authToken")}`,
+      "Another-Header": "HeaderValue",
+    },
+  });
+  socket.on("connect", () => {});
+
   const fetchData = async () => {
-    await getUsers().then((response) => {
-      setdata(response.data);
-    });
+    const data = await getTeam();
+    setteam(data.data);
+    const teamInfo = await getOneTeam();
+    setteamInfo(teamInfo.data);
   };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  const handleRowSelection = (id) => {
-    if (selectedRowIds.includes(id)) {
-      setSelectedRowIds(selectedRowIds.filter((rowId) => rowId !== id));
-    } else {
-      setSelectedRowIds([...selectedRowIds, id]);
-    }
-  };
+  const { theme } = useContext(ThemeContext);
 
-  const handleDelete = async () => {
-    const id = selectedRowIds;
-    await deleteUser(id)
-      .then((res) => {
-        window.location.reload();
+  const handleDelete = (id) => {
+    const data = {
+      email: id,
+    };
+    deleteMember(data)
+      .then(() => {
+        fetchData();
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const textColor = theme === LIGHT_THEME ? "text-black" : "text-white";
-
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", headerName: "ID", flex: 0.5 },
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
+      flex: 0.5,
       cellClassName: "name-column--cell",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
     },
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      flex: 0.5,
     },
     {
-      field: "role",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: { role } }) => {
-        return (
-          <Box
-            width="60%"
-            m="5px 0 0 0"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              role === "admin"
-                ? "#4cceac"
-                : role === "manager"
-                ? "#3da58a"
-                : "#2e7c67"
-            }
-            borderRadius="4px"
-          >
-            {role === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {role === "manager" && <SecurityOutlinedIcon />}
-            {role === "user" && <LockOpenOutlinedIcon />}
-            <Typography
-              sx={{ ml: "5px" }}
-              className={`MuiTypography-root MuiTypography-body1 ${textColor}`}
-            >
-              {role}
-            </Typography>
-          </Box>
-        );
-      },
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      sortable: false,
-      width: 100,
-      renderCell: ({ row }) => {
-        return (
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <EditIcon
-              sx={{ cursor: "pointer" }}
-              onClick={() => navigate(`/form/${row.id}`)}
-            />
-          </div>
-        );
-      },
+      field: "action",
+      headerName: "Action",
+      flex: 0.5,
+      renderCell: ({ row: { email } }) => (
+        <Button
+          onClick={() => handleDelete(email)}
+          variant="contained"
+          color="secondary"
+          startIcon={<DeleteIcon />}
+          sx={{
+            backgroundColor: "#EB8282",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "darkred",
+            },
+          }}
+        >
+          Delete
+        </Button>
+      ),
     },
   ];
 
   return (
     <div className="content-area">
       <AreaTop />
-      <Box m="5px" className={theme === LIGHT_THEME ? "" : "dark-mode"}>
+      <Box
+        m="5px"
+        height="calc(100vh - 100px)"
+        className={theme === LIGHT_THEME ? "" : "dark-mode"}
+      >
+        <Card
+          sx={{
+            margin: "10px 0",
+            padding: "5px",
+            backgroundColor: theme === LIGHT_THEME ? "#f5f5f5" : "#2e2e48",
+            color: theme === LIGHT_THEME ? "#000" : "#fff",
+          }}
+        >
+          {teamInfo !== undefined ? (
+            <CardContent className="h-[30vh]">
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box>
+                  <Typography variant="h6" component="div">
+                    Team Name:
+                    {teamInfo.lenght === undefined
+                      ? teamInfo.lenght !== 0
+                        ? teamInfo.name
+                        : "NaN"
+                      : "NaN"}
+                  </Typography>
+                  <Typography variant="body1" component="div">
+                    Supervisor:{" "}
+                    {teamInfo.lenght === undefined
+                      ? teamInfo.lenght !== 0
+                        ? teamInfo.supervisor
+                        : "NaN"
+                      : "NaN"}
+                  </Typography>
+                  <Typography variant="body1" component="div">
+                    Production Line:{" "}
+                    {teamInfo.lenght === undefined
+                      ? teamInfo.lenght !== 0
+                        ? teamInfo.prod_line
+                        : "NaN"
+                      : "NaN"}
+                  </Typography>
+                </Box>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="flex-end"
+                >
+                  {teamInfo.lenght !== undefined ? (
+                    teamInfo.lenght === 0 ? (
+                      <div className="btn">
+                        <TeamPop />
+                      </div>
+                    ) : null
+                  ) : null}
+                  <div className="btn">
+                    <MemberPop name={teamInfo.name} />
+                  </div>
+                </Box>
+              </Box>
+            </CardContent>
+          ) : null}
+        </Card>
         <Box
           m="30px 0 0 0"
-          height="80vh"
+          height="65vh"
           sx={{
             "& .MuiDataGrid-root": {
               border: "none",
@@ -143,6 +176,7 @@ const Team = () => {
               fontWeight: "bold",
               borderBottom: "none",
             },
+            "& .MuiDataGrid-virtualScroller": {},
             "& .MuiDataGrid-footerContainer": {
               borderTop: "none",
               backgroundColor: theme === LIGHT_THEME ? "#6b7bf2" : "#475be8",
@@ -152,47 +186,20 @@ const Team = () => {
             "& .MuiCheckbox-root": {
               color: theme === LIGHT_THEME ? "#3da58a" : " #70d8bd",
             },
-            "& .menu": {
-              display: "flex",
-              alignItems: "end",
-              justifyContent: "flex-end",
-              paddingRight: "10px",
-              marginBottom: "2px",
-            },
-            "& .menu li": {
-              listStyle: "none",
-              margin: "0 3px",
-            },
-            "& .menu a": {
-              textDecoration: "none",
+            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
               color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
-              backgroundColor: theme === LIGHT_THEME ? "#6b7bf2" : "#475be8",
             },
           }}
         >
-          <div className="menu">
-            <Button
-              startIcon={<DeleteIcon />}
-              variant="contained"
-              onClick={handleDelete}
-              sx={{ cursor: "pointer" }}
-              disabled={selectedRowIds.length === 0}
-            >
-              Delete
-            </Button>
-          </div>
-          <div style={{ height: 400, width: "100%" }}>
+          {team !== undefined ? (
             <DataGrid
-              checkboxSelection
-              rows={data}
+              rows={team}
               columns={columns}
-              getRowId={(row) => row.id}
-              onCellClick={(row) => {
-                handleRowSelection(row.id);
+              slots={{
+                toolbar: GridToolbar,
               }}
-              //disableRowSelectionOnClick
             />
-          </div>
+          ) : null}
         </Box>
       </Box>
     </div>
