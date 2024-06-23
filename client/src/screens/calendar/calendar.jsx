@@ -7,37 +7,41 @@ import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { ThemeContext } from "../../context/ThemeContext";
-import React, { useContext, useState } from "react";
-import { io } from "socket.io-client";
-import { backend_url_socket } from "../../Hooks";
+import React, { useContext, useState, useEffect } from "react";
 import secureLocalStorage from "react-secure-storage";
+import { addEvent, deleteEvents, fetchEvents } from "../../Hooks/Events";
 
 const Calendar = () => {
-  const socket = io(backend_url_socket, {
-    withCredentials: true,
-    extraHeaders: {
-      Authorization: `Bearer ${secureLocalStorage.getItem("authToken")}`,
-      "Another-Header": "HeaderValue",
-    },
-  });
-  socket.on("connect", () => {});
-  const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
-
   const [currentEvents, setCurrentEvents] = useState([]);
 
-  const handleDateClick = (selected) => {
-    const title = prompt("Please enter a new title for your event");
-    const calendarApi = selected.view.calendar;
-    calendarApi.unselect();
+  const fetchData = async () => {
+    const data = await fetchEvents({
+      user: secureLocalStorage.getItem("email"),
+    });
+    setCurrentEvents(data.data);
+  };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
+
+  const handleDateClick = async (selected) => {
+    const title = prompt("Please enter a new title for your event");
     if (title) {
-      calendarApi.addEvent({
-        id: `${selected.dateStr}-${title}`,
-        title,
-        start: selected.startStr,
-        end: selected.endStr,
-        allDay: selected.allDay,
-      });
+      const data = {
+        title: title,
+        user: secureLocalStorage.getItem("email"),
+        date: selected.startStr,
+      };
+      addEvent(data)
+        .then((res) => {
+          fetchData();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -47,7 +51,16 @@ const Calendar = () => {
         `Are you sure you want to delete the event '${selected.event.title}'`
       )
     ) {
-      selected.event.remove();
+      const data = {
+        id: selected.event._def.publicId,
+      };
+      deleteEvents(data)
+        .then((res) => {
+          fetchData();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -66,31 +79,24 @@ const Calendar = () => {
             color={theme === LIGHT_THEME ? "#000000" : "#ffffff"} // Set text color based on theme
           >
             <Typography variant="h5">Events</Typography>
-            <List>
-              {currentEvents.map((event) => (
-                <ListItem
-                  key={event.id}
-                  sx={{
-                    backgroundColor: "#4cceac",
-                    margin: "10px 0",
-                    borderRadius: "2px",
-                  }}
-                >
-                  <ListItemText
-                    primary={event.title}
-                    secondary={
-                      <Typography>
-                        {/* {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })} */}
-                        {event.start.toDateString()}
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-              ))}
+            <List className="max-h-[68vh] overflow-auto">
+              {currentEvents !== undefined
+                ? currentEvents.map((event) => (
+                    <ListItem
+                      key={event.id}
+                      sx={{
+                        backgroundColor: "#4cceac",
+                        margin: "10px 0",
+                        borderRadius: "2px",
+                      }}
+                    >
+                      <ListItemText
+                        primary={event.title}
+                        secondary={<Typography>{event.date}</Typography>}
+                      />
+                    </ListItem>
+                  ))
+                : null}
             </List>
           </Box>
 
@@ -120,19 +126,7 @@ const Calendar = () => {
               dayMaxEvents={true}
               select={handleDateClick}
               eventClick={handleEventClick}
-              eventsSet={(events) => setCurrentEvents(events)}
-              initialEvents={[
-                {
-                  id: "12315",
-                  title: "All-day event",
-                  date: "2022-09-14",
-                },
-                {
-                  id: "5123",
-                  title: "Timed event",
-                  date: "2022-09-28",
-                },
-              ]}
+              events={currentEvents}
             />
           </Box>
         </Box>

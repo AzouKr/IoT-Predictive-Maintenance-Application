@@ -59,7 +59,7 @@ const Profiling = () => {
   const [datasets, setdatasets] = useState([]);
   const [selectedDataset, setselectedDataset] = useState("");
   const [loading, setloading] = useState(false);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const startHnadler = async (event) => {
     event.preventDefault();
@@ -91,10 +91,10 @@ const Profiling = () => {
     <div className="content-area">
       <div className="main-container">
         <h2 className={theme === LIGHT_THEME ? "text-black" : "text-white"}>
-          Data Preparation
+          {t("Data Preparation")}
         </h2>
         <p className={theme === LIGHT_THEME ? "text-black" : "text-white"}>
-          Transforming Raw Data into Actionable Insights.
+          {t("Transforming Raw Data into Actionable Insights.")}
         </p>
       </div>
       <div className="flex items-center justify-items-center  m-4 gap-10 ">
@@ -104,11 +104,13 @@ const Profiling = () => {
             width: "200px", // Adjust width to account for border
           }}
         >
-          <InputLabel id="demo-simple-select-label">Select Dataset</InputLabel>
+          <InputLabel id="demo-simple-select-label">
+            {t("Select Dataset")}
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="Select Dataset"
+            label={t("Select Dataset")}
             onChange={(e) => {
               setselectedDataset(e.target.value);
             }}
@@ -129,7 +131,7 @@ const Profiling = () => {
           }}
           onClick={startHnadler}
         >
-          Start profiling
+          {t("Start profiling")}
         </Button>
       </div>
       {loading ? (
@@ -139,20 +141,21 @@ const Profiling = () => {
       ) : data.length !== 0 ? (
         <div>
           <h1
-            className={`${"text-xl"} ${"font-medium mb-3 "} ${
+            className={`text-xl font-medium mb-3 ${
               theme === LIGHT_THEME ? "text-black" : "text-white"
             }`}
           >
-            Data description
+            {t("Data description")}
           </h1>
-          {/* azoooooooooooo win kayan 10000 w 14 lzm nraj3ouha variable tatbadal 3la7sab dataset */}
+          {/* This is a comment */}
           <p
-            className={`${"text-xl opacity-75"}  ${
+            className={`text-xl opacity-75 ${
               theme === LIGHT_THEME ? "text-black" : "text-white"
             }`}
           >
-            The dataset consists of 10 000 data points stored as rows with 14
-            features in columns
+            {t(
+              "The dataset consists of 10,000 data points stored as rows with 14 features in columns"
+            )}
           </p>
           <Accordion
             className="m-10 text-xl font-medium"
@@ -163,69 +166,52 @@ const Profiling = () => {
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              <Typography>Features description</Typography>
+              <Typography>{t("Features description")}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography
-                className={`${"text-xl"} ${"font-medium mb-5 opacity-50"} ${
+                className={`text-xl font-medium mb-5 opacity-50 ${
                   theme === LIGHT_THEME ? "text-black" : "text-white"
                 }`}
               >
-                UID: unique identifier;
+                {t("UID: unique identifier;")}
                 <br />
-                Product ID: consisting of a letter L, M, or H variants and a
-                variant-specific serial number;
+                {t(
+                  "Product ID: consisting of a letter L, M, or H variants and a variant-specific serial number;"
+                )}
                 <br />
-                Air temperature [K]: generated using a random walk process later
-                normalized to a standard deviation of 2 K around 300 K;
+                {t(
+                  "Air temperature [K]: generated using a random walk process later normalized to a standard deviation of 2 K around 300 K;"
+                )}
                 <br />
-                Process temperature [K]: generated using a random walk process
-                normalized to a standard deviation of 1 K, added to the air
-                temperature plus 10 K; Rotational speed [rpm]: calculated from a
-                power of 2860 W, overlaid with a normally distributed noise;
-                <br /> Torque [Nm]: torque values are normally distributed
-                around 40 Nm with a standard deviation of 10 Nm and no negative
-                values;
+                {t(
+                  "Process temperature [K]: generated using a random walk process normalized to a standard deviation of 1 K, added to the air temperature plus 10 K;"
+                )}
                 <br />
-                Tool wear [min]: The quality variants H/M/L add 5/3/2 minutes of
-                tool wear to the used tool in the process;
+                {t(
+                  "Rotational speed [rpm]: calculated from a power of 2860 W, overlaid with a normally distributed noise;"
+                )}
                 <br />
-                Machine failure: label that indicates, whether the machine has
-                failed in this particular data point for any of the following
-                failure modes are true. The machine failure consists of five
-                independent failure modes: tool wear failure (TWF): the tool
-                will be replaced of fail at a randomly selected tool wear time
-                between 200 - 240 mins;
+                {t(
+                  "Torque [Nm]: torque values are normally distributed around 40 Nm with a standard deviation of 10 Nm and no negative values;"
+                )}
                 <br />
-                heat dissipation failure (HDF): heat dissipation causes a
-                process failure, if the difference between air- and process
-                temperature is below 8.6 K and the tools rotational speed is
-                below 1380 rpm;
+                {t(
+                  "Tool wear [min]: The quality variants H/M/L add 5/3/2 minutes of tool wear to the used tool in the process;"
+                )}
                 <br />
-                power failure (PWF):the product of torque and rotational speed
-                (in rad/s) equals the power required for the process. If this
-                power is below 3500 W or above 9000 W, the process fails;
-                <br />
-                overstrain failure (OSF): if the product of tool wear and torque
-                exceeds 11,000 minNm for the L product variant (12,000 M, 13,000
-                H), the process fails due to overstrain;
-                <br />
-                random failures (RNF): each process has a chance of 0,1 % to
-                fail regardless of its process parameters. If at least one of
-                the above failure modes is true, the process fails and the
-                ’machine failure’ label is set to 1. It is therefore not
-                transparent to the machine learning method, which of the failure
-                modes has caused the process to fail.
-                <br />
+                {t(
+                  "Machine failure: label that indicates, whether the machine has failed in this particular data point for any of the following failure modes are true. The machine failure consists of five independent failure modes: tool wear failure (TWF): the tool will be replaced of fail at a randomly selected tool wear time between 200 - 240 mins;"
+                )}
               </Typography>
             </AccordionDetails>
           </Accordion>
           <h1
-            className={`${"text-xl"} ${"font-medium mb-3 "} ${
+            className={`text-xl font-medium mb-3 ${
               theme === LIGHT_THEME ? "text-black" : "text-white"
             }`}
           >
-            Loading data
+            {t("Loading data")}
           </h1>
           <LoadingData TABLE_DATA={JSON.parse(data[0])} />
           <Accordion className="mb-5 mt-5" style={{ backgroundColor, color }}>
@@ -234,7 +220,7 @@ const Profiling = () => {
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              <Typography> Metadata of The dataset :</Typography>
+              <Typography>{t("Metadata of The dataset :")}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Metadata
@@ -257,16 +243,16 @@ const Profiling = () => {
                   }
                 </h1>
                 <h1>
-                  Check for duplicate values: &nbsp;
+                  {t("Check for duplicate values: ")}
                   {JSON.stringify(JSON.parse(data[1]).duplicate_check)}
                 </h1>
               </Typography>
 
               <Typography>
-                The following histogram shows the number sequences:
+                {t("The following histogram shows the number sequences:")}
               </Typography>
               <div className="min-h-min w-full flex items-center justify-center">
-                <img src={fig1} alt=" Image" className="h-[50vh] w-[90vh] " />
+                <img src={fig1} alt="Image" className="h-[50vh] w-[90vh]" />
               </div>
             </AccordionDetails>
           </Accordion>
@@ -277,14 +263,13 @@ const Profiling = () => {
                 aria-controls="panel1-content"
                 id="panel1-header"
               >
-                <Typography>EDA(Exploratory Data Analysis) </Typography>
+                <Typography>{t("EDA(Exploratory Data Analysis)")}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  It is an approach to perform initial investigations on data to
-                  discover patterns, spot anomalies, test hypothesis and check
-                  assumptions with the help of statistics and graphical
-                  representations
+                  {t(
+                    "It is an approach to perform initial investigations on data to discover patterns, spot anomalies, test hypothesis and check assumptions with the help of statistics and graphical representations"
+                  )}
                 </Typography>
                 <Accordion style={{ backgroundColor, color }}>
                   <AccordionSummary
@@ -292,7 +277,7 @@ const Profiling = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                   >
-                    <Typography> Target , Failure type ...</Typography>
+                    <Typography>{t("Target , Failure type ...")}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <div
@@ -310,13 +295,13 @@ const Profiling = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                   >
-                    <Typography> Target anomalies :</Typography>
+                    <Typography>{t("Target anomalies :")}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      In this section we observe the distribution of the target
-                      to find any imbalances and correct them before dividing
-                      the dataset.
+                      {t(
+                        "In this section we observe the distribution of the target to find any imbalances and correct them before dividing the dataset."
+                      )}
                     </Typography>
                     <div
                       className="flex justify-center "
@@ -332,12 +317,13 @@ const Profiling = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                   >
-                    <Typography>Data Visualisation </Typography>
+                    <Typography>{t("Data Visualisation")}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      Data Visualisation is also a part of EDA to represent
-                      categorical data with graphical representation.
+                      {t(
+                        "Data Visualisation is also a part of EDA to represent categorical data with graphical representation."
+                      )}
                     </Typography>
                     <Accordion style={{ backgroundColor, color }}>
                       <AccordionSummary
@@ -345,18 +331,19 @@ const Profiling = () => {
                         aria-controls="panel1-content"
                         id="panel1-header"
                       >
-                        <Typography> Product types</Typography>
+                        <Typography>{t("Product types")}</Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <Typography>
-                          The following pie chart shows the percentages of
-                          machines by Type:
+                          {t(
+                            "The following pie chart shows the percentages of machines by Type:"
+                          )}
                         </Typography>
                         <div className="min-h-min w-full flex items-center justify-center">
                           <img
                             src={fig2}
-                            alt=" Image"
-                            className="h-[50vh] w-[120vh] "
+                            alt="Image"
+                            className="h-[50vh] w-[120vh]"
                           />
                         </div>
                       </AccordionDetails>
@@ -367,19 +354,20 @@ const Profiling = () => {
                         aria-controls="panel1-content"
                         id="panel1-header"
                       >
-                        <Typography>Percentage of failure</Typography>
+                        <Typography>{t("Percentage of failure")}</Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <div className="min-h-min w-full flex items-center justify-center">
                           <img
                             src={fig3}
-                            alt=" Image"
-                            className="h-[40vh] w-[50vh] "
+                            alt="Image"
+                            className="h-[40vh] w-[50vh]"
                           />
                         </div>
                         <Typography>
-                          The dataset is highly imbalanced where the machine
-                          failure consist only 3.5% of the whole dataset.
+                          {t(
+                            "The dataset is highly imbalanced where the machine failure consist only 3.5% of the whole dataset."
+                          )}
                         </Typography>
                       </AccordionDetails>
                     </Accordion>
@@ -390,15 +378,15 @@ const Profiling = () => {
                         id="panel1-header"
                       >
                         <Typography>
-                          Percentage of failure wrt product type
+                          {t("Percentage of failure wrt product type")}
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <div className="min-h-min w-full flex items-center justify-center">
                           <img
                             src={fig4}
-                            alt=" Image"
-                            className="h-[50vh] w-[120vh] "
+                            alt="Image"
+                            className="h-[50vh] w-[120vh]"
                           />
                         </div>
                       </AccordionDetails>
@@ -411,27 +399,20 @@ const Profiling = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                   >
-                    <Typography> Correlation</Typography>
+                    <Typography>{t("Correlation")}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="min-h-min w-full flex items-center justify-center">
                       <img
                         src={fig5}
-                        alt=" Image"
-                        className="h-[90vh] w-[140vh] "
+                        alt="Image"
+                        className="h-[90vh] w-[140vh]"
                       />
                     </div>
                     <Typography>
-                      Insights: -Torque and rotational speed are highly
-                      correlated. -Process temperature and air temperature are
-                      also highly correlated. We immediately see that failures
-                      occur for extreme values of some features, i.e., the
-                      machinery fails either for the lowest or largest values of
-                      torque and rotational speed. This is easily spotted in the
-                      graph since the green dots are far apart for those
-                      features. So, there is a range for normal conditions in
-                      which the machines operate, and above or under this range,
-                      they tend to fail.
+                      {t(
+                        "Insights: -Torque and rotational speed are highly correlated. -Process temperature and air temperature are also highly correlated. We immediately see that failures occur for extreme values of some features, i.e., the machinery fails either for the lowest or largest values of torque and rotational speed. This is easily spotted in the graph since the green dots are far apart for those features. So, there is a range for normal conditions in which the machines operate, and above or under this range, they tend to fail."
+                      )}
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -442,23 +423,23 @@ const Profiling = () => {
                     id="panel1-header"
                   >
                     <Typography>
-                      {" "}
-                      violin chart to see how torque and rotational speed
-                      behave:
+                      {t(
+                        "violin chart to see how torque and rotational speed behave:"
+                      )}
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="min-h-min w-full flex items-center justify-center">
                       <img
                         src={fig6}
-                        alt=" Image"
-                        className="h-[50vh] w-[140vh] "
+                        alt="Image"
+                        className="h-[50vh] w-[140vh]"
                       />
                     </div>
                     <Typography>
-                      Insight: Regarding torque and rotational speed, it can be
-                      seen again that most failures are triggered for much lower
-                      or much higher values than the mean when not failing.
+                      {t(
+                        "Insight: Regarding torque and rotational speed, it can be seen again that most failures are triggered for much lower or much higher values than the mean when not failing."
+                      )}
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -468,20 +449,20 @@ const Profiling = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                   >
-                    <Typography> Correllation Heatmap:</Typography>
+                    <Typography>{t("Correllation Heatmap:")}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="min-h-min w-full flex items-center justify-center">
                       <img
                         src={fig7}
-                        alt=" Image"
-                        className="h-[80vh] w-[110vh] "
+                        alt="Image"
+                        className="h-[80vh] w-[110vh]"
                       />
                     </div>
                     <Typography>
-                      As mentioned before, there is high correlation between
-                      process temperature and air temperature, and between
-                      rotational speed and torque.
+                      {t(
+                        "As mentioned before, there is high correlation between process temperature and air temperature, and between rotational speed and torque."
+                      )}
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -492,30 +473,21 @@ const Profiling = () => {
                     id="panel1-header"
                   >
                     <Typography>
-                      {" "}
-                      Exploring features for each type of failure:
+                      {t("Exploring features for each type of failure:")}
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="min-h-min w-full flex items-center justify-center">
                       <img
                         src={fig8}
-                        alt=" Image"
-                        className="h-[50vh] w-[140vh] "
+                        alt="Image"
+                        className="h-[50vh] w-[140vh]"
                       />
                     </div>
                     <Typography>
-                      Some insights: Power failure happens both for lower and
-                      higher rotational speed/torque. It is the type of failure
-                      with the highest rotational speed (over 2500rpm) and
-                      lowest torque (below around 15Nm). In other others, above
-                      and below these thresholds only power failures occur.
-                      Between torques 16Nm and 41Nm all failures are tool wear.
-                      Overstrain failures take place with torques ranging from
-                      around 47 and 68Nm) and rotational speeds from 1200 to
-                      1500rpm approximately. For heat dissipation failures, the
-                      torque range is smaller and the rotational speed range is
-                      bigger compared to overstrain failures.
+                      {t(
+                        "Some insights: Power failure happens both for lower and higher rotational speed/torque. It is the type of failure with the highest rotational speed (over 2500rpm) and lowest torque (below around 15Nm). In other others, above and below these thresholds only power failures occur. Between torques 16Nm and 41Nm all failures are tool wear. Overstrain failures take place with torques ranging from around 47 and 68Nm) and rotational speeds from 1200 to 1500rpm approximately. For heat dissipation failures, the torque range is smaller and the rotational speed range is bigger compared to overstrain failures."
+                      )}
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -525,25 +497,25 @@ const Profiling = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                   >
-                    <Typography> Outliers inspection:</Typography>
+                    <Typography>{t("Outliers inspection:")}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      The goal of this section is to check if the dataset
-                      contains any outlier, which are usually misleading for
-                      machine learning algorithms. We begin by looking at a
-                      statistical report of the numerical features.
+                      {t(
+                        "The goal of this section is to check if the dataset contains any outlier, which are usually misleading for machine learning algorithms. We begin by looking at a statistical report of the numerical features."
+                      )}
                     </Typography>
                     <div className="min-h-min w-full flex items-center justify-center">
                       <img
                         src={fig9}
-                        alt=" Image"
-                        className="h-[50vh] w-[140vh] "
+                        alt="Image"
+                        className="h-[50vh] w-[140vh]"
                       />
                     </div>
                     <Typography>
-                      From the boxplots we can see that 'Rotational speed' and
-                      'Torque' have outliers.
+                      {t(
+                        "From the boxplots we can see that 'Rotational speed' and 'Torque' have outliers."
+                      )}
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -555,32 +527,25 @@ const Profiling = () => {
                         aria-controls="panel1-content"
                         id="panel1-header"
                       >
-                        <Typography> Resampling with SMOTE:</Typography>
+                        <Typography>{t("Resampling with SMOTE:")}</Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <Typography>
-                          Another important consideration regards the extremely
-                          low occurrence of machine failures among the entire
-                          dataset, which percentage is equal only to 3.31%.
-                          Moreover, a pie plot showing the occurrence of the
-                          causes involved for each failure reveals a further
-                          degree of imbalance.
+                          {t(
+                            "Another important consideration regards the extremely low occurrence of machine failures among the entire dataset, which percentage is equal only to 3.31%. Moreover, a pie plot showing the occurrence of the causes involved for each failure reveals a further degree of imbalance."
+                          )}
                         </Typography>
                         <div className="min-h-min w-full flex items-center justify-center">
                           <img
                             src={fig10}
-                            alt=" Image"
-                            className="h-[60vh] w-[70vh] "
+                            alt="Image"
+                            className="h-[60vh] w-[70vh]"
                           />
                         </div>
                         <Typography>
-                          we use the SMOTE procedure to generate new samples,
-                          which is very much like slightly moving the data point
-                          in the direction of its neighbors. This way, the
-                          synthetic data point is not an exact copy of an
-                          existing data point but we can also be sure that it is
-                          also not too different from the known observations in
-                          the minority class.
+                          {t(
+                            "we use the SMOTE procedure to generate new samples, which is very much like slightly moving the data point in the direction of its neighbors. This way, the synthetic data point is not an exact copy of an existing data point but we can also be sure that it is also not too different from the known observations in the minority class."
+                          )}
                         </Typography>
                       </AccordionDetails>
                     </Accordion>
@@ -590,35 +555,40 @@ const Profiling = () => {
                         aria-controls="panel1-content"
                         id="panel1-header"
                       >
-                        <Typography> Comparison after resampling:</Typography>
+                        <Typography>
+                          {t("Comparison after resampling:")}
+                        </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <Typography>
-                          The result is described in the following pie charts.
+                          {t(
+                            "The result is described in the following pie charts."
+                          )}
                         </Typography>
                         <div className="min-h-min w-full flex items-center justify-center">
                           <img
                             src={fig11}
-                            alt=" Image"
-                            className="h-[60vh] w-[140vh] "
+                            alt="Image"
+                            className="h-[60vh] w-[140vh]"
                           />
                         </div>
                         <div className="min-h-min w-full flex items-center justify-center mb-[1vh] mt-[1vh]">
                           <img
                             src={fig12}
-                            alt=" Image"
-                            className="h-[60vh] w-[140vh] "
+                            alt="Image"
+                            className="h-[60vh] w-[140vh]"
                           />
                         </div>
                         <Typography>
-                          Finally, let’s look at how the distribution of
-                          features has changed.
+                          {t(
+                            "Finally, let’s look at how the distribution of features has changed."
+                          )}
                         </Typography>
                         <div className="min-h-min w-full flex items-center justify-center mb-[1vh] mt-[1vh]">
                           <img
                             src={fig13}
-                            alt=" Image"
-                            className="h-[60vh] w-[140vh] "
+                            alt="Image"
+                            className="h-[60vh] w-[140vh]"
                           />
                         </div>
                       </AccordionDetails>
@@ -631,23 +601,15 @@ const Profiling = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                   >
-                    <Typography> Features scaling and Encoding:</Typography>
+                    <Typography>
+                      {t("Features scaling and Encoding:")}
+                    </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      In order to make data exploitable for the algorithms we
-                      will run, we apply two transformations: <br />
-                      First, we apply a label encoding to the categorical
-                      columns, since Type is an ordinal feature and Cause must
-                      be represented in one column. <br /> The mapping follows
-                      this scheme: Type: L=0, M=1, H=2 <br /> Cause: Working=0,
-                      PWF=1, OSF=2, HDF=3, TWF=4 <br />
-                      Secondly we perform the scaling of the columns with
-                      StandardScaler. This is particularly useful for the good
-                      working of methods that rely on the metric space, such as
-                      PCA and KNN. It has been also verified that using
-                      StandardScaler leads to slightly better performances than
-                      using MinMaxScaler.
+                      {t(
+                        "In order to make data exploitable for the algorithms we will run, we apply two transformations: First, we apply a label encoding to the categorical columns, since Type is an ordinal feature and Cause must be represented in one column. The mapping follows this scheme: Type: L=0, M=1, H=2 Cause: Working=0, PWF=1, OSF=2, HDF=3, TWF=4 Secondly we perform the scaling of the columns with StandardScaler. This is particularly useful for the good working of methods that rely on the metric space, such as PCA and KNN. It has been also verified that using StandardScaler leads to slightly better performances than using MinMaxScaler."
+                      )}
                     </Typography>
                     <FeaturesScaling TABLE_DATA={JSON.parse(data[4])} />
                   </AccordionDetails>
@@ -658,24 +620,27 @@ const Profiling = () => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                   >
-                    <Typography> PCA (Principal Component Analysis)</Typography>
+                    <Typography>
+                      {t("PCA (Principal Component Analysis)")}
+                    </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      We run PCA to have a further way of displaying the data
-                      instead of making feature selection.
+                      {t(
+                        "We run PCA to have a further way of displaying the data instead of making feature selection."
+                      )}
                     </Typography>
                     <div className="min-h-min w-full flex items-center justify-center mb-[1vh] mt-[1vh]">
-                      <img src={fig14} alt=" Image" className=" w-[140vh] " />
+                      <img src={fig15} alt="Image" className=" w-[140vh] " />
+                    </div>
+                    <div className="min-h-min w-full flex items-center justify-center mb-[1vh] mt-[1vh]">
+                      <img src={fig14} alt="Image" className=" w-[140vh] " />
                     </div>
                   </AccordionDetails>
                   <Typography>
-                    The bar plot of Principal Components weights makes easy to
-                    understand what they represent:
-                    <br /> PC1 is closely related to the two temperature data;
-                    <br /> PC2 can be identified with the machine power, which
-                    is the product of Rotational Speed and Torque;
-                    <br /> PC3 is identifiable with Tool Wear.
+                    {t(
+                      "The bar plot of Principal Components weights makes easy to understand what they represent: PC1 is closely related to the two temperature data; PC2 can be identified with the machine power, which is the product of Rotational Speed and Torque; PC3 is identifiable with Tool Wear."
+                    )}
                   </Typography>
                 </Accordion>
                 <Accordion style={{ backgroundColor, color }}>
@@ -685,15 +650,14 @@ const Profiling = () => {
                     id="panel1-header"
                   >
                     <Typography>
-                      {" "}
-                      Correlation heatmap after data preprocessing :
+                      {t("Correlation heatmap after data preprocessing :")}
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="min-h-min w-full flex items-center justify-center mb-[1vh] mt-[1vh]">
                       <img
                         src={fig16}
-                        alt=" Image"
+                        alt="Image"
                         className="h-[60vh] w-[90vh]"
                       />
                     </div>

@@ -65,6 +65,22 @@ export const editUser = async (data) => {
     return error;
   }
 };
+export const addUser = async (id) => {
+  try {
+    const response = await axios.post(backend_url + `api/user/add`, id, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+      credentials: "include",
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const deleteUser = async (id) => {
   try {
     const response = await axios.post(backend_url + `api/user/delete`, id, {

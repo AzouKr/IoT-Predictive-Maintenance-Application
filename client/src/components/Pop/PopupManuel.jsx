@@ -33,11 +33,13 @@ import {
   deleteModel,
   getDatasets,
 } from "../../Hooks/Python";
+import { useTranslation } from "react-i18next";
 
 const PopupManuel = () => {
   const { theme } = useContext(ThemeContext);
   const backgroundColor = theme === LIGHT_THEME ? "#F3F4F6" : "#2e2e48";
   const color = theme === LIGHT_THEME ? "black" : "white";
+  const { t } = useTranslation();
 
   const [open, openchange] = useState(false);
   const functionopenpopup = () => {
@@ -83,15 +85,13 @@ const PopupManuel = () => {
   const [type, settype] = useState(0);
   const [error, seterror] = useState(false);
   const [loading, setloading] = useState(false);
-  const [validation, setvalidation] = useState(false);
-  const [values, setvalues] = useState();
 
-  const [n_neighbors, setn_neighbors] = useState(0);
-  const [c, setc] = useState(0);
-  const [gamma, setgamma] = useState(0);
-  const [n_estimators, setn_estimators] = useState(0);
-  const [max_depth, setmax_depth] = useState(0);
-  const [learning_rate, setlearning_rate] = useState(0);
+  const [n_neighbors, setn_neighbors] = useState(5);
+  const [c, setc] = useState(10);
+  const [gamma, setgamma] = useState(10);
+  const [n_estimators, setn_estimators] = useState(300);
+  const [max_depth, setmax_depth] = useState(7);
+  const [learning_rate, setlearning_rate] = useState(0.1);
 
   const fetchData = async () => {
     await getDatasets().then((response) => {
@@ -151,21 +151,6 @@ const PopupManuel = () => {
     }
   };
 
-  const handleCreationCancle = async () => {
-    const data = {
-      name: selectedAlgo.toUpperCase() + "_" + name + ".joblib",
-    };
-    await deleteModel(data)
-      .then((res) => {
-        setTimeout(() => {
-          navigate("/createmodel");
-        }, 2000);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <div
       style={{ textAlign: "center" }}
@@ -180,24 +165,21 @@ const PopupManuel = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        Build Custom Model
+        {t("Build Custom Model")}
       </Button>
-
       <Dialog
-        // fullScreen
         open={open}
         onClose={closepopup}
-        // fullWidth maxWidth="sm"
         maxWidth="false"
         PaperProps={{
           className: "w-[100vh] h-[180vh]",
         }}
       >
         <DialogTitle style={{ textAlign: "center", backgroundColor, color }}>
-          Custom ML{" "}
+          {t("Custom ML")}
           <IconButton onClick={closepopup} style={{ float: "right" }}>
             <CloseIcon color="primary"></CloseIcon>
-          </IconButton>{" "}
+          </IconButton>
         </DialogTitle>
         <DialogContent style={{ backgroundColor, color }}>
           {!loading ? (
@@ -209,12 +191,12 @@ const PopupManuel = () => {
                 <Stack spacing={2} margin={2} className=" w-[50vh] h-[55vh] ">
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">
-                      Select Dataset
+                      {t("Select Dataset")}
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      label="Select Dataset"
+                      label={t("Select Dataset")}
                       onChange={(e) => {
                         setselectedDataset(e.target.value);
                       }}
@@ -229,7 +211,7 @@ const PopupManuel = () => {
 
                   <TextField
                     variant="outlined"
-                    label="Name your model"
+                    label={t("Name your model")}
                     InputLabelProps={{
                       sx: {
                         color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
@@ -247,7 +229,7 @@ const PopupManuel = () => {
 
                   <FormControl>
                     <FormLabel id="demo-row-radio-buttons-group-label">
-                      Type
+                      {t("Type")}
                     </FormLabel>
                     <RadioGroup
                       row
@@ -260,12 +242,12 @@ const PopupManuel = () => {
                       <FormControlLabel
                         value={0}
                         control={<Radio />}
-                        label="Binary"
+                        label={t("Binary")}
                       />
                       <FormControlLabel
                         value={1}
                         control={<Radio />}
-                        label="MultiClass"
+                        label={t("MultiClass")}
                       />
                     </RadioGroup>
                   </FormControl>
@@ -277,12 +259,12 @@ const PopupManuel = () => {
                 <Stack spacing={2} margin={2} className=" w-[50vh] h-[55vh]">
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">
-                      Select Algorithm
+                      {t("Select Algorithm")}
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      label="Select Dataset"
+                      label={t("Select Algorithm")}
                       onChange={(e) => {
                         setselectedAlgo(e.target.value);
                       }}
@@ -298,7 +280,7 @@ const PopupManuel = () => {
                     <>
                       <Box sx={{ width: 300 }}>
                         <Typography gutterBottom>
-                          Number of Neighbors
+                          {t("Number of Neighbors")}
                         </Typography>
                         <Slider
                           valueLabelDisplay="auto"
@@ -319,10 +301,9 @@ const PopupManuel = () => {
                     <>
                       <Box sx={{ width: 300 }}>
                         <Typography gutterBottom>
-                          C: Regularization parameter.
+                          {t("C: Regularization parameter.")}
                         </Typography>
                         <Slider
-                          // valueLabelDisplay="auto"
                           aria-label="SVC-slider"
                           defaultValue={10}
                           getAriaValueText={valuetext}
@@ -336,10 +317,9 @@ const PopupManuel = () => {
 
                       <Box sx={{ width: 300 }}>
                         <Typography gutterBottom>
-                          gamma: Kernel coefficient for 'rbf'.
+                          {t("gamma: Kernel coefficient for 'rbf'.")}
                         </Typography>
                         <Slider
-                          //valueLabelDisplay="auto"
                           aria-label="SVC-slider"
                           defaultValue={1}
                           getAriaValueText={valuetext}
@@ -359,7 +339,7 @@ const PopupManuel = () => {
                     <>
                       <Box sx={{ width: 300 }}>
                         <Typography gutterBottom>
-                          Number of trees in the forest.
+                          {t("Number of trees in the forest.")}
                         </Typography>
                         <Slider
                           valueLabelDisplay="auto"
@@ -375,7 +355,7 @@ const PopupManuel = () => {
                       </Box>
                       <Box sx={{ width: 300 }}>
                         <Typography gutterBottom>
-                          Maximum depth of the tree.
+                          {t("Maximum depth ofthe tree.")}
                         </Typography>
                         <Slider
                           valueLabelDisplay="auto"
@@ -391,12 +371,11 @@ const PopupManuel = () => {
                       </Box>
                     </>
                   )}
-
                   {selectedAlgo === "xgb" && (
                     <>
                       <Box sx={{ width: 300 }}>
                         <Typography gutterBottom>
-                          Number of gradient-boosted trees.
+                          {t("Number of gradient-boosted trees.")}
                         </Typography>
                         <Slider
                           valueLabelDisplay="auto"
@@ -412,7 +391,7 @@ const PopupManuel = () => {
                       </Box>
                       <Box sx={{ width: 300 }}>
                         <Typography gutterBottom>
-                          Maximum depth of the tree.
+                          {t("Maximum depth of the tree.")}
                         </Typography>
                         <Slider
                           valueLabelDisplay="auto"
@@ -428,7 +407,7 @@ const PopupManuel = () => {
                       </Box>
                       <Box sx={{ width: 300 }}>
                         <Typography gutterBottom>
-                          Boosting learning rate .
+                          {t("Boosting learning rate .")}
                         </Typography>
                         <Slider
                           valueLabelDisplay="auto"
@@ -456,7 +435,7 @@ const PopupManuel = () => {
                   color="primary"
                   variant="contained"
                 >
-                  Create
+                  {t("Create")}
                 </Button>
               </Stack>
               {error ? (
@@ -475,7 +454,7 @@ const PopupManuel = () => {
                         d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <span>Empty Fields error</span>
+                    <span>{t("Empty Fields error")}</span>
                   </div>
                 </div>
               ) : null}
@@ -487,7 +466,7 @@ const PopupManuel = () => {
                   theme === LIGHT_THEME ? `text-black` : `text-white`
                 }`}
               >
-                Please wait
+                {t("Please wait")}
               </h1>
             </div>
           )}

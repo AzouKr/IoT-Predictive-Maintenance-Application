@@ -17,7 +17,11 @@ function getProductionLine(machineId) {
       if (machineNumber >= 1 && machineNumber <= 6) {
         return "Line 1";
       } else {
-        return "Line 2";
+        if (machineNumber >= 7 && machineNumber <= 12) {
+          return "Line 2";
+        } else {
+          return "Line 3";
+        }
       }
       break;
     case "RM":
@@ -28,7 +32,11 @@ function getProductionLine(machineId) {
       if (machineNumber1 === 1) {
         return "Line 1";
       } else {
-        return "Line 2";
+        if (machineNumber1 === 2) {
+          return "Line 2";
+        } else {
+          return "Line 3";
+        }
       }
       break;
     case "MT":
@@ -39,13 +47,31 @@ function getProductionLine(machineId) {
       if (machineNumber2 === 1) {
         return "Line 1";
       } else {
-        return "Line 2";
+        if (machineNumber2 === 2) {
+          return "Line 2";
+        } else {
+          return "Line 3";
+        }
       }
       break;
   }
 }
 
-const getData = async () => {
+function getMachineType(machineId) {
+  switch (machineId.slice(0, 2)) {
+    case "HM":
+      return 0;
+      break;
+    case "RM":
+      return 1;
+      break;
+    case "MT":
+      return 2;
+      break;
+  }
+}
+
+const getData = async (order) => {
   const client = await createRedisClient();
 
   const data = [];
@@ -54,21 +80,21 @@ const getData = async () => {
   // Await all the asynchronous operations inside the loops
   await Promise.all([
     (async () => {
-      for (let index = 1; index < 13; index++) {
+      for (let index = 1; index < order.HM; index++) {
         const res = await client.hGetAll(`HM${index}`);
         const value = Object.values(res)[0];
         data1.push(JSON.parse(value));
       }
     })(),
     (async () => {
-      for (let index = 1; index < 3; index++) {
+      for (let index = 1; index < order.MT; index++) {
         const res = await client.hGetAll(`MT${index}`);
         const value = Object.values(res)[0];
         data1.push(JSON.parse(value));
       }
     })(),
     (async () => {
-      for (let index = 1; index < 3; index++) {
+      for (let index = 1; index < order.RM; index++) {
         const res = await client.hGetAll(`RM${index}`);
         const value = Object.values(res)[0];
         data1.push(JSON.parse(value));
@@ -77,20 +103,56 @@ const getData = async () => {
   ]);
 
   const data2 = { marche: 0, panne: 0, danger: 0 };
+  const num = 50;
+  const num2 = 3;
 
   await Promise.all(
-    Array.from({ length: 16 }, async (_, index) => {
-      let type = 0;
-      if (index < 12) {
-        type = 0;
-      } else {
-        if (11 < index < 14) {
-          type = 1;
-        } else {
-          type = 2;
+    Array.from({ length: order.total }, async (_, index) => {
+      if (data1[index].failure === 0) {
+        const randomNumber = Math.floor(Math.random() * 100);
+        if (randomNumber === num) {
+          data1[index].failure = 1;
+          const randomCause = Math.floor(Math.random() * 4);
+          let cause;
+          switch (randomCause) {
+            case 0:
+              cause = "Overstrain Failure";
+              break;
+            case 1:
+              cause = "Heat Dissipation Failure";
+              break;
+            case 2:
+              cause = "Power Failure";
+              break;
+            case 3:
+              cause = "Tool Wear Failure";
+              break;
+          }
+          fetchSupervisor(getProductionLine(data1[index].id))
+            .then((res) => {
+              createMachineAlert(
+                data1[index].id,
+                cause,
+                "Panne",
+                res.data[0].supervisor
+              )
+                .then((res) => {})
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
       }
+    })
+  );
+
+  await Promise.all(
+    Array.from({ length: order.total }, async (_, index) => {
       if (data1[index].failure === 0) {
+        let type = getMachineType(data1[index].id);
         const data = [
           [
             type,
@@ -105,58 +167,64 @@ const getData = async () => {
           const result = await Prediction(data);
           if (result.type === 0) {
             if (result.result[0] === 1) {
-              data1[index].failure = 2;
-              fetchSupervisor(getProductionLine(data1[index].id))
-                .then((res) => {
-                  createMachineAlert(
-                    data1[index].id,
-                    "None",
-                    "Risque",
-                    res.data[0].supervisor
-                  )
-                    .then((res) => {})
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
+              const randomNumber = Math.floor(Math.random() * 7);
+              if (randomNumber === num2) {
+                data1[index].failure = 2;
+                fetchSupervisor(getProductionLine(data1[index].id))
+                  .then((res) => {
+                    createMachineAlert(
+                      data1[index].id,
+                      "None",
+                      "Risque",
+                      res.data[0].supervisor
+                    )
+                      .then((res) => {})
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
             }
           } else {
-            if (result.result[0] !== 0) {
-              data1[index].failure = 2;
-              fetchSupervisor(getProductionLine(data1[index].id))
-                .then((res) => {
-                  let cause;
-                  switch (result.result[0]) {
-                    case 1:
-                      cause = "Overstrain Failure";
-                      break;
-                    case 2:
-                      cause = "Heat Dissipation Failure";
-                      break;
-                    case 3:
-                      cause = "Power Failure";
-                      break;
-                    case 4:
-                      cause = "Tool Wear Failure";
-                      break;
-                  }
-                  createMachineAlert(
-                    data1[index].id,
-                    cause,
-                    "Risque",
-                    res.data[0].supervisor
-                  )
-                    .then((res) => {})
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
+            const randomNumber = Math.floor(Math.random() * 7);
+            if (randomNumber === num2) {
+              if (result.result[0] !== 0) {
+                data1[index].failure = 2;
+                fetchSupervisor(getProductionLine(data1[index].id))
+                  .then((res) => {
+                    let cause;
+                    switch (result.result[0]) {
+                      case 1:
+                        cause = "Overstrain Failure";
+                        break;
+                      case 2:
+                        cause = "Heat Dissipation Failure";
+                        break;
+                      case 3:
+                        cause = "Power Failure";
+                        break;
+                      case 4:
+                        cause = "Tool Wear Failure";
+                        break;
+                    }
+                    createMachineAlert(
+                      data1[index].id,
+                      cause,
+                      "Risque",
+                      res.data[0].supervisor
+                    )
+                      .then((res) => {})
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
             }
           }
         } catch (error) {
@@ -169,7 +237,7 @@ const getData = async () => {
   data.push(data1);
 
   await Promise.all(
-    Array.from({ length: 16 }, async (_, index) => {
+    Array.from({ length: order.total }, async (_, index) => {
       await client.hSet(
         data1[index].id,
         data1[index].id,
@@ -178,7 +246,7 @@ const getData = async () => {
     })
   );
 
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < order.total; i++) {
     switch (data1[i].failure) {
       case 0:
         data2.marche = data2.marche + 1;

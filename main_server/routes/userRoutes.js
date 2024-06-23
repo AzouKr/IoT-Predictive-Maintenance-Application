@@ -4,6 +4,7 @@ const {
   modifyUser,
   desactivateUser,
   fetchUserById,
+  activateUser,
 } = require("../Utils/database");
 const authenticateToken = require("../Middleware/authMiddleware");
 const sendEmail = require("../Utils/nodeMailer");
@@ -56,6 +57,25 @@ router.post(
       });
   }
 );
+router.post(
+  "/add",
+  (req, res, next) => {
+    authenticateToken(req, res, next, ["admin"]);
+  },
+  async (req, res) => {
+    const emails = req.body;
+    emails.forEach((email) => {
+      activateUser(email)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          res.status(400).json(error);
+        });
+    });
+  }
+);
+
 router.post(
   "/delete",
   (req, res, next) => {

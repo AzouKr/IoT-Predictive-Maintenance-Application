@@ -11,6 +11,7 @@ const taskEmail = require("../Utils/emails/taskEmail");
 const logger = require("../Utils/logger");
 const sendEmail = require("../Utils/nodeMailer");
 const updateMachine = require("../Utils/updateMachine");
+const { sendUserAlerts } = require("../Utils/server");
 const router = express.Router();
 
 router.get(
@@ -56,32 +57,30 @@ router.post(
   async (req, res) => {
     const { employee, machine } = req.body;
     try {
-      employee.forEach((element) => {
-        assignMachineAlerts(element.email, machine)
-          .then((response) => {
-            createUserAlert(
-              "TASK",
-              "You have been assigned new task",
-              element.email
-            )
-              .then(() => {
-                sendUserAlerts(element.email)
-                  .then()
-                  .catch((err) => {
-                    logger.error(err);
-                  });
-              })
-              .catch((err) => {
-                logger.error(err);
-              });
-            const body = taskEmail();
-            sendEmail(element.email, "TASK ASSIGNED", body);
-            res.status(200).json(response);
-          })
-          .catch((err) => {
-            res.status(400).json(err);
-          });
-      });
+      assignMachineAlerts(employee.email, machine)
+        .then((response) => {
+          createUserAlert(
+            "TASK",
+            "You have been assigned new task",
+            employee.email
+          )
+            .then(() => {
+              sendUserAlerts(employee.email)
+                .then()
+                .catch((err) => {
+                  logger.error(err);
+                });
+            })
+            .catch((err) => {
+              logger.error(err);
+            });
+          const body = taskEmail();
+          sendEmail(element.email, "TASK ASSIGNED", body);
+          res.status(200).json(response);
+        })
+        .catch((err) => {
+          res.status(400).json(err);
+        });
     } catch (error) {
       res.status(400).json(error);
     }
@@ -94,9 +93,9 @@ router.post(
     authenticateToken(req, res, next, ["technicien"]);
   },
   async (req, res) => {
-    const { machine } = req.body;
+    const { machine, rapport, id } = req.body;
     try {
-      updateMachineAlerts(machine)
+      updateMachineAlerts(id, rapport)
         .then((response) => {
           updateMachine(machine)
             .then(() => {

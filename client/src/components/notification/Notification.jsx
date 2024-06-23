@@ -74,6 +74,7 @@ const Notification = (props) => {
         >
           <div style={{ display: "flex" }}>
             <p
+              className="text-black"
               style={{
                 fontSize: "16px",
                 textAlign: "left",
@@ -93,6 +94,7 @@ const Notification = (props) => {
           {listItems.map((i, k) => (
             <div key={k}>
               <p
+                className="text-black"
                 style={{
                   fontSize: "12px",
                   margin: "5px 0",
@@ -101,7 +103,10 @@ const Notification = (props) => {
                   display: "initial",
                 }}
               >
-                <span style={{ display: "inline-block", width: "50%" }}>
+                <span
+                  className="text-black"
+                  style={{ display: "inline-block", width: "50%" }}
+                >
                   {i.date}
                 </span>
                 <span
@@ -132,11 +137,15 @@ const Notification = (props) => {
                     className={"lineItems"}
                   >
                     {/* title*/}
-                    <span style={{ fontSize: "13px", fontWeight: 700 }}>
+                    <span
+                      className="text-black"
+                      style={{ fontSize: "13px", fontWeight: 700 }}
+                    >
                       {`${l.type}`}
                     </span>
                     {/* time*/}
                     <span
+                      className="text-black"
                       style={{
                         fontSize: "10px",
                         fontWeight: 700,
@@ -147,17 +156,14 @@ const Notification = (props) => {
                       {`${time}`}
                     </span>
                     {/* desc*/}
-                    <div style={{ fontSize: "10px" }}>{l.desc}</div>
+                    <div className="text-black" style={{ fontSize: "10px" }}>
+                      {l.desc}
+                    </div>
                   </div>
                 );
               })}
             </div>
           ))}
-          <Link to="/notifications">
-            <p style={{ textAlign: "right", margin: 0, color: "#42A5F5" }}>
-              VIEW ALL
-            </p>
-          </Link>
         </div>
       )}
     </div>

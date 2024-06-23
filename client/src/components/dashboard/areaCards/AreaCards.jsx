@@ -2,9 +2,11 @@ import React from "react";
 import AreaCard from "./AreaCard";
 import "./AreaCards.scss";
 import socket from "../../../socket"; // Import the socket module
+import { useTranslation } from "react-i18next";
 
 const AreaCards = () => {
   const [stats, setstats] = React.useState({});
+  const { t } = useTranslation();
 
   socket.on("getData", (data) => {
     setstats(data[1]);
@@ -16,7 +18,7 @@ const AreaCards = () => {
         colors={["#e4e8ef", "#4ce13f"]}
         percentFillValue={(stats.marche * 100) / 16}
         cardInfo={{
-          title: "En marche",
+          title: t("Running"),
           value: stats.marche,
         }}
       />
@@ -24,7 +26,7 @@ const AreaCards = () => {
         colors={["#e4e8ef", "#f29a2e"]}
         percentFillValue={(stats.danger * 100) / 16}
         cardInfo={{
-          title: "En danger",
+          title: t("In danger"),
           value: stats.danger,
         }}
       />
@@ -32,7 +34,7 @@ const AreaCards = () => {
         colors={["#e4e8ef", "#b30000"]}
         percentFillValue={(stats.panne * 100) / 16}
         cardInfo={{
-          title: "En panne",
+          title: t("Broken"),
           value: stats.panne,
         }}
       />

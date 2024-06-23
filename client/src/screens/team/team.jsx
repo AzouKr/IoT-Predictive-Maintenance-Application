@@ -10,10 +10,12 @@ import { io } from "socket.io-client";
 import { backend_url_socket } from "../../Hooks";
 import secureLocalStorage from "react-secure-storage";
 import { deleteMember, getOneTeam, getTeam } from "../../Hooks/Teams";
+import { useTranslation } from "react-i18next";
 
 const Team = () => {
   const [team, setteam] = useState();
   const [teamInfo, setteamInfo] = useState();
+  const { t } = useTranslation();
 
   const socket = io(backend_url_socket, {
     withCredentials: true,
@@ -51,21 +53,21 @@ const Team = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
+    { field: "id", headerName: t("ID"), flex: 0.5 },
     {
       field: "name",
-      headerName: "Name",
+      headerName: t("Name"),
       flex: 0.5,
       cellClassName: "name-column--cell",
     },
     {
       field: "email",
-      headerName: "Email",
+      headerName: t("Email"),
       flex: 0.5,
     },
     {
       field: "action",
-      headerName: "Action",
+      headerName: t("Action"),
       flex: 0.5,
       renderCell: ({ row: { email } }) => (
         <Button
@@ -81,7 +83,7 @@ const Team = () => {
             },
           }}
         >
-          Delete
+          {t("Delete")}
         </Button>
       ),
     },
@@ -112,28 +114,28 @@ const Team = () => {
               >
                 <Box>
                   <Typography variant="h6" component="div">
-                    Team Name:
-                    {teamInfo.lenght === undefined
-                      ? teamInfo.lenght !== 0
+                    {t("Team Name")}
+                    {teamInfo.length === undefined
+                      ? teamInfo.length !== 0
                         ? teamInfo.name
-                        : "NaN"
-                      : "NaN"}
+                        : t("NaN")
+                      : t("NaN")}
                   </Typography>
                   <Typography variant="body1" component="div">
-                    Supervisor:{" "}
-                    {teamInfo.lenght === undefined
-                      ? teamInfo.lenght !== 0
+                    {t("Supervisor")}
+                    {teamInfo.length === undefined
+                      ? teamInfo.length !== 0
                         ? teamInfo.supervisor
-                        : "NaN"
-                      : "NaN"}
+                        : t("NaN")
+                      : t("NaN")}
                   </Typography>
                   <Typography variant="body1" component="div">
-                    Production Line:{" "}
-                    {teamInfo.lenght === undefined
-                      ? teamInfo.lenght !== 0
+                    {t("Production Line")}
+                    {teamInfo.length === undefined
+                      ? teamInfo.length !== 0
                         ? teamInfo.prod_line
-                        : "NaN"
-                      : "NaN"}
+                        : t("NaN")
+                      : t("NaN")}
                   </Typography>
                 </Box>
                 <Box
@@ -141,12 +143,10 @@ const Team = () => {
                   flexDirection="column"
                   alignItems="flex-end"
                 >
-                  {teamInfo.lenght !== undefined ? (
-                    teamInfo.lenght === 0 ? (
-                      <div className="btn">
-                        <TeamPop />
-                      </div>
-                    ) : null
+                  {teamInfo.length === 0 ? (
+                    <div className="btn">
+                      <TeamPop />
+                    </div>
                   ) : null}
                   <div className="btn">
                     <MemberPop name={teamInfo.name} />

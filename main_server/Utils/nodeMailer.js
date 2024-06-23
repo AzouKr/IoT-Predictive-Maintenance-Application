@@ -20,13 +20,13 @@ function sendEmail(to, subject, text) {
   };
 
   // Sending email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log("Error occurred: ", error);
-    } else {
-      console.log("Email sent: ", info.response);
-    }
-  });
+  // transporter.sendMail(mailOptions, (error, info) => {
+  //   if (error) {
+  //     console.log("Error occurred: ", error);
+  //   } else {
+  //     console.log("Email sent: ", info.response);
+  //   }
+  // });
 }
 
 module.exports = sendEmail;

@@ -20,7 +20,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://192.168.1.6:5173"],
+    origin: [
+      "http://localhost:5173",
+      "http://192.168.1.6:5173",
+      "http://172.20.10.2:5173/",
+    ],
     credentials: true,
   })
 );
@@ -30,7 +34,11 @@ app.use(bodyParser.json());
 const server = http.createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
-    origin: ["http://localhost:5173", "http://192.168.1.6:5173"],
+    origin: [
+      "http://localhost:5173",
+      "http://192.168.1.6:5173",
+      "http://172.20.10.2:5173",
+    ],
     credentials: true,
   },
 });
@@ -79,7 +87,8 @@ io.on("connection", async (socket) => {
       await getUserEmail(cookies.accessToken)
     )
       .then((response) => {
-        io.emit("getMachineAlerts", response);
+        const newRes = { bool: response.bool, data: response.data.reverse() };
+        io.emit("getMachineAlerts", newRes);
       })
       .catch((err) => {
         console.log(err);
@@ -119,7 +128,7 @@ io.on("connection", async (socket) => {
           obj.push({ date: date, list: list });
         });
         const finalData = [];
-        finalData.push({ count: response.data.length, data: obj });
+        finalData.push({ count: response.data.length, data: obj.reverse() });
         io.emit("getUserAlerts/" + email, finalData[0]);
       })
       .catch((err) => {
@@ -133,7 +142,8 @@ const sendData = (data) => {
 };
 
 const sendMachineAlerts = (data) => {
-  io.emit("getMachineAlerts", data);
+  const newRes = { bool: data.bool, data: data.data.reverse() };
+  io.emit("getMachineAlerts", newRes);
 };
 
 const sendUserAlerts = async (email) => {
@@ -173,7 +183,7 @@ const sendUserAlerts = async (email) => {
       const finalData = [];
       finalData.push({ count: response.data.length, data: obj });
       io.emit("getUserAlerts/" + email, finalData[0]);
-      io.emit("soundAlert", "hi");
+      io.emit("soundAlert/" + email, "hi");
     })
     .catch((err) => {
       console.log(err);

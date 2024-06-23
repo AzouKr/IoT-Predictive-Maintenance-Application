@@ -6,9 +6,11 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
 import React, { useContext, useEffect, useState } from "react";
 import { getTeams } from "../../Hooks/Teams";
+
 const Teams = () => {
   const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
   const [data, setdata] = useState([]);
+
   const fetchData = async () => {
     await getTeams().then((response) => {
       setdata(response.data);
@@ -26,31 +28,31 @@ const Teams = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "prod_line",
-      headerName: "Production line",
+      field: "email",
+      headerName: "Email",
       headerAlign: "left",
       flex: 1,
       align: "left",
     },
     {
-      field: "supervisor",
-      headerName: "Supervisor",
+      field: "role",
+      headerName: "Role",
       flex: 1,
     },
   ];
 
   return (
-    <div className="content-area">
+    <div className="content-area min-h-min">
       <AreaTop />
 
       <Box
         m="5px"
-        height="calc(100vh - 100px)"
+        height="min-h-min"
         className={theme === LIGHT_THEME ? "" : "dark-mode"}
       >
         <Box
           m="30px 0 0 0"
-          height="80vh"
+          height="min-h-min"
           sx={{
             "& .MuiDataGrid-root": {
               border: "none",
@@ -86,13 +88,19 @@ const Teams = () => {
             },
           }}
         >
-          <DataGrid
-            rows={data}
-            columns={columns}
-            slots={{
-              toolbar: GridToolbar,
-            }}
-          />
+          {data.map((team) => (
+            <>
+              <h1>{team.team}</h1>
+              <DataGrid
+                rows={team.users}
+                columns={columns}
+                className="mb-[2vh]"
+                // slots={{
+                //   toolbar: GridToolbar,
+                // }}
+              />
+            </>
+          ))}
         </Box>
       </Box>
     </div>

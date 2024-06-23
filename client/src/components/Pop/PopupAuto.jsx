@@ -23,15 +23,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
-import { Link } from "react-router-dom";
 import { createAutoModel, getDatasets } from "../../Hooks/Python";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const PopupAuto = () => {
   const { theme } = useContext(ThemeContext);
   const backgroundColor = theme === LIGHT_THEME ? "#F3F4F6" : "#2e2e48";
   const color = theme === LIGHT_THEME ? "black" : "white";
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [open, openchange] = useState(false);
   const functionopenpopup = () => {
@@ -102,21 +103,15 @@ const PopupAuto = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        Start with AutoML
+        {t("Start with AutoML")}
       </Button>
 
-      <Dialog
-        // fullScreen
-        open={open}
-        onClose={closepopup}
-        fullWidth
-        maxWidth="sm"
-      >
+      <Dialog open={open} onClose={closepopup} fullWidth maxWidth="sm">
         <DialogTitle style={{ textAlign: "center", backgroundColor, color }}>
-          AutoML{" "}
+          {t("AutoML")}
           <IconButton onClick={closepopup} style={{ float: "right" }}>
             <CloseIcon color="primary"></CloseIcon>
-          </IconButton>{" "}
+          </IconButton>
         </DialogTitle>
         <DialogContent style={{ backgroundColor, color }}>
           {!loading ? (
@@ -125,12 +120,12 @@ const PopupAuto = () => {
                 <Stack spacing={2} margin={2}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">
-                      Select Dataset
+                      {t("Select Dataset")}
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      label="Select Dataset"
+                      label={t("Select Dataset")}
                       onChange={(e) => {
                         setselectedDataset(e.target.value);
                       }}
@@ -145,7 +140,7 @@ const PopupAuto = () => {
 
                   <TextField
                     variant="outlined"
-                    label="Name your model"
+                    label={t("Name your model")}
                     InputLabelProps={{
                       sx: {
                         color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
@@ -163,7 +158,7 @@ const PopupAuto = () => {
 
                   <FormControl>
                     <FormLabel id="demo-row-radio-buttons-group-label">
-                      Type
+                      {t("Type")}
                     </FormLabel>
                     <RadioGroup
                       row
@@ -176,28 +171,26 @@ const PopupAuto = () => {
                       <FormControlLabel
                         value={0}
                         control={<Radio />}
-                        label="Binary"
+                        label={t("Binary")}
                       />
                       <FormControlLabel
                         value={1}
                         control={<Radio />}
-                        label="MultiClass"
+                        label={t("MultiClass")}
                       />
                     </RadioGroup>
                   </FormControl>
                 </Stack>
               </div>
-              {/* <Link to="/results"> */}
               <Stack>
                 <Button
                   onClick={handleCreate}
                   color="primary"
                   variant="contained"
                 >
-                  Create
+                  {t("Create")}
                 </Button>
               </Stack>
-              {/* </Link> */}
               {error ? (
                 <div className="min-h-min w-full flex items-center justify-center">
                   <div role="alert" className="alert alert-error m-4 ">
@@ -214,7 +207,7 @@ const PopupAuto = () => {
                         d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <span>empty Fields error</span>
+                    <span>{t("empty Fields error")}</span>
                   </div>
                 </div>
               ) : null}
@@ -226,7 +219,7 @@ const PopupAuto = () => {
                   theme === LIGHT_THEME ? `text-black` : `text-white`
                 }`}
               >
-                Please wait
+                {t("Please wait")}
               </h1>
             </div>
           )}

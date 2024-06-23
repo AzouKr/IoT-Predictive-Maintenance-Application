@@ -2,7 +2,6 @@ import { AreaTop } from "../../components";
 import React, { useContext, useState, useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
@@ -10,7 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
-import { deleteUser, getUsers } from "../../Hooks/Users";
+import { addUser, deleteUser, getUsers } from "../../Hooks/Users";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -18,13 +17,12 @@ const Users = () => {
   const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const [data, setdata] = useState([]);
   const fetchData = async () => {
     await getUsers().then((response) => {
       setdata(response.data);
-      console.log(response.data);
     });
   };
   useEffect(() => {
@@ -42,6 +40,17 @@ const Users = () => {
   const handleDelete = async () => {
     const id = selectedRowIds;
     await deleteUser(id)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleAdd = async () => {
+    const id = selectedRowIds;
+    await addUser(id)
       .then((res) => {
         window.location.reload();
       })
@@ -153,14 +162,14 @@ const Users = () => {
   ];
 
   return (
-    <div className="content-area">
+    <div className="content-area h-[150vh]">
       {data !== undefined ? (
         <>
           <AreaTop />
           <Box m="5px" className={theme === LIGHT_THEME ? "" : "dark-mode"}>
             <Box
               m="30px 0 0 0"
-              height="80vh"
+              maxHeight="50vh"
               sx={{
                 "& .MuiDataGrid-root": {
                   border: "none",
@@ -208,12 +217,20 @@ const Users = () => {
                 },
               }}
             >
-              <div className="menu">
+              <div className="p-[2vh] h-[10vh] flex items-center justify-end">
+                <Button
+                  variant="contained"
+                  onClick={handleAdd}
+                  sx={{ cursor: "pointer" }}
+                  disabled={selectedRowIds.length === 0}
+                >
+                  Add
+                </Button>
                 <Button
                   startIcon={<DeleteIcon />}
                   variant="contained"
                   onClick={handleDelete}
-                  sx={{ cursor: "pointer" }}
+                  sx={{ cursor: "pointer", marginLeft: "1vh" }}
                   disabled={selectedRowIds.length === 0}
                 >
                   {t("label_btn_delete")}

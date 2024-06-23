@@ -4,18 +4,21 @@ import { LIGHT_THEME } from "../../constants/themeConstants";
 import secureLocalStorage from "react-secure-storage";
 import { resetPass } from "../../Hooks/Auth";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function ResetPassword() {
   const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmpassword] = useState("");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleResetPass = () => {
     if (password !== "" && confirmpassword !== "") {
       if (password === confirmpassword) {
         resetPass(secureLocalStorage.getItem("resetEmail"), password)
           .then((res) => {
+            alert(t("Redirecting to login"));
             setTimeout(() => {
               navigate("/login");
             }, 2000);
@@ -24,12 +27,13 @@ function ResetPassword() {
             console.log(err);
           });
       } else {
-        alert("Passwrod do not match ");
+        alert(t("Password do not match"));
       }
     } else {
-      alert("You must enter password and password confirmation");
+      alert(t("You must enter password and password confirmation"));
     }
   };
+
   return (
     <div
       className={`h-[100vh] w-full flex items-center justify-center ${
@@ -46,7 +50,7 @@ function ResetPassword() {
             theme === LIGHT_THEME ? "bg-[#E5E7EB]" : "bg-[#2e2e48]"
           }`}
         >
-          Reset your password
+          {t("Reset your password")}
         </h1>
         <div className="pl-[4vh] pr-[4vh]">
           <label className="input input-bordered flex items-center gap-2">
@@ -65,7 +69,7 @@ function ResetPassword() {
             <input
               type="password"
               className="grow"
-              placeholder="Enter your password"
+              placeholder={t("Enter your password")}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
@@ -89,7 +93,7 @@ function ResetPassword() {
             <input
               type="password"
               className="grow"
-              placeholder="Confirm your password"
+              placeholder={t("Confirm your password")}
               onChange={(e) => {
                 setconfirmpassword(e.target.value);
               }}
@@ -97,13 +101,8 @@ function ResetPassword() {
           </label>
         </div>
         <div className="pt-[5vh]">
-          <button
-            onClick={() => {
-              handleResetPass();
-            }}
-            className="btn btn-wide"
-          >
-            Reset
+          <button onClick={handleResetPass} className="btn btn-wide">
+            {t("Reset")}
           </button>
         </div>
       </div>

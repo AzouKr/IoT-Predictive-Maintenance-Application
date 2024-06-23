@@ -3,7 +3,7 @@ import { backend_url } from "./index";
 
 export const getTeams = async () => {
   try {
-    const response = await axios.get(backend_url + `api/team/`, {
+    const response = await axios.get(backend_url + `api/team/list`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

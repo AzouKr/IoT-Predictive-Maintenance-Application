@@ -8,22 +8,14 @@ import { ThemeContext } from "../../context/ThemeContext";
 import HM from "../../assets/images/HM.png";
 import MT from "../../assets/images/MT.png";
 import RM from "../../assets/images/RM.jpg";
+import { useTranslation } from "react-i18next";
 
 const ReferenceSystem = () => {
   const { theme } = useContext(ThemeContext);
   const color = theme === LIGHT_THEME ? "black" : "white";
 
   const { id } = useParams();
-  // const [state, setstate] = useState();
-
-  // const fetchData = async () => {
-  //   const data = await getData(id);
-  //   setstate(data);
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -39,10 +31,10 @@ const ReferenceSystem = () => {
           style={{ color, opacity: "0.7" }}
         >
           {id.slice(0, 2) === "HM"
-            ? "Hydraulic Machine"
+            ? t("Hydrolic Machine")
             : id.slice(0, 2) === "RM"
-            ? "Rotational Machine"
-            : "Machine Tool"}
+            ? t("Rotational Machine")
+            : t("Machine Tool")}
         </h1>
         <div className="flex items-center justify-center">
           <img

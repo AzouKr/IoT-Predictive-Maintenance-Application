@@ -2,24 +2,27 @@ import React, { useContext, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
 import { sendLink } from "../../Hooks/Auth";
+import { useTranslation } from "react-i18next";
 
 function Email() {
   const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
   const [email, setemail] = useState("");
+  const { t } = useTranslation();
 
   const handleResetPass = () => {
     if (email !== "") {
       sendLink(email)
         .then((res) => {
-          alert("Link sent to your email address");
+          alert(t("Link sent to your email address"));
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
-      alert("You must enter your email");
+      alert(t("You must enter your email"));
     }
   };
+
   return (
     <div
       className={`h-[100vh] w-full flex items-center justify-center ${
@@ -36,7 +39,7 @@ function Email() {
             theme === LIGHT_THEME ? "text-black" : "text-white"
           }`}
         >
-          Send reset link
+          {t("Send reset link")}
         </h1>
         <div className="pl-[4vh] pr-[4vh]">
           <label className="input input-bordered flex items-center gap-2">
@@ -53,7 +56,7 @@ function Email() {
             <input
               type="Email"
               className="grow"
-              placeholder="Enter your password"
+              placeholder={t("Enter your email")}
               onChange={(e) => {
                 setemail(e.target.value);
               }}
@@ -67,7 +70,7 @@ function Email() {
             }}
             className="btn btn-wide"
           >
-            Send
+            {t("Send")}
           </button>
         </div>
       </div>

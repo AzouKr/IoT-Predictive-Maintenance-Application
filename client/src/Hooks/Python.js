@@ -67,7 +67,7 @@ export const getDatasetsInfo = async () => {
   }
 };
 
-export const deleteDataset = async (data) => {
+export const deleteCSV = async (data) => {
   try {
     const response = await axios.post(
       "http://127.0.0.1:8080/dataset/delete",

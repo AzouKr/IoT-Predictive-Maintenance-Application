@@ -18,6 +18,21 @@ const AreaTable = () => {
   socket.on("getData", (data) => {
     setdata(data[0]);
   });
+  const today = new Date();
+  const months = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+  ];
   return (
     <section className="content-area-table">
       <div className="data-table-info">
@@ -62,7 +77,13 @@ const AreaTable = () => {
                   return (
                     <tr key={dataItem.id}>
                       <td>{dataItem.id}</td>
-                      <td>Jun 29,2023</td>
+                      <td>
+                        {today.getDate() +
+                          " " +
+                          months[today.getMonth()] +
+                          " " +
+                          today.getFullYear()}
+                      </td>
                       {<td>{name}</td>}
                       {/* { <td>{dataItem.Type}</td> } */}
                       <td>

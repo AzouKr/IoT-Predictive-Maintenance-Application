@@ -6,7 +6,7 @@ const CircularCharts = ({ state }) => {
     <div className="flex flex-col gap-1 ">
       <section className="content-area-charts w-full ">
         <CircularM
-          percentFillValue={((state.airTemperature * 100) / 400).toFixed(0)}
+          percentFillValue={((state.airTemperature * 100) / 330).toFixed(0)}
           cardInfo={{
             title: "Temperature",
             value: Number(state.airTemperature).toFixed(2),
@@ -15,7 +15,7 @@ const CircularCharts = ({ state }) => {
         <CircularM
           percentFillValue={(
             (state.currentRotatinalSpeed * 100) /
-            2000
+            2698
           ).toFixed(0)}
           cardInfo={{
             title: "Rotation speed",
@@ -25,7 +25,7 @@ const CircularCharts = ({ state }) => {
       </section>
       <section className="content-area-charts">
         <CircularM
-          percentFillValue={((state.torque * 100) / 90).toFixed(0)}
+          percentFillValue={((state.torque * 100) / 78).toFixed(0)}
           cardInfo={{
             title: "Torque",
             value: Number(state.torque).toFixed(2),

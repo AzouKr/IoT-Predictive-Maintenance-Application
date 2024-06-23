@@ -9,11 +9,13 @@ import { io } from "socket.io-client";
 import { backend_url_socket } from "../../Hooks";
 import secureLocalStorage from "react-secure-storage";
 import { updateMachineAlert } from "../../Hooks/Machine";
+import { useTranslation } from "react-i18next";
 
 const AlarmTech = () => {
   const { theme } = useContext(ThemeContext); // Accessing theme from ThemeContext
   const textColor = theme === LIGHT_THEME ? "text-black" : "text-white";
   const [rows, setRows] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const socket = io(backend_url_socket, {
@@ -37,31 +39,37 @@ const AlarmTech = () => {
     });
   }, []);
 
-  const handleDone = (machine) => {
-    console.log(machine);
-    const data = {
-      machine: machine,
-    };
-    updateMachineAlert(data)
-      .then(() => {
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const handleDone = (id, machine) => {
+    const rapport = prompt(
+      "Please enter a quick description of the maintenance"
+    );
+    if (rapport) {
+      const data = {
+        machine: machine,
+        id: id,
+        rapport: rapport,
+      };
+      updateMachineAlert(data)
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const columns = [
     {
       field: "id",
-      headerName: "Alarm ID",
+      headerName: t("Alarm ID"),
       flex: 0.5,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "machine",
-      headerName: "Machine ID",
+      headerName: t("Machine ID"),
       flex: 0.5,
       cellClassName: "machine-column--cell",
       headerAlign: "center",
@@ -69,28 +77,28 @@ const AlarmTech = () => {
     },
     {
       field: "cause",
-      headerName: "Probable cause",
+      headerName: t("Probable cause"),
       flex: 0.5,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "degree",
-      headerName: "Degree of gravity",
+      headerName: t("Degree of gravity"),
       flex: 0.5,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "date",
-      headerName: "Date",
+      headerName: t("Date"),
       flex: 0.5,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "status",
-      headerName: "Status",
+      headerName: t("Status"),
       flex: 0.5,
       renderCell: ({ row: { status } }) => {
         return (
@@ -121,21 +129,21 @@ const AlarmTech = () => {
     },
     {
       field: "Select",
-      headerName: "Affectation",
+      headerName: t("Affectation"),
       flex: 0.5,
       headerAlign: "center",
 
-      renderCell: ({ row: { machine, status } }) => {
+      renderCell: ({ row: { machine, id, status } }) => {
         return (
           <div className="flex items-center justify-center">
             {status !== "done" ? (
               <h1
                 onClick={() => {
-                  handleDone(machine);
+                  handleDone(id, machine);
                 }}
                 className="text-sky-700 cursor-pointer"
               >
-                Done
+                {t("Done")}
               </h1>
             ) : null}
           </div>
@@ -204,7 +212,17 @@ const AlarmTech = () => {
                 toolbar: GridToolbar,
               }}
             />
-          ) : null}
+          ) : (
+            <div className="w-full h-[50vh] flex items-center justify-center">
+              <h1
+                className={`${
+                  theme === LIGHT_THEME ? "text-black" : "text-white"
+                } text-2xl`}
+              >
+                There is No Alarms
+              </h1>
+            </div>
+          )}
         </Box>
       </Box>
     </div>

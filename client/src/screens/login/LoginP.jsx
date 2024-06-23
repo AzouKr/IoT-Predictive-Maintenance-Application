@@ -177,7 +177,7 @@ function LoginP() {
                 {t("label_login_connect")}
               </button>
               <a href="/reset/link" className="text-blue-800 cursor-pointer">
-                Forget password ?
+                {t("label_login_frogot")}
               </a>
               {error ? (
                 <div role="alert" className="alert alert-error">

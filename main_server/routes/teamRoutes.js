@@ -8,6 +8,7 @@ const {
   fetchTeams,
   fetchTeamBySupervisor,
   fetchTeamUsers,
+  fetchTeamsList,
 } = require("../Utils/database");
 const authenticateToken = require("../Middleware/authMiddleware");
 const logger = require("../Utils/logger");
@@ -84,6 +85,23 @@ router.get(
   async (req, res) => {
     try {
       const users = await fetchTeams();
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  }
+);
+
+router.get(
+  "/list",
+  (req, res, next) => {
+    authenticateToken(req, res, next, ["admin"]);
+  },
+  async (req, res) => {
+    try {
+      const teams = await fetchTeams();
+      const teamNames = teams.data.map((team) => team.name);
+      const users = await fetchTeamsList(teamNames);
       res.status(200).json(users);
     } catch (error) {
       res.status(400).json(error);
@@ -181,8 +199,19 @@ router.post(
     try {
       deleteTeamMember(email)
         .then((response) => {
+          createUserAlert("TEAM", "You have removed from your team", email)
+            .then(() => {
+              sendUserAlerts(email)
+                .then()
+                .catch((err) => {
+                  logger.error(err);
+                });
+            })
+            .catch((err) => {
+              logger.error(err);
+            });
           const body = teamDeleteEmail();
-          sendEmail(member, "REMOVED FROM TEAM", body);
+          sendEmail(email, "REMOVED FROM TEAM", body);
           res.status(200).json(response);
         })
         .catch((err) => {

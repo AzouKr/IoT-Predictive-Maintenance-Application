@@ -7,6 +7,7 @@ import { Button } from "@mui/material"; // Importing MUI Button component
 import { useNavigate } from "react-router-dom";
 import { deleteModel, getMetrics } from "../../Hooks/Python";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Results = () => {
   const { theme } = useContext(ThemeContext);
@@ -17,6 +18,7 @@ const Results = () => {
   const [series, setseries] = useState([]);
   const location = useLocation();
   const { state } = location;
+  const { t } = useTranslation();
 
   if (state === null) {
     navigate("/createmodel");
@@ -148,7 +150,7 @@ const Results = () => {
           borderBottom: "1px solid #3210b9",
         }}
       >
-        Results
+        {t("Results")}
       </h1>
       <div
         className="flex items-center justify-center m-6 h-[60px]"
@@ -159,7 +161,7 @@ const Results = () => {
         }}
       >
         <h2 className={theme === LIGHT_THEME ? "text-black" : "text-white"}>
-          Evaluating the Model's Performance Metrics
+          {t("Evaluating the Model's Performance Metrics")}
         </h2>
       </div>
       <Metrics values={values} />
@@ -173,7 +175,7 @@ const Results = () => {
       <div className="flex justify-end space-x-4">
         <a href="/models">
           <Button variant="contained" color="primary">
-            Save Model
+            {t("Save Model")}
           </Button>
         </a>
         <Button
@@ -181,7 +183,7 @@ const Results = () => {
           variant="contained"
           style={{ backgroundColor: "#FF4560" }}
         >
-          Cancel
+          {t("Cancel")}
         </Button>
       </div>
     </div>

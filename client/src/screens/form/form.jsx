@@ -15,11 +15,13 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
 import { AreaTop } from "../../components";
 import { createUser } from "../../Hooks/Users";
+import { useTranslation } from "react-i18next";
 
 const FormUser = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const allFieldsHaveErrors = (errors, touched) => {
     const errorKeys = Object.keys(errors);
@@ -323,6 +325,7 @@ const FormUser = () => {
                     }}
                   >
                     <MenuItem value="admin">Admin</MenuItem>
+                    <MenuItem value="supervisor">Supervisor</MenuItem>
                     <MenuItem value="technicien">Technicien</MenuItem>
                     <MenuItem value="analyst">Analyst</MenuItem>
                   </Select>

@@ -2,10 +2,12 @@ import "./Colors.css";
 import { useState, useContext } from "react";
 import { ThemeContext } from "../../../../context/ThemeContext";
 import { LIGHT_THEME } from "../../../../constants/themeConstants";
+import { useTranslation } from "react-i18next";
 
 const Colors = ({ setSelectedColor }) => {
   const { theme } = useContext(ThemeContext);
   const color = theme === LIGHT_THEME ? "black" : "white";
+  const { t } = useTranslation();
 
   return (
     <>
@@ -19,7 +21,7 @@ const Colors = ({ setSelectedColor }) => {
             theme === LIGHT_THEME ? "text-black" : "text-white"
           }`}
         >
-          Status
+          {t("Status")}
         </h1>
         <div className="h-[5vh] w-full flex items-center">
           <input
@@ -35,7 +37,7 @@ const Colors = ({ setSelectedColor }) => {
               theme === LIGHT_THEME ? "text-black" : "text-white"
             }`}
           >
-            All
+            {t("All")}
           </span>
         </div>
         <div className="h-[5vh] w-full flex items-center">
@@ -52,7 +54,7 @@ const Colors = ({ setSelectedColor }) => {
               theme === LIGHT_THEME ? "text-black" : "text-white"
             }`}
           >
-            Panne
+            {t("Broken")}
           </span>
         </div>
         <div className="h-[5vh] w-full flex items-center">
@@ -69,7 +71,7 @@ const Colors = ({ setSelectedColor }) => {
               theme === LIGHT_THEME ? "text-black" : "text-white"
             }`}
           >
-            Marche
+            {t("Running")}
           </span>
         </div>
         <div className="h-[5vh] w-full flex items-center">
@@ -86,7 +88,7 @@ const Colors = ({ setSelectedColor }) => {
               theme === LIGHT_THEME ? "text-black" : "text-white"
             }`}
           >
-            Danger
+            {t("In danger")}
           </span>
         </div>
       </div>

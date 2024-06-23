@@ -2,6 +2,7 @@ const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("app.db");
 const bcrypt = require("bcrypt");
 const logger = require("./logger");
+const fs = require("fs");
 
 // these function call them on the main server file (index.js) they will Initialize the database
 function InitializeDB() {
@@ -47,15 +48,19 @@ function InitializeDB() {
                   phone: "+213774736674",
                   email: "abdelmouizkerim@gmail.com",
                   city: "Ouargla",
+                  availability: 0,
+                  team: "None",
                 },
                 {
-                  name: "NADIL Marwa Aicha",
-                  password: "nadilmarwa2002",
+                  name: "KERIM Yahia",
+                  password: "kerimyahia1996",
                   role: "analyste",
-                  age: 22,
-                  phone: "+213799771062",
-                  email: "nadilmarwa02@gmail.com",
-                  city: "Alger",
+                  age: 28,
+                  phone: "+491624770984",
+                  email: "kerimyahia@gmail.com",
+                  city: "El Bayadh",
+                  availability: 0,
+                  team: "None",
                 },
                 {
                   name: "ARAAR ZINEB",
@@ -65,6 +70,19 @@ function InitializeDB() {
                   phone: "+213698282788",
                   email: "zeineb.ara@gmail.com",
                   city: "Montreal",
+                  availability: 0,
+                  team: "Team 1",
+                },
+                {
+                  name: "KERIM Aridj",
+                  password: "kerimaridj",
+                  role: "supervisor",
+                  age: 19,
+                  phone: "+213059345345",
+                  email: "aridjkerim@gmail.com",
+                  city: "Ouargla",
+                  availability: 0,
+                  team: "Team 3",
                 },
                 {
                   name: "HADJ BRAHIM Yasmine",
@@ -74,17 +92,8 @@ function InitializeDB() {
                   phone: "+213754967833",
                   email: "yasmine@gmail.com",
                   city: "Alger",
-                },
-                {
-                  name: "KERIM Yahia",
-                  password: "kerimyahia1996",
-                  role: "technicien",
-                  age: 28,
-                  phone: "+491624770984",
-                  email: "kerimyahia@gmail.com",
-                  city: "El Bayadh",
-                  availability: 1,
-                  team: "Team 1",
+                  availability: 0,
+                  team: "Team 2",
                 },
                 {
                   name: "HADJ BRAHIM Nour El Houda",
@@ -92,10 +101,98 @@ function InitializeDB() {
                   role: "technicien",
                   age: 22,
                   phone: "+213541485040",
-                  email: "hbnoureelhouda@gmail.com",
+                  email: "hbnourelhouda@gmail.com",
                   city: "Alger",
                   availability: 1,
                   team: "Team 2",
+                },
+                {
+                  name: "AMARA Mohamed",
+                  password: "mohamed2020",
+                  role: "technicien",
+                  age: 28,
+                  phone: "+213541485041",
+                  email: "amaramed@gmail.com",
+                  city: "Oran",
+                  availability: 1,
+                  team: "Team 2",
+                },
+                {
+                  name: "BENALI Samira",
+                  password: "samira2019",
+                  role: "technicien",
+                  age: 26,
+                  phone: "+213541485042",
+                  email: "benalisamira@gmail.com",
+                  city: "Constantine",
+                  availability: 1,
+                  team: "Team 2",
+                },
+                {
+                  name: "KACI Rachid",
+                  password: "rachid2018",
+                  role: "technicien",
+                  age: 30,
+                  phone: "+213541485043",
+                  email: "kacirachid@gmail.com",
+                  city: "Annaba",
+                  availability: 1,
+                  team: "Team 1",
+                },
+                {
+                  name: "SAHLI Fatiha",
+                  password: "fatiha2017",
+                  role: "technicien",
+                  age: 24,
+                  phone: "+213541485044",
+                  email: "sahlifatiha@gmail.com",
+                  city: "Blida",
+                  availability: 1,
+                  team: "Team 1",
+                },
+                {
+                  name: "MEGHARI Amine",
+                  password: "amine2016",
+                  role: "technicien",
+                  age: 27,
+                  phone: "+213541485045",
+                  email: "meghariamine@gmail.com",
+                  city: "Sétif",
+                  availability: 1,
+                  team: "Team 1",
+                },
+                {
+                  name: "BOUAZZA Yasmina",
+                  password: "yasmina2015",
+                  role: "technicien",
+                  age: 25,
+                  phone: "+213541485046",
+                  email: "bouazzayasmina@gmail.com",
+                  city: "Tlemcen",
+                  availability: 1,
+                  team: "Team 3",
+                },
+                {
+                  name: "ZIANI Karim",
+                  password: "karim2014",
+                  role: "technicien",
+                  age: 29,
+                  phone: "+213541485047",
+                  email: "zianik@gmail.com",
+                  city: "Béjaïa",
+                  availability: 1,
+                  team: "Team 3",
+                },
+                {
+                  name: "BOUCHERIT Ahmed",
+                  password: "ahmed2023",
+                  role: "technicien",
+                  age: 27,
+                  phone: "+213541485048",
+                  email: "boucheritahmed@gmail.com",
+                  city: "Oran",
+                  availability: 1,
+                  team: "Team 3",
                 },
               ];
 
@@ -115,8 +212,8 @@ function InitializeDB() {
                 age,
                 phone,
                 email,
-                city)
-              VALUES (?, ?, ?, ?, ?, ?, ?)
+                city, team, availability)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             `);
 
                   insertUser.run(
@@ -126,7 +223,9 @@ function InitializeDB() {
                     users[index].age,
                     users[index].phone,
                     users[index].email,
-                    users[index].city
+                    users[index].city,
+                    users[index].team,
+                    users[index].availability
                   );
 
                   insertUser.finalize();
@@ -156,6 +255,7 @@ function InitializeDB() {
             `);
               insertTeam.run("Team 1", "Line 1", "zeineb.ara@gmail.com");
               insertTeam.run("Team 2", "Line 2", "yasmine@gmail.com");
+              insertTeam.run("Team 3", "Line 3", "aridjkerim@gmail.com");
               insertTeam.finalize();
             }
           );
@@ -170,9 +270,42 @@ function InitializeDB() {
             status TEXT DEFAULT 'waiting' CHECK (status IN ('waiting', 'process', 'done')),
             supervisor TEXT,
             employee TEXT DEFAULT 'none',
-            date DATETIME DEFAULT CURRENT_TIMESTAMP
+            date DATETIME DEFAULT CURRENT_TIMESTAMP,
+            rapport TEXT DEFAULT 'none'
           )
-        `
+        `,
+            (err) => {
+              if (err) {
+                // Handle error
+                console.error("Error creating table:", err.message);
+                return;
+              }
+              const data = fs.readFileSync("./alerts.txt", "utf8");
+              const lines = data.split("\n");
+              const insertAlert = db.prepare(`
+          INSERT INTO machinealerts (machine, cause, degree, status, supervisor, employee, date, rapport)
+          VALUES (?, ?, ?,?, ?, ?, ?, ?)
+        `);
+              // Execute each insertAlert statement
+              lines.forEach((line) => {
+                values = line.substring(1, line.length - 1);
+                const parts = values.trim().split('","');
+                if (parts.length === 8) {
+                  insertAlert.run(
+                    parts[0],
+                    parts[1],
+                    parts[2],
+                    parts[3],
+                    parts[4],
+                    parts[5],
+                    parts[6],
+                    parts[7]
+                  );
+                }
+              });
+
+              insertAlert.finalize();
+            }
           );
           db.run(
             `
@@ -182,6 +315,16 @@ function InitializeDB() {
             desc TEXT,
             user TEXT,
             date DATETIME DEFAULT CURRENT_TIMESTAMP
+          )
+        `
+          );
+          db.run(
+            `
+          CREATE TABLE IF NOT EXISTS events (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
+            user TEXT,
+            date TEXT
           )
         `
           );
@@ -370,11 +513,11 @@ function activateUser(userId) {
   return new Promise(function (resolve, reject) {
     db.run("UPDATE users SET active = 0 WHERE id = ?", userId, function (err) {
       if (err) {
-        logger.error("Error deleting user:", err.message);
+        logger.error("Error activating user:", err.message);
         reject({ bool: false, error: err.message });
         return;
       }
-      logger.info("User deleted successfully");
+      logger.info("User activated successfully");
       resolve({ bool: true, message: "User deleted successfully" });
     });
   });
@@ -460,7 +603,7 @@ function fetchTeamBySupervisor(supervisor) {
 function fetchTeamUsers(team) {
   return new Promise(function (resolve, reject) {
     db.all(
-      "SELECT id, name, email FROM users WHERE team = ?",
+      "SELECT id, name, email FROM users WHERE team = ? AND role != 'supervisor'",
       [team],
       function (error, rows) {
         if (error) {
@@ -475,6 +618,36 @@ function fetchTeamUsers(team) {
       }
     );
   });
+}
+
+// Function to display all team list
+function fetchTeamsList(teams) {
+  return Promise.all(
+    teams.map((team) => {
+      return new Promise((resolve, reject) => {
+        db.all(
+          "SELECT id, name, email, role FROM users WHERE team = ?",
+          [team],
+          function (error, rows) {
+            if (error) {
+              logger.error(
+                "Error while fetching team users for team " +
+                  team +
+                  ": " +
+                  error.message
+              );
+              reject({ bool: false, error: error.message });
+            } else {
+              // logger.info("Successfully fetching team users for team " + team);
+              resolve({ team, users: rows });
+            }
+          }
+        );
+      });
+    })
+  )
+    .then((results) => ({ bool: true, data: results }))
+    .catch((error) => ({ bool: false, error: error.message }));
 }
 
 // Function to delete team member
@@ -584,7 +757,7 @@ function fetchMachineAlertsById(id) {
         } else {
           // console.log(rows);
           // logger.info("Successfully fetching machinealerts");
-          resolve({ bool: true, data: rows });
+          resolve({ bool: true, data: rows.reverse() });
         }
       }
     );
@@ -613,11 +786,11 @@ function fetchMachineAlertsByUser(email) {
 }
 
 // Update machine alert status
-function updateMachineAlerts(machine) {
+function updateMachineAlerts(machine, rapport) {
   return new Promise(function (resolve, reject) {
     db.all(
-      "UPDATE machinealerts SET status = 'done' WHERE machine = ?",
-      [machine],
+      "UPDATE machinealerts SET status = 'done', rapport = ? WHERE id = ?",
+      [rapport, machine],
       function (error, rows) {
         if (error) {
           logger.error("Error while updating machinealerts");
@@ -637,7 +810,7 @@ function updateMachineAlerts(machine) {
 function assignMachineAlerts(employee, machine) {
   return new Promise(function (resolve, reject) {
     db.all(
-      "UPDATE machinealerts SET status = 'process', employee = ? WHERE machine = ?",
+      "UPDATE machinealerts SET status = 'process', employee = ? WHERE id = ?",
       [employee, machine],
       function (error, rows) {
         if (error) {
@@ -713,6 +886,61 @@ function fetchUserAlerts(user) {
   });
 }
 
+// Function to add event
+function addEvent(title, user, date) {
+  return new Promise(function (resolve, reject) {
+    db.run(
+      "INSERT INTO events (title, user, date) VALUES (?, ?, ?)",
+      [title, user, date],
+      function (err) {
+        if (err) {
+          logger.error("Error inserting event:", err.message);
+          reject({ bool: false, error: err.message });
+          return;
+        }
+        logger.info("Event inserted successfully");
+        resolve({ bool: true, message: "Event inserted successfully" });
+      }
+    );
+  });
+}
+
+// Function to add event
+function fetchEvents(user) {
+  return new Promise(function (resolve, reject) {
+    db.all(
+      "SELECT * FROM events WHERE user = ?",
+      [user],
+      function (error, rows) {
+        if (error) {
+          logger.error("Error while fetching events");
+          reject({ bool: false, error: error.message });
+          return;
+        } else {
+          // console.log(rows);
+          logger.info("Successfully fetching events");
+          resolve({ bool: true, data: rows });
+        }
+      }
+    );
+  });
+}
+
+// Function to delete event
+function deleteEvent(id) {
+  return new Promise(function (resolve, reject) {
+    db.run("DELETE FROM events WHERE id = ?", [id], function (err) {
+      if (err) {
+        logger.error("Error deleting event:", err.message);
+        reject({ bool: false, error: err.message });
+        return;
+      }
+      logger.info("Event deleted successfully");
+      resolve({ bool: true, message: "Event deleted successfully" });
+    });
+  });
+}
+
 // Exporting multiple functions
 module.exports = {
   InitializeDB,
@@ -728,6 +956,7 @@ module.exports = {
   fetchTeams,
   fetchTeamBySupervisor,
   fetchTeamUsers,
+  fetchTeamsList,
   addTeamMember,
   deleteTeamMember,
   fetchAvailableUsers,
@@ -740,4 +969,7 @@ module.exports = {
   assignMachineAlerts,
   createUserAlert,
   fetchUserAlerts,
+  addEvent,
+  fetchEvents,
+  deleteEvent,
 };

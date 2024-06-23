@@ -22,7 +22,7 @@ const Models = () => {
 
   const [data, setdata] = useState([]);
   const [usedModel, setusedModel] = useState();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const fetchData = async () => {
     await getModels().then((response) => {
@@ -62,57 +62,6 @@ const Models = () => {
       });
   };
 
-  const posts = [
-    {
-      id: 1,
-      category: "KNN",
-      date: "January 01, 2XXX",
-      Dataset: "JJJJJ",
-      title: "Lorem ipsum dolor sit amet",
-      type: "Binary",
-      Acc: 55,
-      Auc: 55,
-      F1: 55,
-      F2: 55,
-    },
-    {
-      id: 1,
-      category: "KNN",
-      date: "January 01, 2XXX",
-      Dataset: "JJJJJ",
-      title: "Lorem ipsum dolor sit amet",
-      type: "Binary",
-      Acc: 55,
-      Auc: 55,
-      F1: 55,
-      F2: 55,
-    },
-    {
-      id: 1,
-      category: "KNN",
-      date: "January 01, 2XXX",
-      Dataset: "JJJJJ",
-      title: "Lorem ipsum dolor sit amet",
-      type: "Binary",
-      Acc: 55,
-      Auc: 55,
-      F1: 55,
-      F2: 55,
-    },
-    {
-      id: 1,
-      category: "KNN",
-      date: "January 01, 2XXX",
-      Dataset: "JJJJJ",
-      title: "Lorem ipsum dolor sit amet",
-      type: "Multi",
-      Acc: 55,
-      Auc: 55,
-      F1: 55,
-      F2: 55,
-    },
-  ];
-
   const navigate = useNavigate();
 
   const handleShowInfo = (name) => {
@@ -134,12 +83,13 @@ const Models = () => {
   return (
     <div className={`content-area ${theme === LIGHT_THEME ? "" : "dark-mode"}`}>
       <div className="main-container">
-        {/* <h2>Browse Our Collection of ML Algorithms</h2> */}
         <h2 className={theme === LIGHT_THEME ? "text-black" : "text-white"}>
-          Machine Learning Models Showcase
+          {t("Machine Learning Models Showcase")}
         </h2>
         <p className={theme === LIGHT_THEME ? "text-black" : "text-white"}>
-          Filter models based on their application areas and algorithm types.
+          {t(
+            "Filter models based on their application areas and algorithm types."
+          )}
         </p>
         <div className="filter-container">
           {/* Type Filter */}
@@ -150,7 +100,7 @@ const Models = () => {
                 id="all"
                 onClick={() => typeTitleClick("all")}
               >
-                <li>All Types</li>
+                <li>{t("All Types")}</li>
               </div>
               <div
                 className={`type-title ${
@@ -159,7 +109,7 @@ const Models = () => {
                 id="Binary"
                 onClick={() => typeTitleClick("Binary")}
               >
-                <li>Binary</li>
+                <li>{t("Binary")}</li>
               </div>
               <div
                 className={`type-title ${
@@ -168,7 +118,7 @@ const Models = () => {
                 id="Multi"
                 onClick={() => typeTitleClick("Multi")}
               >
-                <li>Multi</li>
+                <li>{t("Multi")}</li>
               </div>
             </ul>
           </div>
@@ -182,7 +132,7 @@ const Models = () => {
                 id="all"
                 onClick={() => categoryTitleClick("all")}
               >
-                <li>All</li>
+                <li>{t("All")}</li>
                 <span>
                   <i className="fas fa-border-all"></i>
                 </span>
@@ -307,7 +257,7 @@ const Models = () => {
                         theme === LIGHT_THEME ? `text-black` : `text-white`
                       }`}
                     >
-                      Name: {modelName.slice(0, -7).split("_")[2]}
+                      {t("Name")}: {modelName.slice(0, -7).split("_")[2]}
                     </h1>
                   </div>
                   <div className="w-full h-[5vh] flex items-center p-4">
@@ -316,7 +266,7 @@ const Models = () => {
                         theme === LIGHT_THEME ? `text-black` : `text-white`
                       }`}
                     >
-                      Type : {modelName.slice(0, -7).split("_")[0]}
+                      {t("Type")}: {modelName.slice(0, -7).split("_")[0]}
                     </h1>
                   </div>
                   <div className="w-full h-[5vh] flex items-center p-4">
@@ -325,7 +275,7 @@ const Models = () => {
                         theme === LIGHT_THEME ? `text-black` : `text-white`
                       }`}
                     >
-                      Algo : {modelName.slice(0, -7).split("_")[1]}
+                      {t("Algo")}: {modelName.slice(0, -7).split("_")[1]}
                     </h1>
                   </div>
                   {modelName !== usedModel ? (

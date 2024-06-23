@@ -1,6 +1,6 @@
 import { AreaTop } from "../../components";
 import "./index.css";
-import { Machines, Type, Colors, SideM, Card } from "../../components";
+import { SideM, Card } from "../../components";
 import HM from "../../assets/images/HM.png";
 import MT from "../../assets/images/MT.png";
 import RM from "../../assets/images/RM.jpg";
@@ -30,12 +30,6 @@ const Maintenance = () => {
       setdata(data[0]);
     });
   }, []);
-
-  const getType = (id) => {
-    if (id.slice(0, 2) === "HM") return "Hydrolic Machine";
-    if (id.slice(0, 2) === "RM") return "Rotational Machine";
-    return "Machine Tool";
-  };
 
   const getColor = (failure) => {
     if (failure === 0) return "green";

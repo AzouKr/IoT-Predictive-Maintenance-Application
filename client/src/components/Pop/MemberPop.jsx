@@ -14,13 +14,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useState, useContext, useEffect } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { AddTeamMember, getAvailableUsers } from "../../Hooks/Teams";
 
 const MemberPop = ({ name }) => {
   const { theme } = useContext(ThemeContext);
   const backgroundColor = theme === LIGHT_THEME ? "#F3F4F6" : "#2e2e48";
   const color = theme === LIGHT_THEME ? "black" : "white";
+  const { t } = useTranslation();
 
   const [users, setusers] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -71,7 +72,7 @@ const MemberPop = ({ name }) => {
           console.log(err);
         });
     } else {
-      alert("You must add at least one member");
+      alert(t("You must add at least one member"));
     }
   };
 
@@ -89,7 +90,7 @@ const MemberPop = ({ name }) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        Add new member
+        {t("Add new member")}
       </Button>
 
       <Dialog
@@ -100,8 +101,7 @@ const MemberPop = ({ name }) => {
         maxWidth="sm"
       >
         <DialogTitle style={{ textAlign: "center", backgroundColor, color }}>
-          {" "}
-          Add new member{" "}
+          {t("Add new member")}
           <IconButton onClick={closepopup} style={{ float: "right" }}>
             <CloseIcon color="primary"></CloseIcon>
           </IconButton>{" "}
@@ -111,7 +111,7 @@ const MemberPop = ({ name }) => {
             <Stack spacing={2} margin={2}>
               <FormControl fullWidth>
                 <InputLabel id="demo-multiple-select-label">
-                  Select Available Member
+                  {t("Select Available Member")}
                 </InputLabel>
                 {users !== undefined ? (
                   <Select
@@ -119,7 +119,7 @@ const MemberPop = ({ name }) => {
                     id="demo-multiple-select"
                     multiple
                     value={selectedUsers}
-                    label="Select Available Member"
+                    label={t("Select Available Member")}
                     onChange={handleSelectionChange}
                     renderValue={(selected) => selected.join(", ")}
                   >
@@ -139,7 +139,7 @@ const MemberPop = ({ name }) => {
               color="primary"
               variant="contained"
             >
-              ADD
+              {t("ADD")}
             </Button>
           </Stack>
         </DialogContent>

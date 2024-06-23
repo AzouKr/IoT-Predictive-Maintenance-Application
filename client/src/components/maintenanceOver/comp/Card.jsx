@@ -9,7 +9,7 @@ const Card = ({ img, id, color, temp, type }) => {
   return (
     <>
       <section
-        className={`card w-[50vh] ${theme === LIGHT_THEME ? "" : "dark-mode"}`}
+        className={`card w-[46%] ${theme === LIGHT_THEME ? "" : "dark-mode"}`}
       >
         <img src={img} alt={id} className="card-img" />
         <div className="card-details w-full mt-[1vh]">

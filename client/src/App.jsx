@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.scss";
 import { ThemeContext } from "./context/ThemeContext";
 import { DARK_THEME, LIGHT_THEME } from "./constants/themeConstants";
@@ -8,7 +8,6 @@ import SunIcon from "./assets/icons/sun.svg";
 import BaseLayout from "./layout/BaseLayout";
 import {
   Dashboard,
-  PageNotFound,
   LoginP,
   Calendar,
   Contacts,
@@ -39,7 +38,6 @@ import CsvViewer from "./screens/csvViewer/csvViewer";
 import { useTranslation } from "react-i18next";
 import Results from "./screens/createModel/Results";
 import Notif from "./screens/Notification/Notif";
-import { Socket } from "socket.io-client";
 import Maintenance from "./screens/maintenance-overview/index";
 import MachineD from "./screens/MachineDetails/MacineD";
 import socket from "./socket";
@@ -48,17 +46,20 @@ import ResetPassword from "./screens/login/ResetPassword";
 import ResetPassGuard from "./Guard/ResetPassGuard";
 import Email from "./screens/login/Email";
 import MetricsPage from "./screens/createModel/MetricsPage";
+import secureLocalStorage from "react-secure-storage";
 
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { t, i18n } = useTranslation();
+  const [toggle, settoggle] = useState(false);
 
   const handleChangeLng = (lng) => {
     i18n.changeLanguage(lng);
     localStorage.setItem("lng", lng);
   };
 
-  socket.on("soundAlert", () => {
+  socket.on("soundAlert/" + secureLocalStorage.getItem("email"), () => {
+    console.log("Notif received");
     const audio = new Audio(notifSounde);
     audio.play();
   });
@@ -124,12 +125,16 @@ function App() {
             />
           </Route>
         </Routes>
-        <div className="dropdown absolute top-[3.5vh] right-[37vh]">
+
+        <div className="dropdown dropdown-left absolute top-[3.5vh] right-[7vh]">
           <button
             role="button"
             tabIndex={0}
             type="button"
-            className="theme-toggle-btn"
+            className="theme-toggle-btn m-1"
+            onClick={() => {
+              settoggle(!toggle);
+            }}
           >
             <svg
               viewBox="0 0 512 512"
@@ -141,20 +146,22 @@ function App() {
               <path d="M478.33 433.6l-90-218a22 22 0 00-40.67 0l-90 218a22 22 0 1040.67 16.79L316.66 406h102.67l18.33 44.39A22 22 0 00458 464a22 22 0 0020.32-30.4zM334.83 362L368 281.65 401.17 362zM267.84 342.92a22 22 0 00-4.89-30.7c-.2-.15-15-11.13-36.49-34.73 39.65-53.68 62.11-114.75 71.27-143.49H330a22 22 0 000-44H214V70a22 22 0 00-44 0v20H54a22 22 0 000 44h197.25c-9.52 26.95-27.05 69.5-53.79 108.36-31.41-41.68-43.08-68.65-43.17-68.87a22 22 0 00-40.58 17c.58 1.38 14.55 34.23 52.86 83.93.92 1.19 1.83 2.35 2.74 3.51-39.24 44.35-77.74 71.86-93.85 80.74a22 22 0 1021.07 38.63c2.16-1.18 48.6-26.89 101.63-85.59 22.52 24.08 38 35.44 38.93 36.1a22 22 0 0030.75-4.9z" />
             </svg>
           </button>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li onClick={() => handleChangeLng("en")}>
-              <a>English</a>
-            </li>
-            <li onClick={() => handleChangeLng("fr")}>
-              <a>French</a>
-            </li>
-            <li onClick={() => handleChangeLng("ar")}>
-              <a>العربية</a>
-            </li>
-          </ul>
+          {toggle ? (
+            <ul
+              tabIndex={0}
+              className="fixed top-[3vh] right-[8vh] z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li onClick={() => handleChangeLng("en")}>
+                <a>English</a>
+              </li>
+              <li onClick={() => handleChangeLng("fr")}>
+                <a>French</a>
+              </li>
+              <li onClick={() => handleChangeLng("ar")}>
+                <a>العربية</a>
+              </li>
+            </ul>
+          ) : null}
         </div>
         <button
           type="button"

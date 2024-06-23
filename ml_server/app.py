@@ -152,6 +152,24 @@ def get_files():
     files = os.listdir(folder_path)
     return jsonify(files)
 
+# ****************************************
+# ***** Endpoint to delete Dataset   *****
+# ****************************************
+@app.route('/delete', methods=['DELETE'])
+def delete_file():
+    data = request.get_json()
+    file_name = data.get('name')
+
+    if not file_name:
+        return jsonify({"bool": False, "message": "File name not provided"}), 400
+
+    file_path = './dataset/' + file_name
+
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        return jsonify({"bool": True, "message": 'File deleted successfully'})
+    else:
+        return jsonify({"bool": False, "message": 'File not found'}), 404
 
 # ****************************************
 # *** Endpoint to Get Dataset's name   ***
@@ -245,7 +263,7 @@ def delete_models():
     return jsonify({'message': f'Model "{modelname}" deleted successfully.'}), 200
         
 # ****************************************
-# ***** Endpoint to delete a ML Model   *****
+# ***** Endpoint to delete a Dataset *****
 # ****************************************
 @app.route('/dataset/delete', methods=['POST'])
 def delete_dataset():

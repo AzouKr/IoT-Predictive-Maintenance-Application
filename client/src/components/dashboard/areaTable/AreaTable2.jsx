@@ -3,15 +3,7 @@ import "./AreaTable.scss";
 import socket from "../../../socket"; // Import the socket module
 import { useNavigate } from "react-router-dom";
 
-const TABLE_HEADS = [
-  //ask azouuuu if we should add more details
-  "ID",
-  "Date",
-  "Type",
-  "Machine Id",
-  "Status",
-  "Action",
-];
+const TABLE_HEADS = ["ID", "Date", "Type", "Machine Id", "Status", "Action"];
 
 const AreaTable2 = () => {
   const navigate = useNavigate();
@@ -19,6 +11,21 @@ const AreaTable2 = () => {
   socket.on("getData", (data) => {
     setdata(data[0]);
   });
+  const today = new Date();
+  const months = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+  ];
 
   return (
     <section className="content-area-table">
@@ -64,7 +71,13 @@ const AreaTable2 = () => {
                   return (
                     <tr key={"S" + dataItem.id}>
                       <td>{"S" + dataItem.id}</td>
-                      <td>Jun 29,2023</td>
+                      <td>
+                        {today.getDate() +
+                          " " +
+                          months[today.getMonth()] +
+                          " " +
+                          today.getFullYear()}
+                      </td>
                       {<td>{name}</td>}
                       {<td>{dataItem.id}</td>}
                       <td>

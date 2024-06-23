@@ -6,6 +6,7 @@ import Chart from "react-apexcharts";
 import { useNavigate } from "react-router-dom";
 import { getMetrics } from "../../Hooks/Python";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const MetricsPage = () => {
   const { theme } = useContext(ThemeContext);
@@ -16,6 +17,7 @@ const MetricsPage = () => {
   const [series, setseries] = useState([]);
   const location = useLocation();
   const { state } = location;
+  const { t } = useTranslation();
 
   if (state === null) {
     navigate("/models");
@@ -120,7 +122,7 @@ const MetricsPage = () => {
           borderBottom: "1px solid #3210b9",
         }}
       >
-        Results
+        {t("Results")}
       </h1>
       <div
         className="flex items-center justify-center m-6 h-[60px]"
@@ -131,7 +133,7 @@ const MetricsPage = () => {
         }}
       >
         <h2 className={theme === LIGHT_THEME ? "text-black" : "text-white"}>
-          Evaluating the Model's Performance Metrics
+          {t("Evaluating the Model's Performance Metrics")}
         </h2>
       </div>
       <Metrics values={values} />

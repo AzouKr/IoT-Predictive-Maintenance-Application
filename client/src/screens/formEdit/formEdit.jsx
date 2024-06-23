@@ -255,6 +255,7 @@ const FormEdit = () => {
                     }}
                   >
                     <MenuItem value="admin">Admin</MenuItem>
+                    <MenuItem value="supervisor">Supervisor</MenuItem>
                     <MenuItem value="technicien">Technicien</MenuItem>
                     <MenuItem value="analyste">Analyst</MenuItem>
                   </Select>

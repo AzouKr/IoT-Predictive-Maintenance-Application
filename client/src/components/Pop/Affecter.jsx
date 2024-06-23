@@ -21,7 +21,7 @@ const Affecter = ({ machine }) => {
   const color = theme === LIGHT_THEME ? "black" : "white";
 
   const [open, setOpen] = useState(false);
-  const [selectedTechnicians, setSelectedTechnicians] = useState([]);
+  const [selectedTechnicians, setSelectedTechnicians] = useState();
   const [technicians, settechnicians] = useState();
 
   const fetchData = async () => {
@@ -40,17 +40,6 @@ const Affecter = ({ machine }) => {
 
   const handleClosePopup = () => {
     setOpen(false);
-  };
-
-  const handleTechnicianSelect = (technician) => {
-    setSelectedTechnicians((prevSelectedTechnicians) => {
-      const isSelected = prevSelectedTechnicians.includes(technician);
-      if (isSelected) {
-        return prevSelectedTechnicians.filter((t) => t.id !== technician.id);
-      } else {
-        return [...prevSelectedTechnicians, technician];
-      }
-    });
   };
 
   const handleAffect = () => {
@@ -78,7 +67,9 @@ const Affecter = ({ machine }) => {
       className={`content-area ${theme === LIGHT_THEME ? "" : "dark-mode"}`}
     >
       <Button
-        onClick={handleOpenPopup}
+        onClick={() => {
+          handleOpenPopup();
+        }}
         style={{
           color: isHovered ? "#fff" : "#3d59a5",
           fontWeight: "bold",
@@ -103,13 +94,14 @@ const Affecter = ({ machine }) => {
               ? technicians.map((technician) => (
                   <Button
                     key={technician.id}
-                    onClick={() => handleTechnicianSelect(technician)}
+                    onClick={() => setSelectedTechnicians(technician)}
                     style={{
                       justifyContent: "flex-start",
                       color: theme === LIGHT_THEME ? "#000000" : "#ffffff",
-                      backgroundColor: selectedTechnicians.includes(technician)
-                        ? "#d3d3d3"
-                        : "transparent",
+                      backgroundColor:
+                        selectedTechnicians === technician
+                          ? "#d3d3d3"
+                          : "transparent",
                       border: "1px solid #3d59a5",
                       padding: "10px",
                       minWidth: "150px",
@@ -125,13 +117,13 @@ const Affecter = ({ machine }) => {
               : null}
           </Stack>
         </DialogContent>
-        {selectedTechnicians.length > 0 && (
+        {selectedTechnicians !== undefined ? (
           <DialogActions style={{ backgroundColor, color }}>
             <Button onClick={handleAffect} color="primary" variant="contained">
               Affect
             </Button>
           </DialogActions>
-        )}
+        ) : null}
       </Dialog>
     </div>
   );

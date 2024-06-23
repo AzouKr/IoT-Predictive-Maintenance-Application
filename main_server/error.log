@@ -390,3 +390,196 @@
 [31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
 [31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
 [31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Error while fetching events
+[31merror[39m: sendUserAlerts is not defined
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Redis Client Error {"code":"ECONNREFUSED","stack":"AggregateError [ECONNREFUSED]: \n    at internalConnectMultiple (node:net:1116:18)\n    at afterConnectMultiple (node:net:1680:7)"}
+[31merror[39m: Error while updating machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching machinealerts
+[31merror[39m: Error while fetching team users: SQLITE_RANGE: column index out of range
+[31merror[39m: Error while fetching team users: SQLITE_RANGE: column index out of range
+[31merror[39m: Error while fetching team users: SQLITE_RANGE: column index out of range

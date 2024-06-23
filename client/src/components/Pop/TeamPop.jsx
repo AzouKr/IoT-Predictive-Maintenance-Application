@@ -22,8 +22,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useState, useContext, useEffect } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
-import { Link } from "react-router-dom";
 import { createTeam, getAvailableUsers } from "../../Hooks/Teams";
+import { useTranslation } from "react-i18next";
 
 const TeamPop = () => {
   const { theme } = useContext(ThemeContext);
@@ -34,6 +34,7 @@ const TeamPop = () => {
   const [name, setname] = useState("");
   const [prod, setprod] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const { t } = useTranslation();
 
   const handleSelectionChange = (event) => {
     setSelectedUsers(event.target.value);
@@ -82,7 +83,7 @@ const TeamPop = () => {
           console.log(err);
         });
     } else {
-      alert("Input Fields must be filled");
+      alert(t("Input Fields must be filled"));
     }
   };
 
@@ -100,7 +101,7 @@ const TeamPop = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        Create New Team
+        {t("Create New Team")}
       </Button>
 
       <Dialog
@@ -111,7 +112,7 @@ const TeamPop = () => {
         maxWidth="sm"
       >
         <DialogTitle style={{ textAlign: "center", backgroundColor, color }}>
-          Create New Team{" "}
+          {t("Create New Team")}{" "}
           <IconButton onClick={closepopup} style={{ float: "right" }}>
             <CloseIcon color="primary"></CloseIcon>
           </IconButton>{" "}
@@ -121,7 +122,7 @@ const TeamPop = () => {
             <Stack spacing={2} margin={2}>
               <TextField
                 variant="outlined"
-                label="Name your team"
+                label={t("Name your team")}
                 onChange={(e) => {
                   setname(e.target.value);
                 }}
@@ -138,7 +139,7 @@ const TeamPop = () => {
               ></TextField>
               <TextField
                 variant="outlined"
-                label="Production line"
+                label={t("Production line")}
                 onChange={(e) => {
                   setprod(e.target.value);
                 }}
@@ -155,7 +156,7 @@ const TeamPop = () => {
               ></TextField>
               <FormControl fullWidth>
                 <InputLabel id="demo-multiple-select-label">
-                  Select Available Member
+                  {t("Select Available Member")}
                 </InputLabel>
                 {users !== undefined ? (
                   <Select
@@ -163,7 +164,7 @@ const TeamPop = () => {
                     id="demo-multiple-select"
                     multiple
                     value={selectedUsers}
-                    label="Select Available Member"
+                    label={t("Select Available Member")}
                     onChange={handleSelectionChange}
                     renderValue={(selected) => selected.join(", ")}
                   >
@@ -183,7 +184,7 @@ const TeamPop = () => {
               color="primary"
               variant="contained"
             >
-              Create
+              {t("Create")}
             </Button>
           </Stack>
         </DialogContent>

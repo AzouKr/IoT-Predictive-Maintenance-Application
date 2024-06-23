@@ -17,7 +17,7 @@ const CsvViewer = () => {
   const [typeError, setTypeError] = useState(null);
 
   const fetchData = async () => {
-    getCsvFile(name + ".csv")
+    getCsvFile(name)
       .then((res) => {
         const workbook = XLSX.read(res, { type: "string" });
         const worksheetName = workbook.SheetNames[0];
