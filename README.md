@@ -16,7 +16,7 @@ This project aims to develop an innovative system for predictive maintenance of 
 - **Frontend**: React.js, CSS
 - **Backend**: Node.js, Python
 - **Machine Learning**: Python libraries for SVM, LR, KNN, RF, XGBoost
-- **Database**: PostgreSQL
+- **Database**: SQLite
 - **3D Simulation**: Unity 3D
 
 ## Methodology
@@ -55,8 +55,8 @@ Utilizes Unity 3D to create digital twins of industrial environments, enabling u
 
 ## Contributors
 
-- **Nour El Houda**
-- **Abdelmouiz**
+- **HADJ BRAHIM Nour El Houda**
+- **KERIM Abdelmouiz**
 
 ## License
 
